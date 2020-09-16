@@ -1,6 +1,6 @@
-const accountSid = require("../Store/secrets").twilio_secrets.ACCOUNT_SID;
-const authToken = require("../Store/secrets").twilio_secrets.AUTH_TOKEN;
-const phone_number_from = require("../Store/secrets").twilio_secrets.PHONE_NUMBER;
+const accountSid = require("./utilities/secrets/secrets").twilio_secrets.ACCOUNT_SID;
+const authToken = require("./utilities/secrets/secrets").twilio_secrets.AUTH_TOKEN;
+const phone_number_from = require("./utilities/secrets/secrets").twilio_secrets.PHONE_NUMBER;
 const client = require('twilio')(accountSid, authToken);
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Your Account Sid and Auth Token from twilio.com/console

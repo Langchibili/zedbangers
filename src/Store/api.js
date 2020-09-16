@@ -1,4 +1,4 @@
-const api_url = require("../constants/api");
+const api_url = require("../constants/api_url");
 
  const api = {
    /* GET REQUESTS */

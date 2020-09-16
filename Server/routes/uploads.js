@@ -4,14 +4,13 @@ const uuidv1 = require('uuid/v1');
 const uploads = require("../database/uploads").uploads;
 const execQuery = require("../database/connection").amalevelz.runQuery;
 const IncomingForm = require("formidable").IncomingForm;
-const rootdirectory = "C:/Users/Z. Goldwyn/Desktop/amalevelz";
 const videoThumnaiGenerator = require("../processes/video-thumnail-generation");
 const imageResizer = require("../processes/image-processing").imageResizer;
 //const videoProcesser = require("../processes/video-processing");
 //constants
 const rootdirectory = require("../utilities/constants/rootdirectory");
 const static_folder_name = require("../utilities/constants/static_folder_name");
-const api_url = require("../../constants/api");
+const api_url = require("../utilities/constants/api");
 
 /* UUID CODE*/
 const v1options = {
