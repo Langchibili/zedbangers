@@ -97,7 +97,7 @@ router.post("/", (req,res,next)=>{
        /*query runs here*/
        const AddedPost = await posts.addPost(postObject);
        /*log new activity and send notification */
-       await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
+      //  await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
        /*response here*/
        res.send(AddedPost);
        

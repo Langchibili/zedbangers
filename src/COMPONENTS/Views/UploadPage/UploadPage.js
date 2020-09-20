@@ -8,7 +8,7 @@ export default class UploadPage extends React.Component{
         super(props);
         // set text as default, if this.props.initialPostObject is not set
         this.state = {
-              post_type: this.props.post_type === "music"? "music" : "video",
+              post_type: this.props.post_type === "song"? "music" : "video",
               postingText: "post",
               showTitleBox: false,
               buttonState: {backgroundColor: "lightgrey",disabled:true}
@@ -20,7 +20,7 @@ export default class UploadPage extends React.Component{
      }
 
      renderFormType(addPhotoFunction, addAudioFunction, addVideoFunction, addGenre, removeGenre, toggleLyricsType){
-         if(this.state.post_type === "music"){
+         if(this.props.post_type === "song"){
           return <NewSongForm 
                  addPhoto={addPhotoFunction} 
                  addAudio={addAudioFunction}
@@ -180,7 +180,7 @@ export default class UploadPage extends React.Component{
     return (   
         <section className="panel panel-default"> 
 
-        <header className="panel-heading font-bold">Upload {this.props.post_type === "music"? "Song" : "Video" }</header> 
+        <header className="panel-heading font-bold">Upload {this.props.post_type === "song"? "Song" : "Video" }</header> 
         
         <div className="panel-body"> 
         
@@ -190,7 +190,7 @@ export default class UploadPage extends React.Component{
         <input type="text" className="form-control" placeholder="title" onChange={this.setTitle} /> 
         </div> 
         {this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
-        <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "music"? "about song..." : "about video..." } />
+        <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "song"? "about song..." : "about video..." } />
         <br/>
         <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
         </form> 

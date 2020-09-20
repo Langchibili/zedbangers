@@ -5,9 +5,11 @@ export default class Footer extends React.Component{
         return (
 
         <footer className="footer bg-dark"> 
+        
 
         <div id="jp_container_N" className="jp-video-270p"> 
-
+        {/* 
+        Developed by Langson Chibili langchibili@gmail.com
         <div className="jp-type-playlist"> 
 
         <div id="jplayer_N" className="jp-jplayer hide" style={{width: '480px', height: '270px'}}><img id="jp_poster_0" src="images/m0.jpg" style={{width: '480px', height: '270px', display: 'inline'}} /><audio id="jp_audio_0" preload="metadata" src="http://flatfull.com/themes/assets/musics/Miaow-07-Bubble.ogg" title="Bubble" /><video id="jp_video_0" preload="metadata" title="Bubble" style={{width: '0px', height: '0px'}} />
@@ -110,8 +112,9 @@ export default class Footer extends React.Component{
         </span> To play the media you will need to either update your browser to a recent version or update your <a href="../../../get.adobe.com/flashplayer/index.html" target="_blank">Flash plugin</a>. 
         </div> 
         </div> 
-        </div> 
-    </footer>
+        */}
+</div> 
+    </footer> 
   );
  }
 }

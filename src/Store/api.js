@@ -1,10 +1,11 @@
-const api_url = require("../constants/api_url");
+import api_url from "../constants/api_url";
 
  const api = {
    /* GET REQUESTS */
-   getItemById: async function (apiEndPoint,id,fields){
+   getItemById: async function (apiEndPoint,id,fields=null){
+    const fieldsPart = fields? '/?fields='+fields : "";
     try{
-      const response = await fetch(api_url+apiEndPoint+ "/"+id+'/?fields='+fields,{credentials: "include"});
+      const response = await fetch(api_url+apiEndPoint+"/"+id+fieldsPart,{credentials: "include"});
       const myResponse = await response.json();
       return myResponse;
     }

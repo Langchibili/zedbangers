@@ -127,7 +127,7 @@ export default class SideBar extends React.Component{
             </div> </li> 
             </ul> </section> <footer className="footer footer-md bg-black"> 
             
-            <form className role="search"> 
+            <form className="" role="search"> 
             
             <div className="form-group clearfix m-b-none"> 
             
