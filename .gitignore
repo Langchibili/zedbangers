@@ -18,6 +18,7 @@
 .env.test.local
 .env.production.local
 /public/files
+/public/aboutwebapp.txt
 /Server/utilities/ffmpeg
 /Server/utilities/constants/db_url.js
 /Server/utilities/secrets

@@ -11,7 +11,8 @@ export default class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      nowPlayingSongId: null
+      nowPlayingSongId: null,
+      headerTheme: "bg-white-only"
     }
 }
 UserInfo = {
@@ -28,32 +29,44 @@ updateNowPlayingSongId = (songId) =>{
   })
 }
 
+changeHeaderTheme = () =>{
+  this.setState({
+    headerTheme: "bg-black lter"
+  })
+}
+
+componentDidMount(){
+  console.log(this);
+}
 
    render(){
     return ( 
       <div>
-      <BrowserRouter>
        <section className="vbox">
-          <Header />
+          <Header UserInfo={this.UserInfo} headerTheme={this.state.headerTheme}/>
+         
           <section>
             <section className="hbox stretch">
+            <BrowserRouter>
               <Navigation />    
                <section id="content">
                 <section className="hbox stretch">
                  <section>
                    <section className="vbox">
-                       <Views updateNowPlayingSongId={this.updateNowPlayingSongId} UserInfo={this.UserInfo}/>
-                       <Footer />
+                     <section className="w-f-md">
+                        <Views updateNowPlayingSongId={this.updateNowPlayingSongId} UserInfo={this.UserInfo} changeHeaderTheme={this.changeHeaderTheme}/>
+                        <Footer />
+                      </section>
                    </section>
                  </section>
                  <SideBar />
                 </section>
               </section>
+          </BrowserRouter>
            </section>
           </section>
         </section>
-      </BrowserRouter>
-      <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />
+      {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} /> */}
       </div>
       );
       } 

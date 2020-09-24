@@ -3,52 +3,39 @@ import api from "../../../Store/api";
 import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
 
-export default class SinglePostPage extends React.Component{ 
+export default class SingleUserPage extends React.Component{ 
    constructor(props){
        super(props);
        this.state = {
-           post: null,
-           songs: [],
+           artist: null,
+           artistSongs: [],
            updatedOnce: false
        }
    }
-
-   getPost = async () =>{
-    const postId = this.props.postId;
-    if(!postId){
-      return
-    }
-    else{
-    //  const post = await api.getItemById("/posts", postId, " ");
-     const moresongs = this.getMoreSongs();
-     this.setState(
-        {
-          //post: post // first update post, and render it
-          post: { // for testing purposes
-                _id: "5f62957f8467921958e59951",
-                title: "gliding"
-              } 
+   artist = {  // testing purpose
+        username: "langson",
+        niceName: "Langson chibili",
+        picture: {
+            small: "image.jpg"
         },
-        ()=>{
-            const songs = this.state.songs;
-            songs.push(this.state.post) // add current song
-            this.setState({
-                songs: songs
-            },
-            ()=>{
-                const song = this.state.songs[0];
-                moresongs.unshift(song)
-                this.setState({
-                    songs: moresongs // add more songs to songs list
-                })
-            } 
-           )
-        } 
-     );
-    }
-  }
+        _id: "ahdkkkajlfjjffsssjal"
+      } 
 
-   getMoreSongs = () =>{
+   getArtistInfo = async () =>{
+       //  const userId = this.props.userId; 
+       //  const artist = await api.getItemById("/users", userId, " ");
+       const artistSongs = this.artistSongs();
+       
+       this.setState({
+           artist: this.artist      
+       }, ()=>{
+        this.setState({
+           artistSongs: artistSongs
+        })
+       })
+   }
+
+   getArtistSongs = () =>{
     // return await api.getItems("/posts","","music","","","",10);
     // testing bellow
      return [{
@@ -90,7 +77,7 @@ export default class SinglePostPage extends React.Component{
    }
 
    componentWillMount(){    
-    this.getPost();
+    this.getArtistInfo();
    }
    componentDidUpdate(){
     this.setState({ updatedOnce: true})

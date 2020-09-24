@@ -1,0 +1,12 @@
+.video-ad-container{
+    position: fixed;
+    bottom: 0px;
+    max-width: 320px;
+    padding: 10px;
+    border: 1px solid lightgrey;
+    clear: both;
+}
+.video-ad-container video {
+    width: 100%;
+    border: none !important;
+}

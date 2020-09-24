@@ -3,11 +3,11 @@ import React from "react";
 export default class Header extends React.Component{
    render(){
          return (
-            <header className="bg-white-only header header-md navbar navbar-fixed-top-xs"> 
+            <header className={this.props.headerTheme+" header header-md navbar navbar-fixed-top-xs"}> 
             
-            <div className="navbar-header aside bg-info dk"> <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> <i className="icon-list" /> </a> <a href="index-2.html" className="navbar-brand text-lt"> <i className="icon-earphones" /> <img src="images/logo.png" alt="." className="hide" /> 
+            <div className="navbar-header aside bg-info dk"> <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> <i className="icon-list" /> </a> <a href="/" className="navbar-brand text-lt"> <i className="icon-earphones" /> <img src="images/logo.png" alt="." className="hide" /> 
             
-            <span className="hidden-nav-xs m-l-sm">Zedbangers
+            <span className="hidden-nav-xs m-l-sm">Musicbase
             </span> </a> <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i className="icon-settings" /> </a> 
             </div> 
             <ul className="nav navbar-nav hidden-xs"> 
@@ -31,12 +31,12 @@ export default class Header extends React.Component{
             <ul className="nav navbar-nav m-n hidden-xs nav-user user"> 
             <li className="hidden-xs"> <a href="#" className="dropdown-toggle lt" data-toggle="dropdown"> <i className="icon-bell" /> 
             
-            <span className="badge badge-sm up bg-danger count" style={{display: 'inline-block'}}>3
+            <span className="badge badge-sm up bg-danger count" style={{display: 'inline-block'}}> 3
             </span> </a> <section className="dropdown-menu aside-xl animated fadeInUp"> <section className="panel bg-white"> 
             
             <div className="panel-heading b-light bg-light"> <strong>You have 
             
-            <span className="count" style={{display: 'inline'}}>3
+            <span className="count" style={{display: 'inline'}}> 3
             </span> notifications</strong> 
             </div> 
             
@@ -45,19 +45,19 @@ export default class Header extends React.Component{
             <span className="pull-left thumb-sm text-center"><i className="fa fa-envelope-o fa-2x text-success" />
             </span>
             
-            <span className="media-body block m-b-none">Sophi sent you a email
-            <br /><small className="text-muted">1 minutes ago</small>
+            <span className="media-body block m-b-none"> Your account is set up for uploading.
+            <br /><small className="text-muted">moments ago</small>
             </span></a> <a href="#" className="media list-group-item"> 
             
             <span className="pull-left thumb-sm"> <img src="images/a0.png" alt="..." className="img-circle" /> 
             </span> 
             
-            <span className="media-body block m-b-none"> Use awesome animate.css
-            <br /> <small className="text-muted">10 minutes ago</small> 
-            </span> </a> <a href="#" className="media list-group-item"> 
-            
-            <span className="media-body block m-b-none"> 1.0 initial released
-            <br /> <small className="text-muted">1 hour ago</small> 
+            <span className="media-body block m-b-none"> You will be able to receive notifications soon
+            <br /> <small className="text-muted">moments ago</small> 
+            </span> 
+            </a> <a href="#" className="media list-group-item"> 
+            <span className="media-body block m-b-none"> Read about the next features
+            <br /> <small className="text-muted">moments ago</small> 
             </span> </a> 
             </div> 
             
@@ -66,7 +66,7 @@ export default class Header extends React.Component{
             <li className="dropdown"> <a href="#" className="dropdown-toggle bg clear" data-toggle="dropdown"> 
             
             <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm"> <img src="images/a0.png" alt="..." /> 
-            </span> John.Smith <b className="caret" /> </a> 
+            </span> {this.props.UserInfo.niceName}<b className="caret" /> </a> 
             <ul className="dropdown-menu animated fadeInRight"> 
             <li> 
             
