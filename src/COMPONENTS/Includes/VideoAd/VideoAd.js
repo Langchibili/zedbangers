@@ -2,13 +2,17 @@ import React from "react";
 import api from "../../../Store/api";
 import "./VideoAd.css";
 import UserExperience from "../UserExperience/UserExperience";
+import FileDownloader from "../FileDownloader/FileDownloader";
+import Display from "../Display/Display";
 
 
 export default class VideoAd extends React.Component{
     constructor(props){
       super(props);
       this.state = {
-        showUx: false
+        showUx: false,
+        videoCurrentTime: 0,
+        showFileDownloader: false
       }
       this.video = React.createRef();
     }
@@ -45,27 +49,45 @@ export default class VideoAd extends React.Component{
    }
   componentDidMount(){
     const video = this.video.current;
-    video.load();
     video.oncanplay = ()=>{
-      video.play();
       this.setState({
         showUx: true
       })
     }
-    video.onerror = ()=>{
-      video.play();
+    // video.onerror = ()=>{
+    //   video.play();
+    // }
+  }
+
+  componentDidUpdate(){
+    const video = this.video.current;
+    const toggleOffFileIsDownloading = this.props.toggleOffFileIsDownloading;
+    if(video.currentTime && video.currentTime <= 40){
+      this.setState({
+        videoCurrentTime: video.currentTime
+      })
+      if(this.state.videoCurrentTime >= 30){
+        this.setState({
+          showFileDownloader: true
+        },()=>{
+          toggleOffFileIsDownloading();
+        })
+        
+      }
     }
   }
     
-    render(){   
+    render(){ 
         return(
         <div className="video-ad-container">
           <span>wait while we process your file</span>
           {this.renderDownloadProcessUx(this.state.showUx)}
-          <video ref={this.video} width="320" height="240" controls>
+          <p>Ad</p>
+          <video id="advideo" ref={this.video} width="320" height="240" controls>
            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
            Your browser does not support the video tag.
           </video>
+          <Display isVisible={this.state.showFileDownloader}><FileDownloader downloadId={this.props.downloadId}/></Display>
         </div>
         );
     }

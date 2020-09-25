@@ -1,12 +1,19 @@
 .video-ad-container{
+    background-color: white;
     position: fixed;
+    z-index: 1;
     bottom: 0px;
     max-width: 320px;
     padding: 10px;
     border: 1px solid lightgrey;
-    clear: both;
+    
 }
 .video-ad-container video {
+    margin-top: 0px !important;
     width: 100%;
     border: none !important;
+}
+.video-ad-container span, p{
+    font-weight: 400;
+    text-transform: uppercase;
 }

@@ -52,35 +52,35 @@ export default class SinglePostPage extends React.Component{
     // return await api.getItems("/posts","","music","","","",10);
     // testing bellow
      return [{
-        _id: "5f62957f8467921958e59951",
+        _id: "5f62957f8467921958e59[951",
         title: "gliding"
       },{
-        _id: "5f62957f8467921958e5995",
+        _id: "5f62957f8467921958]e5995",
         title: "gliding"
       },{
-        _id: "5f62957f8467921958e599",
+        _id: "5f62957f8467921,958e599",
         title: "gliding"
       },{
-        _id: "5f62957f84679219pp58e5",
+        _id: "5f62957f8467.9219pp58e5",
         title: "gliding"
       },{
-        _id: "5f62957f8458e59951",
+        _id: "5f62957f84k59951",
         title: "gliding"
       },
       ,{
-        _id: "5297f846719559951",
+        _id: "5297f846719j5;;;;;59951",
         title: "gliding"
       },{
-        _id: "5f957f871e59951",
+        _id: "5f957f871el59951",
         title: "gliding"
       },{
-        _id: "5f62kkk84671958e59951",
+        _id: "5f62kkk84h671958e59951",
         title: "gliding"
       },{
-        _id: "56295??7f84671958e59951",
+        _id: "56295??7fi84671958e59951",
         title: "gliding"
       },{
-        _id: "5f6295784619))58e59951",
+        _id: "5f6295784619))58te59951",
         title: "gliding"
       }];
    }
@@ -131,14 +131,23 @@ export default class SinglePostPage extends React.Component{
                 </span> 
                     </div> {/*<img className="img-full" src={this.state.post? this.state.post.thumbnail.medium : ""} alt="song thumnail" />  */}
                 </div> 
-                <Lists list_type="PlainListType" items_type="song" items={this.state.songs} updateNowPlayingSongId={this.props.updateNowPlayingSongId}/>
+                <Lists 
+                list_type="PlainListType" 
+                items_type="song" items={this.state.songs} 
+                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                updateDownloadId={this.props.updateDownloadId}
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section> 
             </section>
         </aside>
         <section className="col-sm-4 no-padder bg">
             <section className="vbox">
                 <section className=" scrollable hover">
-                <Lists list_type="ListWithImageType" items_type="song" items={this.state.songs} updateNowPlayingSongId={this.props.updateNowPlayingSongId}/>
+                <Lists list_type="ListWithImageType" 
+                items_type="song" items={this.state.songs} 
+                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                updateDownloadId={this.props.updateDownloadId}
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section>
             </section>
         </section>

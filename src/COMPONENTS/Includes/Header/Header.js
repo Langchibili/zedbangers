@@ -66,7 +66,7 @@ export default class Header extends React.Component{
             <li className="dropdown"> <a href="#" className="dropdown-toggle bg clear" data-toggle="dropdown"> 
             
             <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm"> <img src="images/a0.png" alt="..." /> 
-            </span> {this.props.UserInfo.niceName}<b className="caret" /> </a> 
+            </span> {this.props.isLoggedIn? this.props.UserInfo.niceName : "Howdy There!"}<b className="caret" /> </a> 
             <ul className="dropdown-menu animated fadeInRight"> 
             <li> 
             
@@ -78,7 +78,7 @@ export default class Header extends React.Component{
             </span> Notifications </a> </li> 
             <li> <a href="docs.html">Help</a> </li> 
             <li className="divider" /> 
-            <li> <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a> </li> 
+            <li> <a href="/logout" data-toggle="ajaxModal">Logout</a> </li> 
             </ul> </li> 
             </ul> 
             </div>

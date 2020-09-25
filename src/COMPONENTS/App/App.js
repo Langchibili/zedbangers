@@ -6,14 +6,46 @@ import Views from "../Views/Views";
 import SideBar from "../Includes/SideBar/SideBar";
 import { BrowserRouter } from "react-router-dom";
 import AudioPlayer from "../Includes/AudioPlayer/AudioPlayer";
+import VideoAd from "../Includes/VideoAd/VideoAd";
+import Display from "../Includes/Display/Display";
+import api from "../../Store/api";
+import Loader from "../Includes/Loader/Loader";
 
 export default class App extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       nowPlayingSongId: null,
+      downloadId: null,
+      fileIsDownloading: false,
+      isLoggedIn: false,
+      sessionReqDone: false,
+      UserInfo: null,
       headerTheme: "bg-white-only"
     }
+}
+async checkUserSession(){
+  const userStatus = await api.getItems("/user_status");
+  if(userStatus){
+     if(userStatus.isLoggedIn){
+      const loggeInUserInfo = await api.getItemByUsername("/users", userStatus.loggedUserName);
+      this.setState({
+          isLoggedIn: true,
+          UserInfo: loggeInUserInfo,
+          sessionReqDone: true
+      })
+    }
+    else{
+        this.setState(
+          {
+            isLoggedIn: false,
+            sessionReqDone: true
+          })
+    }
+  }
+  else{
+    return;
+  }
 }
 UserInfo = {
   username: "langson",
@@ -23,6 +55,30 @@ UserInfo = {
   },
   _id: "ahdkkkajlfjjffsssjal"
 }
+
+setVideoInstance = (video)=>{
+   this.setState({
+     video: video
+   })
+}
+
+toggleOffFileIsDownloading = ()=>{
+  this.setState({
+    fileIsDownloading: false
+  })
+}
+toggleOnFileIsDownloading = ()=>{
+  this.setState({
+    fileIsDownloading: true
+  })
+}
+
+updateDownloadId = (fileId) =>{
+  this.setState({
+    downloadId: fileId
+  })
+}
+
 updateNowPlayingSongId = (songId) =>{
   this.setState({
     nowPlayingSongId: songId
@@ -35,26 +91,44 @@ changeHeaderTheme = () =>{
   })
 }
 
-componentDidMount(){
-  console.log(this);
+async componentWillMount(){
+  await this.checkUserSession();
 }
+
 
    render(){
     return ( 
       <div>
        <section className="vbox">
-          <Header UserInfo={this.UserInfo} headerTheme={this.state.headerTheme}/>
+           <Header 
+            isLoggedIn={this.state.isLoggedIn} 
+            UserInfo={this.state.UserInfo} 
+            headerTheme={this.state.headerTheme}/> 
          
           <section>
             <section className="hbox stretch">
             <BrowserRouter>
-              <Navigation />    
+             <Navigation isLoggedIn={this.state.isLoggedIn} /> 
                <section id="content">
                 <section className="hbox stretch">
                  <section>
                    <section className="vbox">
                      <section className="w-f-md">
-                        <Views updateNowPlayingSongId={this.updateNowPlayingSongId} UserInfo={this.UserInfo} changeHeaderTheme={this.changeHeaderTheme}/>
+
+                     {this.state.sessionReqDone? <Views 
+                          updateNowPlayingSongId={this.updateNowPlayingSongId} 
+                          UserInfo={this.state.UserInfo} 
+                          changeHeaderTheme={this.changeHeaderTheme}
+                          updateDownloadId={this.updateDownloadId}
+                          toggleOnFileIsDownloading={this.toggleOnFileIsDownloading}
+                          isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
+
+                        <Display isVisible={this.state.fileIsDownloading}>
+                          <VideoAd 
+                           downloadId={this.state.downloadId} 
+                           toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
+                        </Display>
+
                         <Footer />
                       </section>
                    </section>
@@ -66,7 +140,7 @@ componentDidMount(){
            </section>
           </section>
         </section>
-      {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} /> */}
+       <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} /> 
       </div>
       );
       } 

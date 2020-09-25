@@ -66,10 +66,10 @@ export default class Filedownloadupdate extends React.Component{
     render(){   
         return(
         <div>
-            preparing download... this may take upto 30 seconds...
          {this.showDownloadProcess(this.state.processesRendered)}
          <Display isVisible={!this.state.isLastProcess}>
              <CircularProgress disableShrink color={"secondary"}/>
+             <p>preparing download... this may take upto 30 seconds...</p>
          </Display>
         </div>
         );

@@ -23,10 +23,14 @@ export default class Navigation extends React.Component{
                     
                     <span className="font-bold">Events
                     </span> </Link> </li>  */}
-                    <li> <Link to="/upload/song"> <i className="icon-list icon text-info-dker" /> 
+                    <li> <Link to={this.props.isLoggedIn? "/upload/song" : "/signup"}> <i className="icon-list icon text-info-dker" /> 
                     
                     <span className="font-bold">upload
                     </span> </Link> </li> 
+                    {this.props.isLoggedIn? "" : <li> <Link to="/signup"> <i className="icon-list icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
+                    {this.props.isLoggedIn? "" : <li> <Link to="/login"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
+                     
+                    {this.props.isLoggedIn? <li> <Link to="/logout"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">logout</span> </Link> </li>: ""}
                     {/* <li> <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true"> <i className="icon-social-youtube icon text-primary" /> 
                     
                     <span className="font-bold">Video
