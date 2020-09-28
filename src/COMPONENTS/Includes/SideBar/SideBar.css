@@ -1,0 +1,44 @@
+.ads-section{
+    background-color: black !important;
+    z-index: 1;
+}
+
+.ads-section video {
+    width: 100% !important;
+}
+@media (max-width: 768px){
+    .ads-section{
+        padding: 0px 2px 0px 2px;
+        position: fixed;
+        bottom: 0;
+        max-height: 200px;
+        max-width: 420px;
+        display: flex;
+    }
+    .ads-section video {
+        max-width: 160px !important;
+        max-height: 100px !important;
+    }
+}
+@media (max-width: 360px){
+    .ads-section{
+        padding: 0px 2px 0px 2px;
+        position: fixed;
+        bottom: 0;
+        max-width: 360px;
+        display: flex;
+    }
+    .ads-section video {
+        max-width: 120px !important;
+        max-height: 100px !important;
+    }
+}
+@media (max-width: 280px){
+    .ads-section{
+        max-width: 360px;
+    }
+    .ads-section video {
+        max-width: 100px !important;
+        max-height: 100px !important;
+    }
+}

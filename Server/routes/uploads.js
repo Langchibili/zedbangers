@@ -19,7 +19,7 @@ const v1options = {
   msecs: Date.now(),
   nsecs: 5678
 };
-const myUuid = "-ZEDBANGERS.COM-" + uuidv1(v1options); 
+const myUuid = "-MUSICBASE.COM-" + uuidv1(v1options); 
 
 
 // GET REQUESTS

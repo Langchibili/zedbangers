@@ -1,9 +1,25 @@
 import React from "react";
+import "./SideBar.css";
 
 export default class SideBar extends React.Component{
    render(){
     return (
-        <aside className="aside-md bg-light dk" id="sidebar"> <section className="vbox animated fadeInRight"> <section className="w-f-md scrollable hover"> <h4 className="font-thin m-l-md m-t">Artists</h4> 
+        <aside className="aside-md bg-light dk" id="sidebar"> 
+        <section className="vbox animated fadeInRight ads-section"> 
+        <video id="advideo2" ref={this.video} width="320" height="240" controls>
+            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
+            Your browser does not support this video.
+        </video>
+        <video id="advideo3" ref={this.video} width="320" height="240" controls>
+            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
+            Your browser does not support this video.
+        </video>
+        <video id="advideo4" ref={this.video} width="320" height="240" controls>
+            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
+            Your browser does not support this video.
+        </video>
+        {/* <section className="w-f-md scrollable hover"> 
+        <h4 className="font-thin m-l-md m-t">Artists</h4> 
             <ul className="list-group no-bg no-borders auto m-t-n-xxs"> 
             <li className="list-group-item"> 
             
@@ -139,7 +155,7 @@ export default class SideBar extends React.Component{
             </div> 
             </div> 
             </form>
-            </footer> 
+            </footer>  */}
             </section>
         </aside>
       );

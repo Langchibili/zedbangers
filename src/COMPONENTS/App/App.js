@@ -20,8 +20,7 @@ export default class App extends React.Component{
       fileIsDownloading: false,
       isLoggedIn: false,
       sessionReqDone: false,
-      UserInfo: null,
-      headerTheme: "bg-white-only"
+      UserInfo: null
     }
 }
 async checkUserSession(){
@@ -85,12 +84,6 @@ updateNowPlayingSongId = (songId) =>{
   })
 }
 
-changeHeaderTheme = () =>{
-  this.setState({
-    headerTheme: "bg-black lter"
-  })
-}
-
 async componentWillMount(){
   await this.checkUserSession();
 }
@@ -102,8 +95,7 @@ async componentWillMount(){
        <section className="vbox">
            <Header 
             isLoggedIn={this.state.isLoggedIn} 
-            UserInfo={this.state.UserInfo} 
-            headerTheme={this.state.headerTheme}/> 
+            UserInfo={this.state.UserInfo} /> 
          
           <section>
             <section className="hbox stretch">

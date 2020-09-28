@@ -15,14 +15,10 @@ export default class Login extends React.Component{
             uErrorText:"",
             pErrorText: "",
             disabled: false,
-            loginText: "Login",
-            showSingUp: false,
-            showLogin: true
+            loginText: "Login"
           }
           this.createRefs = this.createRefs.bind(this);
           this.handleSubmit = this.handleSubmit.bind(this);
-          this.showLogin = this.showLogin.bind(this);
-          this.showSingUp = this.showSingUp.bind(this);
           this.LogUserIn = this.LogUserIn.bind(this);
           this.createRefs();
       }
@@ -32,26 +28,6 @@ export default class Login extends React.Component{
         this.passwordRef = React.createRef();
       } 
 
-      hideLogin = () => {
-        this.setState({
-          showLogin: false
-        })
-      }
-        
-      showSingUp(e){
-        e.preventDefault();
-        this.setState({
-          showSingUp: true,
-          showLogin: false
-        })
-      }
-      showLogin(e){
-        e.preventDefault();
-        this.setState({
-          showSingUp: false,
-          showLogin: true
-        })
-      }
       async LogUserIn(username,password){
         const apiResponse = await api.createItem("/login",{username: username, password: password});
         if(apiResponse){
@@ -95,7 +71,7 @@ export default class Login extends React.Component{
         event.preventDefault();
         this.setState({
           disabled: true,
-          loginText: "checking credentials..."
+          loginText: "validating credentials..."
         });
         const username = this.usernameRef.current.value;
         const password = this.passwordRef.current.value;
@@ -110,73 +86,55 @@ export default class Login extends React.Component{
         }
         else{
           // log user in
-          await this.LogUserIn(username,password);
+          this.setState({
+            disabled: true,
+            loginText: "logging you in..."
+          },async ()=>{
+            await this.LogUserIn(username,password);
+          });
         }
       }
       
        render(){
          return (
-          <div className="app" aria-describedby="main-loader" aria-busy="false">
-              <div className="theme-layout">
-                  <div className="container-fluid pdng0">
+          <section className="m-t-lg wrapper-md animated fadeInUp" aria-describedby="main-loader" aria-busy="false">
+              <div className="container aside-xl">
+                  <section className="m-b-lg">
+                  <header className="wrapper text-center"> <strong>Sign in to upload</strong> </header>
                     <div className="row merged">
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div className="land-featurearea">
-                          <div className="land-meta">
-                            <h1>musicbase</h1>
-                            <p>
-                              musicbase is free to use for as long as you want.
-                            </p>
-                            <div className="friend-logo">
-                            </div>
-                            <a href="#" title="" className="folow-me">Follow Us on</a>
-                          </div>	
-                        </div>
-                      </div>
-                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div className="login-reg-bg">
-                        <Display isVisible={this.state.showLogin}>
-                          <div className="log-reg-area sign">
                             <h2 className="log-title">{this.state.loginText}</h2>
                               <p>
-                                Not on amalevelz Yet? <a href="#" title="">Take the tour</a> or <a onClick={this.showSingUp} href="#" title="">Join now</a>
+                                Not on musicbase Yet? <Link to="/" title="">Take the tour</Link> or <Link to="/signup" title="">Join now</Link>
                               </p>
                             <form method="post">
                               <div className="form-group">	
-                                <input type="text" id="input" ref={this.usernameRef} required="required"/>
+                                <input type="text" className="form-control rounded input-lg text-center no-border" id="input" ref={this.usernameRef} required="required"/>
                                 <label className="control-label" htmlFor="input">Username</label><i className="mtrl-select"></i>
-                                <span className="error" style={{color:"red"}}>{this.state.uErrorText}</span>
+                                <p className="error text-center" style={{color:"red"}}>{this.state.uErrorText}</p>
                               </div>
                               <div className="form-group">	
-                                <input type="password" ref={this.passwordRef} required="required"/>
+                                <input type="password" className="form-control rounded input-lg text-center no-border" ref={this.passwordRef} required="required"/>
                                 <label className="control-label" htmlFor="input">Password</label><i className="mtrl-select"></i>
-                                <span className="error" style={{color:"red"}}>{this.state.pErrorText}</span>
+                                <p className="error text-center" style={{color:"red"}}>{this.state.pErrorText}</p>
                                 <Display isVisible={this.state.showActivateLink}>
                                   <Link to={"/account_verification/"+this.state.username}>Activate Account</Link>
                                 </Display>
                               </div>
                               <div className="checkbox">
                                 <label>
-                                <input type="checkbox" defaultChecked/><i className="check-box"></i>Always Remember Me.
+                                <input type="checkbox"  defaultChecked/><i className="check-box"></i>Always Remember Me.
                                 </label>
                               </div>
-                              <a href="#" title="" className="forgot-pwd">Forgot Password?</a>
-                              <div className="submit-btns">
-                                <button className="mtr-btn signin" type="button" disabled={this.state.disabled} onClick={this.handleSubmit}><span>{this.state.loginText}</span></button>
-                                <button onClick={this.showSingUp} className="mtr-btn" stye={{marginLeft: "10px"}} type="button"><span>Register</span></button>
-                              </div>
+                              <button className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded" type="button" disabled={this.state.disabled} onClick={this.handleSubmit}><span>{this.state.loginText}</span></button>
+                              <div className="text-center m-t m-b"> <a href="#" title="" className="forgot-pwd">Forgot Password?</a></div>
+                              <div className="line line-dashed"></div>
+                              <p className="text-muted text-center"><small>Do not have an account?</small></p>
+                              <Link to="/signup" className="btn btn-lg btn-info btn-block rounded">Create an account</Link>
                             </form>
-                          </div>
-                          </Display>
-                          <Display isVisible={this.state.showSingUp}>
-                            <SignUp showLogin={this.showLogin} hideLogin={this.hideLogin}/>
-                          </Display>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                  </section>
                 </div>
-          </div>
+          </section>
          );
        }
 }

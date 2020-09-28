@@ -48,6 +48,12 @@ export default class SinglePostPage extends React.Component{
     }
   }
 
+  changeHeaderTheme = () =>{
+    const header = document.getElementById("header");
+    console.log(header.className);
+    header.className.replace("bg-white-only","bg-black lter")
+  }
+
    getMoreSongs = () =>{
     // return await api.getItems("/posts","","music","","","",10);
     // testing bellow
@@ -88,16 +94,15 @@ export default class SinglePostPage extends React.Component{
    shouldComponentUpdate(){
        return this.state.updatedOnce? false : true;
    }
-
+   
    componentWillMount(){    
+    this.changeHeaderTheme(); 
     this.getPost();
    }
    componentDidUpdate(){
     this.setState({ updatedOnce: true})
    }
-//    componentDidMount(){
-//     this.props.changeHeaderTheme();
-//    }
+
    render(){
     return ( 
         <section className="hbox stretch bg-black dker">

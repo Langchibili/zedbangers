@@ -1,7 +1,7 @@
 import React from 'react';
 import './SignUp.css';
 import CountryCodeSelect from './CountryCodeSelect';
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import api from "../../../Store/api";
 import Loader from '../../Includes/Loader/Loader';
 import Display from '../../Includes/Display/Display';
@@ -74,7 +74,7 @@ export default class SignUp extends React.Component{
               const selectedValue = e.target.value;
               this.setState({
                   selectedSex: selectedValue
-              },()=>{console.log(this.state.selectedSex)});
+              });
         }
         
         redirectUser(){
@@ -99,9 +99,6 @@ export default class SignUp extends React.Component{
             const termsAndConditionsChecked = this.termsAndConditionsRef.current.checked;
             const userSex = this.state.selectedSex;
             let contactNumber = '+'+country.toString()+number.toString();
-
-            console.log(this.firstNameRef.current);
-            console.log(firstName, lastName,username,password,termsAndConditionsChecked,number,country);
              
             if(!firstName || !lastName || !username || !password || !number || !country){
               this.setState({
@@ -165,7 +162,6 @@ export default class SignUp extends React.Component{
                                     });
                                 }
                                 else{
-                                  this.props.hideLogin();
                                   this.setState({
                                     showContent: false,
                                   },()=>{
@@ -204,26 +200,27 @@ export default class SignUp extends React.Component{
       
        render(){
          return (
-          <div className="log-reg-area">
+          <section className="m-t-lg wrapper-md animated fadeInUp" aria-describedby="main-loader" aria-busy="false">
+          <div className="container aside-xl">
              <Display isVisible={this.state.showloader} > <Loader loaderContent="Signing you up..." /></Display>
              <Display isVisible={this.state.showContent} >
              <h2 className="log-title">Register</h2>
              <form method="post">
                 <div className="form-group">	
-                <input ref={this.firstNameRef} type="text" required="required"/>
+                <input ref={this.firstNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <label className="control-label" htmlFor="input">FirstName</label><i className="mtrl-select"></i>
                 </div>
                 <div className="form-group">	
-                <input ref={this.lastNameRef} type="text" required="required"/>
+                <input ref={this.lastNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <label className="control-label" htmlFor="input">LastName</label><i className="mtrl-select"></i>
                 </div>
                 <div className="form-group">	
-                <input ref={this.usernameRef} type="text" required="required"/>
+                <input ref={this.usernameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <label className="control-label" htmlFor="input">User Name</label><i className="mtrl-select"></i>
                 <span className="error" style={{color:"red"}}>{this.state.uErrorText}</span>
                 </div>
                 <div className="form-group">	
-                <input ref={this.passwordRef} type="password" required="required"/>
+                <input ref={this.passwordRef} className="form-control rounded input-lg text-center no-border" type="password" required="required"/>
                 <label className="control-label" htmlFor="input">Password</label><i className="mtrl-select"></i>
                 <span className="error" style={{color:"red"}}>{this.state.pErrorText}</span>
                 </div>
@@ -248,28 +245,26 @@ export default class SignUp extends React.Component{
                 {<CountryCodeSelect selectRef={this.countryRef}/>}
                 <label htmlFor="phone" style={{display: "block", font: "1rem 'Fira Sans', sans-serif", margin: ".4rem 0"}}>Enter your phone number:</label>
 
-                <input ref={this.phoneNumberRef} style={{borderLeft:"1px solid grey",margin: ".4rem 0"}} type="tel" id="phone" name="phone"
+                <input className="form-control rounded input-lg text-center no-border" ref={this.phoneNumberRef} style={{borderLeft:"1px solid grey",margin: ".4rem 0"}} type="tel" id="phone" name="phone"
                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                     maxLength = "9"
                     required />
 
                 <small> Format: 97#######</small>
-                <span className="error" style={{color:"red", display:"inline-block", marginTop:"5px"}}>{this.state.nErrorText}</span>
-                <div className="checkbox" style={{marginTop:"5px"}}>
-                <label>
-                <input type="checkbox" ref={this.termsAndConditionsRef} /><i className="check-box"></i>Accept Terms & Conditions ?
-                </label>
-                </div>
-                <a onClick={this.props.showLogin} href="#" title="" style={{color:"blue"}}>Already have an account</a>
-                <span className="error" style={{color:"red"}}>{this.state.generalErrors}</span>
+                <p className="error text-center" style={{color:"red", display:"inline-block", marginTop:"5px"}}>{this.state.nErrorText}</p>
+                <div className="checkbox i-checks m-b"> <label className="m-l"> <input ref={this.termsAndConditionsRef} type="checkbox" /><i></i> Agree the <a href="#">terms and policy</a> </label> </div>
+                <p className="error text-center" style={{color:"red"}}>{this.state.generalErrors}</p>
                 <div className="submit-btns">
-                  <a href="#" className="mtr-btn signup" type="button" onClick={this.handleSubmit}><span>Register</span></a>
+                <button href="#" className="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded" type="button" onClick={this.handleSubmit}><span>Register</span></button>
                 </div>
+                <div className="line line-dashed"></div>
+                <p className="text-muted text-center"><small>Already have an account?</small></p>
+                <Link to="/login" className="btn btn-lg btn-info btn-block rounded">signin</Link>
                 {this.redirectUser()}
             </form>
              </Display>
             </div>
-           
+          </section>
          );
        }
 }

@@ -5,7 +5,7 @@ export default function CountryCodeSelect(props){
 
      
         return(            
-        <select ref={props.selectRef} name="countrycode" id="">
+        <select className="form-control rounded input-lg text-center no-border" ref={props.selectRef} name="countrycode" id="">
             <option data-countrycode="ZM" value="260">Zambia (+260)</option>
             <optgroup label="Other countries">
                 <option data-countrycode="DZ" value="213">Algeria (+213)</option>
@@ -205,7 +205,7 @@ export default function CountryCodeSelect(props){
                 <option data-countrycode="TC" value="1649">Turks &amp; Caicos Islands (+1649)</option>
                 <option data-countrycode="TV" value="688">Tuvalu (+688)</option>
                 <option data-countrycode="UG" value="256">Uganda (+256)</option>
-                <option data-countrycode="GB" value="44">UK (+44)</option> -->
+                <option data-countrycode="GB" value="44">UK (+44)</option> 
                 <option data-countrycode="UA" value="380">Ukraine (+380)</option>
                 <option data-countrycode="AE" value="971">United Arab Emirates (+971)</option>
                 <option data-countrycode="GB" value="44">UK (+44)</option>
