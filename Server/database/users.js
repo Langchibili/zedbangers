@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const date =  require('date-and-time');
+const api = require("../utilities/constants/api");
+const docApiConcatinator = require("../functions").docApiConcatinator;
 const now = new Date();
 
 //user schema
@@ -73,20 +75,20 @@ const userSchema = new mongoose.Schema({
     verifiedUploaders: [],
     uploadatistsfor: [],
     picture: {
-      cover: { type: String, default : "http://localhost:3000/files/images/red.jpg" },
+      cover: { type: String, default : "/files/images/red.jpg" },
       medium: { type: String },
-      thumbnail: { type: String, default : "http://localhost:3000/files/images/red.jpg" },
+      thumbnail: { type: String, default : "/files/images/red.jpg" },
       small: { type: String }     
     },
     picture_small: String,
     picture_medium: String,
     picture_big: {
       type: String,
-      default : "http://localhost:3000/files/images/red.jpg"
+      default : "/files/images/red.jpg"
      },
     picture_xl: String,
     cover_photo: {
-      cover: { type: String, default : "http://localhost:3000/files/images/black-and-white-rose-image.jpg" },
+      cover: { type: String, default : "/files/images/black-and-white-rose-image.jpg" },
       medium: { type: String },
       thumbnail: { type: String },
       small: { type: String }    
@@ -224,30 +226,30 @@ module.exports.users = {
                  /* GET ALL USERS FROM DATABASE*/
                   getUsers: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
                     if(!arrayOfIds){
-                      return await userModel.find({},fields,function (err, docs) {
+                      return await docApiConcatinator(api, null, await userModel.find({},fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
                           return docs;
-                       }).sort(sortObject).limit(limit);
+                       }).sort(sortObject).limit(limit));
                       }
                       else{
-                        return await userModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
+                        return await docApiConcatinator(api, null, await userModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
                           return docs;
-                       }).sort(sortObject).limit(limit);
+                       }).sort(sortObject).limit(limit));
                       }
 
                   },
                   getUsersByIdsInverse: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await userModel.find({ _id : { $nin : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await userModel.find({ _id : { $nin : arrayOfIds } },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
                       return docs;
-                   }).sort(sortObject).limit(limit);
+                   }).sort(sortObject).limit(limit));
                   },
                   /* GET ONE USERS FROM DATABASE*/
                   getUser: async function(userId=null,username=null,fields=null){
@@ -258,12 +260,12 @@ module.exports.users = {
                     else{
                         filterObject = { username: username };
                     }
-                    return await userModel.findOne(filterObject, fields, function (err, doc) {
+                    return await docApiConcatinator(api, await userModel.findOne(filterObject, fields, function (err, doc) {
                         if (err){
                             throw err;
                         }
                         return doc;
-                     })
+                     }))
 
                 },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/

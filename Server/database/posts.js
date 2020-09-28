@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const date =  require('date-and-time');
+const api = require("../utilities/constants/api");
+const docApiConcatinator = require("../functions").docApiConcatinator; // adds current api to uris
 const now = new Date();
 
 //post schema
@@ -218,54 +220,54 @@ module.exports.posts = {
                  /* GET ALL POSTS FROM DATABASE*/
                  getPosts: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
                     if(!arrayOfIds){
-                      return await postModel.find({},fields,function (err, docs) {
+                      return await docApiConcatinator(api, null, await postModel.find({},fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
                           return docs;
-                       }).sort(sortObject).limit(limit);
+                       }).sort(sortObject).limit(limit));
                       }
                       else{
-                        return await postModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
+                        return docApiConcatinator(api, null, await postModel.find({ _id : { $in : arrayOfIds } },fields, function (err, docs) {
                           if (err){
                               throw err;
                           }
                           return docs;
-                       }).sort(sortObject).limit(limit);
+                       }).sort(sortObject).limit(limit));
                       }
 
                   },
                   getPostsByUserId: async function(userId=null,fields=null,limit=null,sortObject={_id: -1}){
-                    return await postModel.find({ userId :userId},fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find({ userId :userId},fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
                       return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit);
+                   }).sort(sortObject={_id: -1}).limit(limit));
                  },
                   getPostsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                        return await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
                           return docs;
-                       }).sort(sortObject={_id: -1}).limit(limit);
+                       }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByTypeAndUserIds: async function(post_type,fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
                       return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit);
+                   }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByTypeAndTaxonomy: async function(post_type, taxonomy, taxonomyValue, fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find({ [taxonomy] : taxonomyValue, post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
                       return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit);
+                   }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getUserPostsByTypeAndTaxonomy: async function(post_type,taxonomy, taxonomyValue,userId=null,username=null,fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
                     let filterObject;
@@ -275,22 +277,22 @@ module.exports.posts = {
                     else{
                       filterObject = { userName: username, [taxonomy] : taxonomyValue, post_type: post_type }
                     }
-                    return await postModel.find(filterObject,fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find(filterObject,fields,function (err, docs) {
                       if (err){
                           throw err;
                       }
                       return docs;
-                   }).sort(sortObject={_id: -1}).limit(limit);
+                   }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   /* GET ONE POST FROM DATABASE*/
                   getPost: async function(postId,fields=null){
                     const filterObject = { _id: postId };
-                    return await postModel.findOne(filterObject, fields, function (err, doc) {
-                        if (err){
-                            throw err;
-                        }
-                        return doc;
-                     })
+                    return docApiConcatinator(api,await postModel.findOne(filterObject, fields, function (err, doc) {
+                      if (err){
+                          throw err;
+                      }
+                      return doc;
+                   }));
 
                 },
                 /* ADD A POST TO DATABASE AND RETURN SAVED OBJECT*/

@@ -100,13 +100,13 @@ router.post("/", (req,res,next)=>{
          // check if file is an audio file, then upload 
          if(splitFileType[0] === "audio"){
             file.path = rootdirectory + static_folder_name+'/files/tracks/' + fileName; 
-            file.uri_path = api_url +   '/files/tracks/' + fileName; 
+            file.uri_path =  '/files/tracks/' + fileName; 
          }
 
          // check if file is a video file, then upload 
          else if(splitFileType[0] === "video"){
             file.path = rootdirectory + static_folder_name+'/files/videos/' + fileName;
-            file.uri_path = api_url +   '/files/videos/' + fileName; 
+            file.uri_path =  '/files/videos/' + fileName; 
             //videoProcesser.resizeVideo(file.path);
             // send you a response that the video has been uploaded, but is being processed, you will be notified when it's done
             // res.send({videoUpload: "pending"});
@@ -114,7 +114,7 @@ router.post("/", (req,res,next)=>{
          // check if file is an image file, then upload 
          else if(splitFileType[0] === "image"){
             file.path = rootdirectory + static_folder_name+'/files/images/' + fileName;
-            file.uri_path= api_url+'/files/images/'+fileName; 
+            file.uri_path =  '/files/images/'+fileName; 
          }
          
          else{

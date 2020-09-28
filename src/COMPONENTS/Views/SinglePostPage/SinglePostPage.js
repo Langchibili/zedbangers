@@ -50,21 +50,20 @@ export default class SinglePostPage extends React.Component{
 
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
-    console.log(header.className);
-    header.className.replace("bg-white-only","bg-black lter")
+    header.className.replace("bg-white-only","bg-black lter");
   }
 
    getMoreSongs = () =>{
     // return await api.getItems("/posts","","music","","","",10);
     // testing bellow
      return [{
-        _id: "5f62957f8467921958e59[951",
+        _id: "5f62964e8467921958e59952",
         title: "gliding"
       },{
-        _id: "5f62957f8467921958]e5995",
+        _id: "5f62957f8467921958e59951",
         title: "gliding"
       },{
-        _id: "5f62957f8467921,958e599",
+        _id: "5f62957c8467921958e59950",
         title: "gliding"
       },{
         _id: "5f62957f8467.9219pp58e5",

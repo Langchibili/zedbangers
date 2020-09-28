@@ -1,6 +1,12 @@
 /* UTILITY FUNCTIONS */
 
+const { valueOf } = require("./utilities/constants/api");
+
+/*  document api concatinator  */
+
+
 /* counts updating function */
+
 async function upDateCounts(id,subject,fetchData,updateData,count=null,countType=null){
      const countsFinalObject = { counts: {}}; // setting blank final counts object
      let counts; 
@@ -423,6 +429,69 @@ module.exports = {
              return await fetchObjectArray(fields,limit,actionIds); // get user's followings' user objects from ids
         } 
     },
+    docApiConcatinator: function (api, doc=null, docs=[]){
+        concatinatedDoc = doc;
+        if(doc){
+                doc = doc._doc;
+                const allProps = Object.keys(doc);
+                allProps.forEach(function(prop){
+                    if(doc[prop] && typeof doc[prop] === "object"){
+                        const innerObj = doc[prop];
+                        const innerObjProps = Object.keys(innerObj);
+                        innerObjProps.forEach(function(innerObjProp){
+                            if(typeof innerObj[innerObjProp] === "string")
+                            {
+                                if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
+                                    doc[prop][innerObjProp] = api + doc[prop][innerObjProp]; //change document value 
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        if(typeof doc[prop] === "string")
+                        {
+                            if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
+                                doc[prop] = api + doc[prop]; //change document value completely
+                            }
+                        }
+                    }
+                    concatinatedDoc = doc;
+                });
+            }
+            else if(docs){
+                if(docs){  
+                    concatinatedDoc = docs.map(function(doc) {
+                    doc = doc._doc; 
+                    const allProps = Object.keys(doc);
+                    allProps.forEach(function(prop){
+                        if(doc[prop] && typeof doc[prop] === "object"){
+                            const innerObj = doc[prop];
+                            const innerObjProps = Object.keys(innerObj);
+                            innerObjProps.forEach(function(innerObjProp){
+                                if(typeof innerObj[innerObjProp] === "string")
+                                {
+                                    if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
+                                        doc[prop][innerObjProp] = api + doc[prop][innerObjProp]; //change document value 
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            if(typeof doc[prop] === "string")
+                            {
+                                if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
+                                    doc[prop] = api + doc[prop]; //change document value completely
+                                }
+                            }
+                        }           
+                    });
+                    return doc;
+                  });
+                }
+            }
+            return concatinatedDoc;
+    },
+    
     deletePostAction: async function(){
 
     },
