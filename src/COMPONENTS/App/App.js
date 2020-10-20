@@ -10,6 +10,7 @@ import VideoAd from "../Includes/VideoAd/VideoAd";
 import Display from "../Includes/Display/Display";
 import api from "../../Store/api";
 import Loader from "../Includes/Loader/Loader";
+import api_url from "../../constants/api_url";
 
 export default class App extends React.Component{
   constructor(props){
@@ -90,11 +91,6 @@ async componentWillMount(){
   await this.checkUserSession();
 }
 
-componentDidMount(){
-  document.getElementById("a").addEventListener('click', function (event){
-    event.preventDefault();
-  })
-}
 
    render(){
     return ( 

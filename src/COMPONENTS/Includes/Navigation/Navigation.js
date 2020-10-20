@@ -27,7 +27,7 @@ export default class Navigation extends React.Component{
                     
                     <span className="font-bold">upload
                     </span> </Link> </li> 
-                    {this.props.isLoggedIn? "" : <li> <Link id="a" to="/signup"> <i className="icon-list icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
+                    {this.props.isLoggedIn? "" : <li> <Link to="/signup"> <i className="icon-list icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
                     {this.props.isLoggedIn? "" : <li> <Link to="/login"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
                      
                     {this.props.isLoggedIn? <li> <Link to="/logout"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">logout</span> </Link> </li>: ""}
