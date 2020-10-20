@@ -1,13 +1,13 @@
 const express = require("express"); // express 
 const cors = require("cors");  // cors
-const app = express();  // express app
+const app = express();  // express aspp
 const session = require('express-session')// express-session
 const session_secret = require("./utilities/secrets/secrets").session_secret; // sms secret
 const bodyParser = require("body-parser"); // body parser 
 const expressLimit = require("express-limit").limit;
 const MongoDBStore = require('connect-mongodb-session')(session); // connect-mongodb-session 
-var timeout = require('connect-timeout');// timeout midleware
-var helmet = require('helmet')
+const timeout = require('connect-timeout');// timeout midleware
+const helmet = require('helmet')
 //routes requires
 const usersRouter = require("./routes/users"); 
 const accountActivation = require("./routes/account_activation");

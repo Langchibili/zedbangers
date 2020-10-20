@@ -25,14 +25,14 @@ export default class Views extends React.Component{
               <Route path="/login" exact component={props => <Login />} /> {/* login route */}
               <Route path="/song/:title/:id" exact component={props => <SinglePostPage  
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                            updateDownloadId={this.props.updateDownloadId}
+                            updateDownload={this.props.updateDownload}
                             toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
                             UserInfo={this.props.UserInfo}
                             postId={props.match.params.id} 
                             changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* singlepost page route */}
                <Route path="/:username" exact component={props => <SingleUserPage  
                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-               updateDownloadId={this.props.updateDownloadId}
+               updateDownload={this.props.updateDownload}
                username={props.match.params.username}
                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
                UserInfo={this.props.UserInfo} />} />  {/* singleuserpage route */}

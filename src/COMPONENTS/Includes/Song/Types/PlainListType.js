@@ -10,14 +10,14 @@ export default class PlainListType extends React.Component{
             <div className="pull-right m-l"> 
             <ActionButton
                 action_type="download"
-                songId={this.props.song._id}
-                updateDownloadId={this.props.updateDownloadId}
+                song={this.props.song}
+                updateDownload={this.props.updateDownload}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading} /> 
              <a href="#"><i className="icon-plus" /></a> 
             </div> 
             <ActionButton
                 action_type="play"
-                songId={this.props.song._id}
+                song={this.props.song}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                  />  
             

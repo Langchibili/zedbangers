@@ -53,7 +53,6 @@ export default class SignUp extends React.Component{
 
        checkUsername = async (username) =>{
         const apiResponse = await api.getItemByUsername("/users",username);
-        console.log(apiResponse);
         if(apiResponse){ 
           this.setState({
             username: username
@@ -63,7 +62,7 @@ export default class SignUp extends React.Component{
         else{
           return false;
         }
-      }
+        }
         
         CheckPassword = (password) =>
         { 
@@ -216,7 +215,7 @@ export default class SignUp extends React.Component{
                 </div>
                 <div className="form-group">	
                 <input ref={this.usernameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
-                <label className="control-label" htmlFor="input">User Name</label><i className="mtrl-select"></i>
+                <label className="control-label" htmlFor="input">UserName</label><i className="mtrl-select"></i>
                 <span className="error" style={{color:"red"}}>{this.state.uErrorText}</span>
                 </div>
                 <div className="form-group">	

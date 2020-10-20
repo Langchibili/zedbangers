@@ -7,7 +7,6 @@ const phoneToken = require("generate-sms-verification-code") // verification cod
 const generatedToken = phoneToken(8, {type: 'number'});  //  generate verification code
 const execQuery = require("../database/connection").amalevelz.runQuery;
 
-
 /* create a user */
 router.post("/", (req,res,next)=>{
      // get user from request
@@ -47,13 +46,8 @@ router.post("/", (req,res,next)=>{
             
         }
         
-        /*response here*/
-        console.log(response); // res object log
-
-        setTimeout(function(){
-          res.send(response); // request end
-        },1000);
-       
+       res.send(response); // request end
+      
         
      }
 

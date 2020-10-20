@@ -9,8 +9,7 @@ const getActedOnPost = require("../functions").getActedOnPost;
 const getActedOnPostsById = require("../functions").getActedOnPostsById;
 const downloads = require("../database/downloads").downloads;
 const execQuery = require("../database/connection").amalevelz.runQuery;
-const rootdirectory = "C:/Users/Z. Goldwyn/Desktop/amalevelz";
-
+const rootdirectory = require("../utilities/constants/rootdirectory");
 // GET REQUESTS
 
 /* get all downloads */

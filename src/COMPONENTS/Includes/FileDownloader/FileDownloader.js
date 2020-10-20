@@ -1,19 +1,18 @@
 import React from "react";
-import api from "../../../Store/api";
+import download from "downloadjs";
 
 
 export default class FileDownloader extends React.Component{
-  componentDidMount(){
-     // const downloadUri = await api.getItemById("/posts",this.props.downloadId,"")
-    // construct donwload link
-    //fire download
+  async componentDidUpdate(){
+    // const res = await fetch("http://localhost:1000/downloads/download/?type=audio&filename=Chris Brown - Go Off[via torchbrowser.com].aac");
+    // const blob = await res.blob();
+    // download(blob, "test.mp3");
+    console.log(this.props.downloadObject)
   }
     
     render(){ 
         return(
-        <div className="video-ad-container">
-                    downloading ......, {this.props.downloadId}
-        </div>
+        <div></div>
         );
     }
 }

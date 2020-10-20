@@ -20,12 +20,17 @@ router.get("/", (req,res,next)=>{
           }
           else{
             result = await users.getUser(null,username,null);
+            console.log(result);
           }
-          }
-          else{
-              result = await users.getUsers(fields,limit);
-          }   
-        /*response here*/ 
+        }
+        else{
+            result = await users.getUsers(fields,limit);
+        }   
+        /*response here*/
+        if(result === [] || result === {}){
+          result = null
+        }
+        
         res.send(result);
      }
      /* open connection and run query */

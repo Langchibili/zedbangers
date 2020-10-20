@@ -8,7 +8,7 @@ export default class Song extends React.Component{
   renderSongType = ()=>{
     const list_type = this.props.list_type; 
     const updateNowPlayingSongId= this.props.updateNowPlayingSongId;
-    const updateDownloadId= this.props.updateDownloadId;
+    const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
     const song = this.props.song;
     
@@ -16,21 +16,21 @@ export default class Song extends React.Component{
        return <PlainListType 
               song={song} 
               updateNowPlayingSongId={updateNowPlayingSongId} 
-              updateDownloadId={updateDownloadId}
+              updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }
     else if(list_type === "ListWithImageType"){
        return <ListWithImageType 
               song={song} 
               updateNowPlayingSongId={updateNowPlayingSongId}
-              updateDownloadId={updateDownloadId}
+              updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }
     else if(list_type === "ThumnailType"){
        return <ThumnailType 
               song={song} 
               updateNowPlayingSongId={updateNowPlayingSongId}
-              updateDownloadId={updateDownloadId}
+              updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }
     else{

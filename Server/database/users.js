@@ -75,20 +75,20 @@ const userSchema = new mongoose.Schema({
     verifiedUploaders: [],
     uploadatistsfor: [],
     picture: {
-      cover: { type: String, default : "/files/images/red.jpg" },
+      cover: { type: String, default : "/files/images/blankcover.jpg" },
       medium: { type: String },
-      thumbnail: { type: String, default : "/files/images/red.jpg" },
+      thumbnail: { type: String, default : "/files/images/blankprofile.png" },
       small: { type: String }     
     },
     picture_small: String,
     picture_medium: String,
     picture_big: {
       type: String,
-      default : "/files/images/red.jpg"
+      default : "/files/images/blankcover.jpg"
      },
     picture_xl: String,
     cover_photo: {
-      cover: { type: String, default : "/files/images/black-and-white-rose-image.jpg" },
+      cover: { type: String, default : "/files/images/blankcover.jpg" },
       medium: { type: String },
       thumbnail: { type: String },
       small: { type: String }    
@@ -266,8 +266,7 @@ module.exports.users = {
                         }
                         return doc;
                      }))
-
-                },
+            },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/
                   addUser: async function(userObject){
                     const newUser = new userModel(userObject);

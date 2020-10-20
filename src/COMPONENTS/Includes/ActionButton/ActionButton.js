@@ -4,11 +4,14 @@ export default class ActionButton extends React.Component{
 
   updateNowPlayingSong = (e) =>{
       e.preventDefault();
-      this.props.updateNowPlayingSongId(this.props.songId);
+      this.props.updateNowPlayingSongId(this.props.song._id);
   }
   triggerDownload = (e) =>{
     e.preventDefault();
-    this.props.updateDownloadId(this.props.songId);
+    const downloadObject = {}
+    downloadObject.title = this.props.song.title;
+    downloadObject.file = this.props.song.track;
+    this.props.updateDownload(downloadObject);
     this.props.toggleOnFileIsDownloading();
     const video = document.getElementById("advideo");
     video.load();

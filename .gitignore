@@ -22,6 +22,8 @@
 /Server/utilities/ffmpeg
 /Server/utilities/constants/db_url.js
 /Server/utilities/secrets
+/TestServer
+testserver.js
 
 npm-debug.log*
 yarn-debug.log*

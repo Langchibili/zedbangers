@@ -139,7 +139,7 @@ export default class SinglePostPage extends React.Component{
                 list_type="PlainListType" 
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                updateDownloadId={this.props.updateDownloadId}
+                updateDownload={this.props.updateDownload}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section> 
             </section>
@@ -150,7 +150,7 @@ export default class SinglePostPage extends React.Component{
                 <Lists list_type="ListWithImageType" 
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                updateDownloadId={this.props.updateDownloadId}
+                updateDownload={this.props.updateDownload}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section>
             </section>

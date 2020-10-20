@@ -73,6 +73,9 @@ router.get("/:id", (req,res,next)=>{
       /*query runs here*/
       const result = await posts.getPost(postId, fields);
       /*response here if found*/ 
+      if(result === [] || result === {}){
+         result = null
+       }
       if(result){
          res.send(result);
       }

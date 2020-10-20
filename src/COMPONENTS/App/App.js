@@ -16,7 +16,7 @@ export default class App extends React.Component{
     super(props);
     this.state = {
       nowPlayingSongId: null,
-      downloadId: null,
+      download: null,
       fileIsDownloading: false,
       isLoggedIn: false,
       sessionReqDone: false,
@@ -27,6 +27,7 @@ async checkUserSession(){
   const userStatus = await api.getItems("/user_status");
   if(userStatus){
      if(userStatus.isLoggedIn){
+      const allusers = await api.getItems("/users");
       const loggeInUserInfo = await api.getItemByUsername("/users", userStatus.loggedUserName);
       this.setState({
           isLoggedIn: true,
@@ -72,9 +73,10 @@ toggleOnFileIsDownloading = ()=>{
   })
 }
 
-updateDownloadId = (fileId) =>{
+updateDownload = (download) =>{
+  console.log(download)
   this.setState({
-    downloadId: fileId
+    download: download
   })
 }
 
@@ -88,6 +90,11 @@ async componentWillMount(){
   await this.checkUserSession();
 }
 
+componentDidMount(){
+  document.getElementById("a").addEventListener('click', function (event){
+    event.preventDefault();
+  })
+}
 
    render(){
     return ( 
@@ -111,13 +118,13 @@ async componentWillMount(){
                           updateNowPlayingSongId={this.updateNowPlayingSongId} 
                           UserInfo={this.state.UserInfo} 
                           changeHeaderTheme={this.changeHeaderTheme}
-                          updateDownloadId={this.updateDownloadId}
+                          updateDownload={this.updateDownload}
                           toggleOnFileIsDownloading={this.toggleOnFileIsDownloading}
                           isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
 
                         <Display isVisible={this.state.fileIsDownloading}>
                           <VideoAd 
-                           downloadId={this.state.downloadId} 
+                           download={this.state.download} 
                            toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
                         </Display>
 
@@ -125,14 +132,14 @@ async componentWillMount(){
                       </section>
                    </section>
                  </section>
-                 <SideBar />
+                 {/* <SideBar /> */}
                 </section>
               </section>
           </BrowserRouter>
            </section>
           </section>
         </section>
-       <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} /> 
+       {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />  */}
       </div>
       );
       } 

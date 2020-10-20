@@ -87,7 +87,7 @@ export default class VideoAd extends React.Component{
            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
            Your browser does not support the video tag.
           </video>
-          <Display isVisible={this.state.showFileDownloader}><FileDownloader downloadId={this.props.downloadId}/></Display>
+          {/*<Display isVisible={this.state.showFileDownloader}>*/}<FileDownloader downloadObject={this.props.download}/>{/*</Display>*/}
         </div>
         );
     }
