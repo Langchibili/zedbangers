@@ -50,10 +50,20 @@ export default class SignUp extends React.Component{
                 return true;
             }
        }
-
+       isEmpty = (obj)=>{
+          let isempty = false;
+          if(Array.isArray(obj)){
+            if(obj.length === 0){
+              isempty = true
+            }
+          }
+          return isempty;
+       }
+      //olk567fr45
        checkUsername = async (username) =>{
         const apiResponse = await api.getItemByUsername("/users",username);
-        if(apiResponse){ 
+       
+        if(!this.isEmpty(apiResponse)){ 
           this.setState({
             username: username
           })

@@ -2,7 +2,7 @@ var Jimp = require('jimp');
 
 module.exports = {
   imageResizer: function (imageUri, imageName, imageExt){
-    Jimp.read(imageUri)
+    Jimp.read(imageName)
     .then(pic => {
         return pic
         .resize(500, 270) // resize

@@ -20,6 +20,15 @@ router.post("/", (req,res,next)=>{
      userObject.password = HashedPassword; // add password to user object
      userObject.activation_code =  generatedToken; // add verification code to user object
      //add to database object and sending response object 
+     function isEmpty(obj){ // return true if obj is empty
+          let isempty = false;
+          if(Array.isArray(obj)){
+               if(obj.length === 0){
+                 isempty = true
+               }
+          }
+          return isempty;
+       }
       async function queryPlusResponse(){
         
         let response;
@@ -30,7 +39,7 @@ router.post("/", (req,res,next)=>{
         }
       
         const getCurrentUser = await users.getUser(null,currentUserName);
-        if(getCurrentUser){
+        if(!isEmpty(getCurrentUser)){
              response = errors;
         }
         else{

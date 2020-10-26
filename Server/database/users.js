@@ -258,6 +258,7 @@ module.exports.users = {
                         filterObject = { _id: userId };
                     }
                     else{
+                        username = username.toLowerCase(); // change username to lowercase first
                         filterObject = { username: username };
                     }
                     return await docApiConcatinator(api, await userModel.findOne(filterObject, fields, function (err, doc) {
@@ -269,6 +270,7 @@ module.exports.users = {
             },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/
                   addUser: async function(userObject){
+                    userObject.username = userObject.username.toLowerCase(); // change username to lowercase
                     const newUser = new userModel(userObject);
                     return await newUser.save();
                 },

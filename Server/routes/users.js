@@ -14,23 +14,20 @@ router.get("/", (req,res,next)=>{
    async function queryPlusResponse(){
         /*query runs here*/
         let result = {};
-         if(username){
+        if(username){
           if(fields){
             result = await users.getUser(null,username,fields);
           }
           else{
             result = await users.getUser(null,username,null);
-            console.log(result);
           }
         }
         else{
             result = await users.getUsers(fields,limit);
         }   
         /*response here*/
-        if(result === [] || result === {}){
-          result = null
-        }
         
+
         res.send(result);
      }
      /* open connection and run query */
@@ -64,7 +61,6 @@ router.put("/:id", (req,res,next)=>{
    async function queryPlusResponse(){
        /*query runs here*/
        const result = await users.updateUser(userId,updateObject);
-       console.log(result);
        /*response here if found*/ 
        if(result){
          res.send(result);

@@ -594,3 +594,9 @@
 [1008/140157.595:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7f81e000 of 3992 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
 [1008/140157.595:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7f81f000 of 560 bytes failed: Only part of a ReadProcessMemory or WriteProcessMemory request was completed. (0x12B)
 [1008/140202.599:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[1020/234442.680:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1021/221346.909:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1021/221347.331:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1021/221347.332:ERROR:process_reader_win.cc(151)] SuspendThread: Access is denied. (0x5)
+[1021/221347.332:ERROR:exception_snapshot_win.cc(99)] thread ID 5508 not found in process
+[1022/104532.446:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

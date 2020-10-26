@@ -19,7 +19,7 @@ const v1options = {
   msecs: Date.now(),
   nsecs: 5678
 };
-const myUuid = "-MUSICBASE.COM-" + uuidv1(v1options); 
+const myUuid = "-MUSICSTREAMBASE.COM-" + uuidv1(v1options); 
 
 
 // GET REQUESTS
@@ -134,14 +134,14 @@ router.post("/", (req,res,next)=>{
       let splitFileType = fileFormat.split("/");
 
       // make a download link uri
-      const download_link = api_url+"/downloads/download/?type="+splitFileType[0]+"&filename="+fileName;
+      const download_link = "/downloads/download/?type="+splitFileType[0]+"&filename="+fileName;
       
       // check if file is audio then overwrite the fileObject to send to database 
       if(splitFileType[0] === "audio"){
          fileObject = {
             type: "audio",
             track:{
-               full_track_path : file.path,
+               full_track_path : file.uri_path,
                uri_path: file.uri_path,
                size: file.size,
                download_link: download_link
@@ -160,7 +160,7 @@ router.post("/", (req,res,next)=>{
          fileObject = {
             type: "video",
             video: {
-               full_video_path : file.path,
+               full_video_path : file.uri_path,
                uri_path: file.uri_path,
                size: file.size,
                download_link: download_link
@@ -187,7 +187,7 @@ router.post("/", (req,res,next)=>{
                medium: medium,
                thumbnail: thumbnail,
                small: small,
-               image_full_path : file.path,
+               image_full_path : file.uri_path,
                uri_path: file.uri_path,
                size: file.size,
                download_link: download_link
@@ -199,7 +199,7 @@ router.post("/", (req,res,next)=>{
          fileObject = {
             type: "attachment",
             attachment:{
-               full_attachment_path : file.path,
+               full_attachment_path : file.uri_path,
                size: file.size,
                download_link: download_link
             }

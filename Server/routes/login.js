@@ -11,10 +11,20 @@ router.post("/", (req,res,next)=>{
       let username = userObject.username;
       username = username.toLowerCase();
       
+      function isEmpty(obj){ // return true if obj is empty
+        let isempty = false;
+        if(Array.isArray(obj)){
+          if(obj.length === 0){
+            isempty = true
+          }
+        }
+        return isempty;
+     }
       //check if user exists
       let getCurrentUser = await users.getUser(null,username);
       let LoggedInUserPassword; // initialize empty loggedInUserPassword 
-      if(getCurrentUser){
+
+      if(!isEmpty(getCurrentUser)){ // if not empty 
         let password = userObject.password; // get raw unhashed or could be already hashed password, depending on login type
         let HashedPassword; // will assign it to either the raw password after being hashed or the already hashed password sent with a type property 
         const account_status = getCurrentUser.account_status;

@@ -1,1 +1,1 @@
-module.exports = "/public";
+module.exports = "/build";

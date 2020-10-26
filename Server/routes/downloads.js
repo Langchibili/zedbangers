@@ -10,6 +10,7 @@ const getActedOnPostsById = require("../functions").getActedOnPostsById;
 const downloads = require("../database/downloads").downloads;
 const execQuery = require("../database/connection").amalevelz.runQuery;
 const rootdirectory = require("../utilities/constants/rootdirectory");
+const static_folder_name = require("../utilities/constants/static_folder_name");
 // GET REQUESTS
 
 /* get all downloads */
@@ -42,7 +43,7 @@ router.get("/download",(req,res,next)=>{
       else if(type === "attachment"){
          subPath = "attachements/";
       }
-      const downloadDir = rootdirectory + '/public/files/'+subPath+filename;
+      const downloadDir = rootdirectory + static_folder_name + '/files/'+subPath+filename;
       // send download response, meaning, download the file
       res.download(downloadDir, filename)
       
