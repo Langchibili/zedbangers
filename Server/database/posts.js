@@ -10,6 +10,7 @@ const postSchema = new mongoose.Schema({
 			playlistsIds:[],
 			genres: [],
       userId: String,
+      postId: String,
       userName: String,
       userfullName: String,
 			type: {

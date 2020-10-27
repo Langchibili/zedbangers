@@ -23,7 +23,6 @@ export default class AudioPlayer extends React.Component{
     }
     getDefaultPlaylist = async ()=>{
       const songs = await api.getItems("/posts","","music","","","",10);
-      console.log(songs);
       this.setState({
         playList: songs.map((song)=>{ return { musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
       })

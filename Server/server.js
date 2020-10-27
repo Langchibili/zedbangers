@@ -37,6 +37,7 @@ const viewsRouter = require("./routes/views");
 const ratingsRouter = require("./routes/ratings");
 const reviewsRouter = require("./routes/reviews");
 const sharesRouter = require("./routes/shares");
+const trashRouter = require("./routes/trash");
 //routes requires endline
 
 //constants
@@ -190,6 +191,7 @@ app.use("/account_activation", accountActivation);
 app.use("/get_activation_code", getActivationCode);
 app.use("/user_following", userFollowing);
 app.use("/newsfeed", newsFeed);
+app.use("/trash", trashRouter);
 
 
 
