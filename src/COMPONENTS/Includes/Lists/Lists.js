@@ -34,9 +34,7 @@ export default class Lists extends React.Component{
 
   render(){
     return ( 
-        <ul className="list-group list-group-lg no-radius no-border no-bg m-t-n-xxs m-b-none auto"> 
-           {this.renderPostType()}
-        </ul>
+        this.props.divListType? this.renderPostType() : <ul className="list-group list-group-lg no-radius no-border no-bg m-t-n-xxs m-b-none auto"> {this.renderPostType()}</ul>
     );
      } 
 }

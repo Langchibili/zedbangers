@@ -2,6 +2,8 @@ import React from "react";
 import PlainListType from "./Types/PlainListType";
 import ListWithImageType from "./Types/ListWithImageType";
 import ThumnailType from "./Types/ThumnailType";
+import DivThumbnailType from "./Types/DivThumbnailType";
+import DivLongThumbnailType from "./Types/DivLongThumbnailType";
 
 export default class Song extends React.Component{ 
 
@@ -33,6 +35,20 @@ export default class Song extends React.Component{
               updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }
+    else if(list_type === "DivThumbnailType"){
+      return <DivThumbnailType
+             song={song} 
+             updateNowPlayingSongId={updateNowPlayingSongId}
+             updateDownload={updateDownload}
+             toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
+   }
+   else if(list_type === "DivLongThumbnailType"){
+      return <DivLongThumbnailType 
+             song={song} 
+             updateNowPlayingSongId={updateNowPlayingSongId}
+             updateDownload={updateDownload}
+             toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
+   }
     else{
        return <div></div>;
     }

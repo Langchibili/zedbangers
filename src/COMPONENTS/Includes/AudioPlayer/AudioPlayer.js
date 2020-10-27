@@ -62,6 +62,7 @@ export default class AudioPlayer extends React.Component{
         return(
         <div>
                 <ReactJkMusicPlayer 
+                 defaultPosition = {{right: "0", bottom: "0"}}
                 {...this.options} 
                 clearPriorAudioLists = {this.state.clearPriorAudioLists}
                 playIndex = {0}

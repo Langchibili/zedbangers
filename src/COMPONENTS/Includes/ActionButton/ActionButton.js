@@ -28,9 +28,11 @@ export default class ActionButton extends React.Component{
 
   renderActionType = ()=>{
     const action_type = this.props.action_type;
-
+    const linkClassList = this.props.linkClassList;
+    const linkContent = this.props.linkContent;
+     
     if(action_type === "play"){
-       return <a href="#" onClick={this.updateNowPlayingSong}  className="jp-play-me m-r-sm pull-left"> <i className="icon-control-play text" /> <i className="icon-control-pause text-active" /> </a>
+       return <span href="#" onClick={this.updateNowPlayingSong}  className={linkClassList? linkClassList: "" }> {linkContent} </span>
     }
     else if(action_type === "download"){
        return <a href="#" onClick={this.triggerDownload} className="m-r-sm"><i className="icon-cloud-download" /></a>

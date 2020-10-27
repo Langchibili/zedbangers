@@ -16,6 +16,8 @@ export default class PlainListType extends React.Component{
              <a href="#"><i className="icon-plus" /></a> 
             </div> 
             <ActionButton
+                linkClassList = "jp-play-me m-r-sm pull-left"
+                linkContent = {<i className="icon-control-play text" /> }
                 action_type="play"
                 song={this.props.song}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}

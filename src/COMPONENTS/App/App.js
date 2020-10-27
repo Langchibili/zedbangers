@@ -48,14 +48,6 @@ async checkUserSession(){
     return;
   }
 }
-UserInfo = {
-  username: "langson",
-  niceName: "Langson chibili",
-  picture: {
-      small: "image.jpg"
-  },
-  _id: "ahdkkkajlfjjffsssjal"
-}
 
 setVideoInstance = (video)=>{
    this.setState({
@@ -135,7 +127,7 @@ async componentWillMount(){
            </section>
           </section>
         </section>
-       {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />  */}
+        {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />   */}
       </div>
       );
       } 

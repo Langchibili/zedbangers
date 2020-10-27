@@ -19,15 +19,10 @@ export default class SinglePostPage extends React.Component{
       return
     }
     else{
-    //  const user = await api.getItemByUsername("/users",username,"");
      const artistsongs = this.getartistsongs();
      this.setState(
         {
-          //user: user // first update user, and render it
-          user: { // for testing purposes
-                _id: "5f62957f8467921958e59951",
-                username: "cb"
-              } 
+          user: await api.getItemByUsername("/users",username,"") 
         },
         ()=>{
           this.setState({
@@ -108,9 +103,9 @@ export default class SinglePostPage extends React.Component{
                     </a>
                     <div>
                       
-                      <div className="h3 m-t-xs m-b-xs">John.Smith</div>
+                      <div className="h3 m-t-xs m-b-xs">{this.state.user? this.state.user.niceName: "" }</div>
                       <small className="text-muted">
-                        <i className="fa fa-map-marker" /> London, UK
+                        <i className="fa fa-map-marker" /> location unset
                       </small>
                     </div>
                   </div>
