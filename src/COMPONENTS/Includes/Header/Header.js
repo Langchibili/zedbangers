@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import blankProfilePic from "../../../constants/blankprofile.png";
 
 export default class Header extends React.Component{
    render(){
@@ -66,7 +67,7 @@ export default class Header extends React.Component{
             </div> </section> </section> </li> 
             <li className="dropdown"> <a href="#" className="dropdown-toggle bg clear" data-toggle="dropdown"> 
             
-            <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm"> <img src={this.props.isLoggedIn? this.props.UserInfo.picture.small : ""} alt="..." /> 
+            <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm"> <img src={this.props.isLoggedIn? this.props.UserInfo.picture.small : blankProfilePic} alt="..." /> 
             </span> {this.props.isLoggedIn? this.props.UserInfo.niceName : "Howdy There!"}<b className="caret" /> </a> 
             <ul className="dropdown-menu animated fadeInRight"> 
             <li> 

@@ -87,14 +87,14 @@ export default class UserUpdatePage extends React.Component{
         <header className="panel-heading font-bold">Update Profile</header>   
         <div className="panel-body"> 
         <form role="form">  
-        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.first_name} onChange={this.setFirstName} /> </div> 
-        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.last_name} onChange={this.setLastName} /></div>
-        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.bio.location? this.state.bio.location: "unset" } onChange={this.setLocation} /></div>
+        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.first_name} defaultValue={this.state.first_name} onChange={this.setFirstName} /> </div> 
+        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.last_name} defaultValue={this.state.last_name} onChange={this.setLastName} /></div>
+        <div className="form-group"><input type="text" className="form-control" placeholder={this.state.bio.location? this.state.bio.location: "unset" } defaultValue={this.state.bio.location? this.state.bio.location: "unset" } onChange={this.setLocation} /></div>
         <h5>Change Profile Picture</h5>
         <Uploader addPhoto={this.addPhoto} UploaderType="image"/>
         <div><img src={this.state.picture_big} style={{maxWidth: 200, marginBottom: "10px"}}/></div>
         <div className="form-group">
-        <textarea id="editor" onChange={this.setAboutInfo} ref={this.aboutUser} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.state.bio.about} />
+        <textarea id="editor" onChange={this.setAboutInfo} ref={this.aboutUser} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} defaultValue={this.state.bio.about} />
         </div>
         <br/>
         <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>

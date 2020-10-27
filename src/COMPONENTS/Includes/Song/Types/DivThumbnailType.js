@@ -28,7 +28,7 @@ export default class DivThumbnailType extends React.Component{
                 </div> <a href="#"><img src={this.props.song? this.props.song.thumbnail.medium : ""} alt="" className="r r-2x img-full" /></a>
             </div>
 
-            <div className="padder-v"> <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="text-ellipsis">{this.props.song? this.props.song.title : ""}</Link> <Link to={this.props.song? "/user/"+this.props.song.artist.artistName : "#"} className="text-ellipsis text-xs text-muted">{this.props.song? this.props.song.artist.artistName : ""}</Link>
+            <div className="padder-v"> <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="text-ellipsis">{this.props.song? this.props.song.title : ""}</Link> <Link to={this.props.song? "/user/"+this.props.song.artist.userName : "#"} className="text-ellipsis text-xs text-muted">{this.props.song? this.props.song.artist.userName : ""}</Link>
             </div>
             </div>
         </div>
