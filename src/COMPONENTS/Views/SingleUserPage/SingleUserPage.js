@@ -19,57 +19,20 @@ export default class SinglePostPage extends React.Component{
       return
     }
     else{
-     const artistsongs = this.getartistsongs();
      this.setState(
         {
           user: await api.getItemByUsername("/users",username,"") 
         },
-        ()=>{
+        async ()=>{
+          const userId = this.state.user._id;
           this.setState({
-            songs: artistsongs // add artist songs to state
-        })
-        } 
+            songs: await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist songs to state
+           })
+        }
      );
     }
   }
 
-
-   getartistsongs = () =>{
-    // return await api.getItems("/posts","","music","","","",10);
-    // testing bellow
-     return [{
-        _id: "5f62964e8467921958e59952",
-        title: "gliding"
-      },{
-        _id: "5f62957f8467921958e59951",
-        title: "gliding"
-      },{
-        _id: "5f62957c8467921958e59950",
-        title: "gliding"
-      },{
-        _id: "5f62957f8467.9219pp58e5",
-        title: "gliding"
-      },{
-        _id: "5f62957f84k59951",
-        title: "gliding"
-      },
-      ,{
-        _id: "5297f846719j5;;;;;59951",
-        title: "gliding"
-      },{
-        _id: "5f957f871el59951",
-        title: "gliding"
-      },{
-        _id: "5f62kkk84h671958e59951",
-        title: "gliding"
-      },{
-        _id: "56295??7fi84671958e59951",
-        title: "gliding"
-      },{
-        _id: "5f6295784619))58te59951",
-        title: "gliding"
-      }];
-   }
 
    shouldComponentUpdate(){
        return this.state.updatedOnce? false : true;
@@ -78,9 +41,9 @@ export default class SinglePostPage extends React.Component{
    componentWillMount(){    
     this.getUser();
    }
-   componentDidUpdate(){
-    this.setState({ updatedOnce: true})
-   }
+  //  componentDidUpdate(){
+  //   this.setState({ updatedOnce: true})
+  //  }
 
    render(){
     return (
@@ -99,13 +62,13 @@ export default class SinglePostPage extends React.Component{
                     
                     <a href="#" className="thumb-lg">
                       
-                      <img src="images/a0.png" className="img-circle" />
+                      <img src={this.state.user? this.state.user.picture.thumbnail: "" } className="img-circle" />
                     </a>
                     <div>
                       
                       <div className="h3 m-t-xs m-b-xs">{this.state.user? this.state.user.niceName: "" }</div>
                       <small className="text-muted">
-                        <i className="fa fa-map-marker" /> location unset
+                        <i className="fa fa-map-marker" /> {this.state.user? this.state.user.bio.location: "no location added" }
                       </small>
                     </div>
                   </div>
@@ -157,8 +120,7 @@ export default class SinglePostPage extends React.Component{
                     <p>Artist</p>
                     <small className="text-uc text-xs text-muted">info</small>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                      id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.
+                    {this.state.user? this.state.user.bio.about: "" }
                     </p>
                     <div className="line" />
                     <small className="text-uc text-xs text-muted">connection</small>
@@ -188,8 +150,8 @@ export default class SinglePostPage extends React.Component{
                 <ul className="nav nav-tabs nav-white">
                   
                   <li className="active">
-                    <a href="#activity" data-toggle="tab">
-                      Activity
+                    <a href="#usersongs" data-toggle="tab">
+                      Songs
                     </a>
                   </li>
                   <li className>
@@ -208,12 +170,12 @@ export default class SinglePostPage extends React.Component{
                 
                 <div className="tab-content">
                   
-                  <div className="tab-pane active" id="activity">
-                  <Lists list_type="ListWithImageType" 
+                  <div className="tab-pane active" id="usersongs">
+                  {this.state.songs.length > 0? <Lists list_type="ListWithImageType" 
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div>no songs yet</div>}
                   </div>
                   <div className="tab-pane" id="about">
                     

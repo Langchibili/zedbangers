@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ActionButton from "../../ActionButton/ActionButton";
 
 export default class PlainListType extends React.Component{ 
@@ -24,13 +25,15 @@ export default class PlainListType extends React.Component{
                  />  
             
             <div className="clear text-ellipsis"> 
-            
-            <span>Faucibus dolor auctor
+            <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"}>
+            <span>{this.props.song? this.props.song.title : "untitled"}
             </span> 
+            </Link>
             
-            <span className="text-muted"> -- 02:55
+            <span className="text-muted"> -- {this.props.song? this.props.song.counts.plays : ""}
             </span> 
             </div> 
+             <div className="song-description">{this.props.song? this.props.song.description: ""}</div>
         </li> 
     );
      } 

@@ -88,13 +88,12 @@ async componentWillMount(){
     return ( 
       <div>
        <section className="vbox">
+       <BrowserRouter>
            <Header 
             isLoggedIn={this.state.isLoggedIn} 
             UserInfo={this.state.UserInfo} /> 
-         
           <section>
             <section className="hbox stretch">
-            <BrowserRouter>
              <Navigation isLoggedIn={this.state.isLoggedIn} /> 
                <section id="content">
                 <section className="hbox stretch">
@@ -123,11 +122,11 @@ async componentWillMount(){
                  {/* <SideBar /> */}
                 </section>
               </section>
-          </BrowserRouter>
            </section>
           </section>
+          </BrowserRouter>
         </section>
-        {/* <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />   */}
+       <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />  
       </div>
       );
       } 

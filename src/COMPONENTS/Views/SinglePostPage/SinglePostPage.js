@@ -19,15 +19,10 @@ export default class SinglePostPage extends React.Component{
       return
     }
     else{
-    //  const post = await api.getItemById("/posts", postId, " ");
-     const moresongs = this.getMoreSongs();
+    const post = await api.getItemById("/posts", postId, " ");
      this.setState(
         {
-          //post: post // first update post, and render it
-          post: { // for testing purposes
-                _id: "5f62957f8467921958e59951",
-                title: "gliding"
-              } 
+          post: post 
         },
         ()=>{
             const songs = this.state.songs;
@@ -35,8 +30,10 @@ export default class SinglePostPage extends React.Component{
             this.setState({
                 songs: songs
             },
-            ()=>{
+            async ()=>{
                 const song = this.state.songs[0];
+                const userId = this.state.post.userId;
+                const moresongs = await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist more songs to state
                 moresongs.unshift(song)
                 this.setState({
                     songs: moresongs // add more songs to songs list
@@ -53,43 +50,6 @@ export default class SinglePostPage extends React.Component{
     header.className.replace("bg-white-only","bg-black lter");
   }
 
-   getMoreSongs = () =>{
-    // return await api.getItems("/posts","","music","","","",10);
-    // testing bellow
-     return [{
-        _id: "5f62964e8467921958e59952",
-        title: "gliding"
-      },{
-        _id: "5f62957f8467921958e59951",
-        title: "gliding"
-      },{
-        _id: "5f62957c8467921958e59950",
-        title: "gliding"
-      },{
-        _id: "5f62957f8467.9219pp58e5",
-        title: "gliding"
-      },{
-        _id: "5f62957f84k59951",
-        title: "gliding"
-      },
-      ,{
-        _id: "5297f846719j5;;;;;59951",
-        title: "gliding"
-      },{
-        _id: "5f957f871el59951",
-        title: "gliding"
-      },{
-        _id: "5f62kkk84h671958e59951",
-        title: "gliding"
-      },{
-        _id: "56295??7fi84671958e59951",
-        title: "gliding"
-      },{
-        _id: "5f6295784619))58te59951",
-        title: "gliding"
-      }];
-   }
-
    shouldComponentUpdate(){
        return this.state.updatedOnce? false : true;
    }
@@ -98,9 +58,9 @@ export default class SinglePostPage extends React.Component{
     this.changeHeaderTheme(); 
     this.getPost();
    }
-   componentDidUpdate(){
-    this.setState({ updatedOnce: true})
-   }
+  //  componentDidUpdate(){
+  //   this.setState({ updatedOnce: true})
+  //  }
 
    render(){
     return ( 
@@ -127,13 +87,13 @@ export default class SinglePostPage extends React.Component{
                 
                 <div className="bottom gd bg-info wrapper-lg"> 
                 
-                <span className="pull-right text-sm">101,400 
-                <br />Followers
+                <span className="pull-right text-sm">{this.state.post? this.state.post.counts.downloads : ""}
+                <br />Downloads
                 </span> 
                 
-                <span className="h2 font-thin">Soph Ashe
+                <span className="h2 font-thin">{this.state.post? this.state.post.artist.artistName : "unknown"}
                 </span> 
-                    </div> {/*<img className="img-full" src={this.state.post? this.state.post.thumbnail.medium : ""} alt="song thumnail" />  */}
+                    </div> <img className="img-full" src={this.state.post? this.state.post.thumbnail.cover : ""} alt="song thumnail" />  
                 </div> 
                 <Lists 
                 list_type="PlainListType" 

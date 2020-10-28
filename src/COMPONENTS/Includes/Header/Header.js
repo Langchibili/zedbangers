@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.css";
 import blankProfilePic from "../../../constants/blankprofile.png";
+import { Link } from "react-router-dom";
 
 export default class Header extends React.Component{
    render(){
@@ -31,14 +32,18 @@ export default class Header extends React.Component{
             
             <div className="navbar-right "> 
             <ul className="nav navbar-nav m-n hidden-xs nav-user user"> 
-            <li className="hidden-xs"> <a href="#" className="dropdown-toggle lt" data-toggle="dropdown"> <i className="icon-bell" /> 
+            <li className="hidden-xs"> 
+            {this.props.isLoggedIn? <a href="#" className="dropdown-toggle lt" data-toggle="dropdown"> 
+            <i className="icon-bell" /> 
             
-            <span className="badge badge-sm up bg-danger count" style={{display: 'inline-block'}}> 3
-            </span> </a> <section className="dropdown-menu aside-xl animated fadeInUp"> <section className="panel bg-white"> 
+             <span className="badge badge-sm up bg-danger count" style={{display: 'inline-block'}}> 3
+            </span> </a> : ""}
+            
+            <section className="dropdown-menu aside-xl animated fadeInUp"> <section className="panel bg-white"> 
             
             <div className="panel-heading b-light bg-light"> <strong>You have 
             
-            <span className="count" style={{display: 'inline'}}> 3
+            <span className="count-err" style={{display: 'inline'}}> 3
             </span> notifications</strong> 
             </div> 
             
@@ -69,19 +74,27 @@ export default class Header extends React.Component{
             
             <span className="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm"> <img src={this.props.isLoggedIn? this.props.UserInfo.picture.small : blankProfilePic} alt="..." /> 
             </span> {this.props.isLoggedIn? this.props.UserInfo.niceName : "Howdy There!"}<b className="caret" /> </a> 
-            <ul className="dropdown-menu animated fadeInRight"> 
+            
+            {this.props.isLoggedIn? 
+           <ul className="dropdown-menu animated fadeInRight"> 
             <li> 
-            
-            <span className="arrow top" /> <a href="#">Settings</a> </li> 
-            <li> <a href="profile.html">Profile</a> </li> 
-            <li> <a href="#"> 
-            
+            <span className="arrow top" /> 
+                <Link to="/profile/update">update profile</Link>
+            </li> 
+            <li> 
+            <Link to={"/user/"+this.props.UserInfo.username}>view Profile</Link> 
+            </li> 
+            <li> 
+            <a href="#"> 
             <span className="badge bg-danger pull-right">3
             </span> Notifications </a> </li> 
-            <li> <a href="docs.html">Help</a> </li> 
+            <li> 
+                  <a href="#">Help</a> 
+            </li> 
             <li className="divider" /> 
-            <li> <a href="/logout" data-toggle="ajaxModal">Logout</a> </li> 
-            </ul> </li> 
+            <li> <Link to="/logout">Logout</Link> </li></ul> : <ul className="dropdown-menu animated fadeInRight"> <li className="divider" /> 
+            <li> <Link to="/login">Login</Link> </li><li> <Link to="/signup">Signup</Link> </li></ul>}
+            </li> 
             </ul> 
             </div>
             </header>
