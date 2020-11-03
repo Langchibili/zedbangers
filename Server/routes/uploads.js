@@ -33,6 +33,7 @@ router.get("/", (req,res,next)=>{
         const result = await uploads.getUploads(fields=fields,limit=limit);
         /*response here*/ 
         res.send(result);
+        return {query: "done"};
      }
      /* open connection and run query */
      execQuery(queryPlusResponse);
@@ -51,6 +52,7 @@ router.get("/:id", (req,res,next)=>{
       /* sending 404 headers if not found*/ 
          res.sendStatus(404);
       }
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);
@@ -211,6 +213,7 @@ router.post("/", (req,res,next)=>{
       async function queryPlusResponse(){ 
        ResponseObject = await uploads.addUpload(fileObject);
        res.send(ResponseObject);
+       return {query: "done"};
       }
       /* open connection and run query */
       execQuery(queryPlusResponse); 

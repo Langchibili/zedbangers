@@ -29,6 +29,7 @@ router.get("/", (req,res,next)=>{
         
 
         res.send(result);
+        return {query: "done"};
      }
      /* open connection and run query */
      execQuery(queryPlusResponse);
@@ -49,6 +50,7 @@ router.get("/:id", (req,res,next)=>{
         /* sending 404 headers if not found*/ 
          res.sendStatus(404);
        }
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -69,6 +71,7 @@ router.put("/:id", (req,res,next)=>{
          /* sending 404 headers if not found*/ 
          res.sendStatus(404);
        }
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -82,7 +85,8 @@ router.delete("/:id", (req,res,next)=>{
        /*query runs here*/
        const result = await users.deleteUser(userId);
        /*rREDIRECT USER TO HOMEPAGE AND NOT SEND ANY RESPONSE*/ 
-       res.send({success: "deleted"});
+       res.send({success: "deleted"})
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);

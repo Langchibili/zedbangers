@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const posts = require("../database/posts").posts;
-const users = require("../database/users").users;
-const activities = require("../database/activities").activities;
-const notifications = require("../database/notifications").notifications;
-const logActivityAndSendNotification = require("../functions").logActivityAndSendNotification;
+// const users = require("../database/users").users;
+// const activities = require("../database/activities").activities;
+// const notifications = require("../database/notifications").notifications;
+// const logActivityAndSendNotification = require("../functions").logActivityAndSendNotification;
 const execQuery = require("../database/connection").amalevelz.runQuery;
 
 
@@ -18,6 +18,7 @@ router.get("/", (req,res,next)=>{
        const result = await posts.getPosts(fields=fields,limit=limit);
        /*response here*/ 
        res.send(result);
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -44,6 +45,7 @@ router.get("/:post_type/:taxonomy/:taxonomyValue", (req,res,next)=>{
        }
        /*response here*/ 
        res.send(result);
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -59,6 +61,7 @@ router.get("/chat", (req,res,next)=>{
        const result = await posts.getPosts(fields=fields,limit=limit);
        /*response here*/ 
        res.send(result);
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -83,6 +86,7 @@ router.get("/:id", (req,res,next)=>{
       /* sending 404 headers if not found*/ 
          res.sendStatus(404);
       }
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);
@@ -103,7 +107,7 @@ router.post("/", (req,res,next)=>{
       //  await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
        /*response here*/
        res.send(AddedPost);
-       
+       return {query: "done"};
     }
 
     /* open connection and run query */
@@ -122,7 +126,7 @@ router.post("/timeline", (req,res,next)=>{
       const timeline = await posts.getPostsByUserId(postObject.userId, postObject.fields || "", postObjectLimit);
       /*response here*/
       res.send(timeline);
-      
+      return {query: "done"};
    }
 
    /* open connection and run query */
@@ -146,7 +150,7 @@ router.put("/:id", (req,res,next)=>{
       /* sending 404 headers if not found*/ 
          res.sendStatus(404);
       }
-      
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);
@@ -160,6 +164,7 @@ router.delete("/:id", (req,res,next)=>{
       await posts.deletePost(postId);
       /*RESPOND THAT DELETE WAS SUCCESSFULL*/ 
       res.send({success: "deleted"});
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);

@@ -216,7 +216,8 @@ const userSchema = new mongoose.Schema({
           default: true
         },
       }
-    }
+    },
+    tags: [String]
   });
 
 
@@ -271,7 +272,10 @@ module.exports.users = {
             },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/
                   addUser: async function(userObject){
-                    userObject.username = userObject.username.toLowerCase(); // change username to lowercase
+                    postObject.username = postObject.username.toLowerCase();
+                    postObject.first_name = postObject.first_name.toLowerCase();
+                    postObject.last_name = postObject.last_name.toLowerCase();
+                    postObject.tags = [postObject.first_name, postObject.last_name];
                     const newUser = new userModel(userObject);
                     return await newUser.save();
                 },
@@ -324,5 +328,14 @@ module.exports.users = {
                    //delete user
                    userModel.deleteOne(filterObject, function (err) { if(err) { throw err } return; } );
 
-                } 
+                } ,
+                searchUser: async function(keyword, fields=null, limit=null){
+                  keyword = keyword.toLowerCase();
+                  return await docApiConcatinator(api, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
+                    if (err){
+                        throw err;
+                    }
+                    return docs;
+                 }).sort(sortObject={_id: -1}).limit(limit));             
+                }
 }

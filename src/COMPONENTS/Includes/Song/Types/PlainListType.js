@@ -29,7 +29,6 @@ export default class PlainListType extends React.Component{
             <span>{this.props.song? this.props.song.title : "untitled"}
             </span> 
             </Link>
-            
             <span className="text-muted"> -- {this.props.song? this.props.song.counts.plays : ""}
             </span> 
             </div> 

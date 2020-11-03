@@ -140,8 +140,8 @@ import api_url from "../constants/api_url";
       
   },
 
-  deleteItem: async function (apiEndPoint,deleteObject){
-    const data = deleteObject;
+  deleteItem: async function (apiEndPoint,deleteObject=null){
+    const data = deleteObject? deleteObject : {"delete": "by id"};
     try{
           const response = await fetch(api_url+apiEndPoint,{
           method: 'DELETE', 

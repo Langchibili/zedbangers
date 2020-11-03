@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const posts = require("../database/posts").posts;
 const users = require("../database/users").users;
-const execQuery = require("../database/connection").amalevelz.runQuery;
+const execQuery = require("../database/trash_db_connection").amalevelz.runQuery;
 
 
 // GET REQUESTS
 /* get all posts */
-router.get("/trash/posts", (req,res,next)=>{
+router.get("/posts", (req,res,next)=>{
    let limit =  parseInt(req.query.limit);
    let fields = req.query.fields;
    async function queryPlusResponse(){
@@ -15,6 +15,7 @@ router.get("/trash/posts", (req,res,next)=>{
        const result = await posts.getPosts(fields=fields,limit=limit);
        /*response here*/ 
        res.send(result);
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -22,7 +23,7 @@ router.get("/trash/posts", (req,res,next)=>{
 
 
 /* get all users */
-router.get("/trash/users", (req,res,next)=>{
+router.get("/users", (req,res,next)=>{
     let limit =  parseInt(req.query.limit);
     let fields = req.query.fields;
     let username = req.query.username;
@@ -44,6 +45,7 @@ router.get("/trash/users", (req,res,next)=>{
          
  
          res.send(result);
+         return {query: "done"};
       }
       /* open connection and run query */
       execQuery(queryPlusResponse);
@@ -53,7 +55,7 @@ router.get("/trash/users", (req,res,next)=>{
 //POST REQUESTS
 
 /* create a post */
-router.post("/trash/posts", (req,res,next)=>{
+router.post("/posts", (req,res,next)=>{
     // get post from request
     const postObject = req.body;
     postObject.postId = postObject._id;
@@ -67,7 +69,7 @@ router.post("/trash/posts", (req,res,next)=>{
       //  await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
        /*response here*/
        res.send(AddedPost);
-       
+       return {query: "done"};
     }
 
     /* open connection and run query */
@@ -76,7 +78,7 @@ router.post("/trash/posts", (req,res,next)=>{
 });
 
 /* create a post */
-router.post("/trash/users", (req,res,next)=>{
+router.post("/users", (req,res,next)=>{
     // get post from request
     const userObject = req.body;
     userObject.userId = userObject._id;
@@ -90,7 +92,7 @@ router.post("/trash/users", (req,res,next)=>{
       //  await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
        /*response here*/
        res.send(AddedUser);
-       
+       return {query: "done"};
     }
 
     /* open connection and run query */
@@ -101,13 +103,14 @@ router.post("/trash/users", (req,res,next)=>{
 
 
 //DELETE REQUESTS
-router.delete("/trash/:id", (req,res,next)=>{
+router.delete("/:id", (req,res,next)=>{
   const postId = req.params.id;
   async function queryPlusResponse(){
       /*query runs here*/
       await posts.deletePost(postId);
       /*RESPOND THAT DELETE WAS SUCCESSFULL*/ 
       res.send({success: "deleted"});
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);

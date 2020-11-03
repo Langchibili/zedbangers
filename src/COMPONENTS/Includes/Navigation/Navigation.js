@@ -29,14 +29,35 @@ export default class Navigation extends React.Component{
                     </span> </Link> </li> 
                     {this.props.isLoggedIn? "" : <li> <Link to="/signup"> <i className="icon-list icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
                     {this.props.isLoggedIn? "" : <li> <Link to="/login"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
-                     
-                    {this.props.isLoggedIn? <li> <Link to="/logout"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">logout</span> </Link> </li>: ""}
-                    {/* <li> <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true"> <i className="icon-social-youtube icon text-primary" /> 
+                      {/* <li> <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true"> <i className="icon-social-youtube icon text-primary" /> 
                     
                     <span className="font-bold">Video
                     </span> </a> </li>  */}
                     <li className="m-b hidden-nav-xs" /> 
                 </ul> 
+               { this.props.isLoggedIn? 
+                 <ul className="nav" data-ride="collapse"> 
+                    <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> manage posts </li> 
+                    <li> <a href="#" className="auto"> 
+                         
+                    <span className="pull-right text-muted"> <i className="fa fa-angle-left text" /> <i className="fa fa-angle-down text-active" /> 
+                    </span> <i className="icon-grid icon"> </i> 
+                    
+                    <span>Songs
+                    </span> </a> 
+                    <ul className="nav dk text-sm"> 
+                    <li> <Link to="/posts/edit" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    
+                    <span>edit song
+                    </span> </Link> </li> 
+                    <li> <Link to="/posts/delete" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    
+                    <span>delete song
+                    </span> </Link> </li> 
+                    </ul> 
+                    </li> 
+                </ul> : ""
+               }
                 <ul className="nav" data-ride="collapse"> 
                     <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> about us </li> 
                     <li> <a href="#" className="auto"> 
@@ -66,8 +87,8 @@ export default class Navigation extends React.Component{
                     </span> </a> </li> 
                     </ul> 
                     </li> 
-                </ul> 
-                <ul className="nav text-sm"> 
+                </ul>  
+                 <ul className="nav text-sm"> 
                 <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> 
                 
                 <span className="pull-right"><a href="#"><i className="icon-plus i-lg" /></a>

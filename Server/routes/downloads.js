@@ -20,6 +20,7 @@ router.get("/", (req,res,next)=>{
        const result = await downloads.getDownloads();
        /*response here*/ 
        res.send(result);
+       return {query: "done"};
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
@@ -66,6 +67,7 @@ router.get("/:username", (req,res,next)=>{
          response = await getActedOnPost(userId,requestObject.fields,requestObject.limit,users.getUser,downloads.getDownloads,requestObject.actionType);  
        } 
        res.send(response);
+       return {query: "done"};
     }
     if(req.params.hasOwnProperty("username") &&  requestObject.hasOwnProperty("limit") &&  requestObject.hasOwnProperty("actionType")){
     /* open connection and run query */
@@ -93,7 +95,7 @@ router.post("/", (req,res,next)=>{
        
        /*response here*/;
        res.send({"success": "post downloaded"});
-       
+       return {query: "done"};
     }
 
     /* open connection and run query */
@@ -117,7 +119,7 @@ router.put("/:id", (req,res,next)=>{
       /* sending 404 headers if not found*/ 
          res.sendStatus(404);
       }
-      
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);
@@ -131,6 +133,7 @@ router.delete("/:id", (req,res,next)=>{
       await downloads.deleteDownload(downloadId);
       /*RESPOND THAT DELETE WAS SUCCESSFULL*/ 
       res.send({success: "deleted"});
+      return {query: "done"};
    }
    /* open connection and run query */
    execQuery(queryPlusResponse);

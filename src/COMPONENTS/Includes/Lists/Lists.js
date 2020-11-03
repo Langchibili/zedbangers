@@ -11,10 +11,14 @@ export default class Lists extends React.Component{
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
     const items = this.props.items;
+    const edit = this.props.edit;
+    const del = this.props.del;
 
     return items.map((item)=>{ 
          if(items_type === "song"){
             return <Song 
+                    edit={edit}
+                    del={del}
                     song={item} 
                     key={item._id} list_type={list_type} 
                     updateNowPlayingSongId={updateNowPlayingSongId}

@@ -13,6 +13,8 @@ export default class Song extends React.Component{
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
     const song = this.props.song;
+    const edit = this.props.edit;
+    const del = this.props.del;
     
     if(list_type === "PlainListType"){
        return <PlainListType 
@@ -23,6 +25,8 @@ export default class Song extends React.Component{
     }
     else if(list_type === "ListWithImageType"){
        return <ListWithImageType 
+              edit={edit}
+              del={del}
               song={song} 
               updateNowPlayingSongId={updateNowPlayingSongId}
               updateDownload={updateDownload}

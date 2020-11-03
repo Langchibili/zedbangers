@@ -56,8 +56,7 @@ router.post("/", (req,res,next)=>{
         }
         
        res.send(response); // request end
-      
-        
+       return {query: "done"};
      }
 
      /* open connection and run query */

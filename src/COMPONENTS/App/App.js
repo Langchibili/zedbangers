@@ -11,6 +11,9 @@ import Display from "../Includes/Display/Display";
 import api from "../../Store/api";
 import Loader from "../Includes/Loader/Loader";
 import api_url from "../../constants/api_url";
+import HomeButton from "../Includes/Shortcuts/HomeButton";
+import BackBtn from "../Includes/Shortcuts/BackBtn";
+import ScrowDownBtn from "../Includes/Shortcuts/ScrowDownBtn";
 
 export default class App extends React.Component{
   constructor(props){
@@ -21,7 +24,10 @@ export default class App extends React.Component{
       fileIsDownloading: false,
       isLoggedIn: false,
       sessionReqDone: false,
-      UserInfo: null
+      UserInfo: null,
+      previousUrl: null,
+      updateView: true,
+      visitedUrls: [window.location.href]
     }
 }
 async checkUserSession(){
@@ -57,7 +63,7 @@ setVideoInstance = (video)=>{
 
 toggleOffFileIsDownloading = ()=>{
   this.setState({
-    fileIsDownloading: false
+    fileIsDownloading: true
   })
 }
 toggleOnFileIsDownloading = ()=>{
@@ -67,27 +73,41 @@ toggleOnFileIsDownloading = ()=>{
 }
 
 updateDownload = (download) =>{
-  console.log(download)
   this.setState({
-    download: download
+    download: download,
+    updateView: false
   })
 }
 
 updateNowPlayingSongId = (songId) =>{
   this.setState({
-    nowPlayingSongId: songId
+    nowPlayingSongId: songId,
+    updateView: false
   })
+}
+
+logUrl = ()=>{
+  console.log("logged");
+  const currentUrl =  window.location.href;
+  const urlArray = this.state.visitedUrls;
+  const previousUrl = urlArray[urlArray.length-2];
+  if(currentUrl !== urlArray[urlArray.length-1]){
+    urlArray.push(currentUrl);
+    this.setState({
+      visitedUrls: urlArray,
+      previousUrl: previousUrl
+    }) 
+  }
 }
 
 async componentWillMount(){
   await this.checkUserSession();
 }
-
-
    render(){
     return ( 
       <div>
        <section className="vbox">
+       <div id="topDiv"></div>
        <BrowserRouter>
            <Header 
             isLoggedIn={this.state.isLoggedIn} 
@@ -100,13 +120,19 @@ async componentWillMount(){
                  <section>
                    <section className="vbox">
                      <section className="w-f-md">
-
+                     {this.state.previousUrl? 
+                     <div>
+                     <HomeButton />
+                     <BackBtn previousUrl={this.state.previousUrl}/></div>:
+                     ""}
                      {this.state.sessionReqDone? <Views 
+                          logUrl={this.logUrl}
                           updateNowPlayingSongId={this.updateNowPlayingSongId} 
                           UserInfo={this.state.UserInfo} 
                           changeHeaderTheme={this.changeHeaderTheme}
                           updateDownload={this.updateDownload}
                           toggleOnFileIsDownloading={this.toggleOnFileIsDownloading}
+                          updateView={this.state.updateView}
                           isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
 
                         <Display isVisible={this.state.fileIsDownloading}>
@@ -114,7 +140,7 @@ async componentWillMount(){
                            download={this.state.download} 
                            toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
                         </Display>
-
+                        <ScrowDownBtn />
                         <Footer />
                       </section>
                    </section>
@@ -127,6 +153,7 @@ async componentWillMount(){
           </BrowserRouter>
         </section>
        <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />  
+       <div id="buttomDiv"></div>
       </div>
       );
       } 

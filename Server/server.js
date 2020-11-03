@@ -38,12 +38,13 @@ const ratingsRouter = require("./routes/ratings");
 const reviewsRouter = require("./routes/reviews");
 const sharesRouter = require("./routes/shares");
 const trashRouter = require("./routes/trash");
+const searchRouter = require("./routes/search");
 //routes requires endline
 
 //constants
 const rootdirectory = require("./utilities/constants/rootdirectory");
 const static_folder_name = require("./utilities/constants/static_folder_name");
-const db_url = require("./utilities/constants/db_url");
+const sessions_db_url = require("./utilities/constants/sessions_db_url");
 const api = require("./utilities/constants/api");
 require('events').EventEmitter.prototype._maxListeners = 1000;
 
@@ -86,7 +87,7 @@ app.use(function (req, res, next) {
 app.use(cors(corsOptions));
 /* create a sessions store*/
 const store = new MongoDBStore({
-  uri: db_url,
+  uri: sessions_db_url,
   collection: "sessions"
 });
 // create a session 
@@ -113,6 +114,9 @@ app.get("/user_status", (req,res,next)=>{
        isLoggedIn: true,
        loggedUserName: loggedUserName
       });
+  }
+  else if(req.session){
+    res.send({ isLoggedIn: false });
   }
   else{
     res.send({ isLoggedIn: false });
@@ -192,6 +196,7 @@ app.use("/get_activation_code", getActivationCode);
 app.use("/user_following", userFollowing);
 app.use("/newsfeed", newsFeed);
 app.use("/trash", trashRouter);
+app.use("/search", searchRouter);
 
 
 

@@ -50,17 +50,14 @@ export default class SinglePostPage extends React.Component{
     header.className.replace("bg-white-only","bg-black lter");
   }
 
-   shouldComponentUpdate(){
-       return this.state.updatedOnce? false : true;
-   }
+//    shouldComponentUpdate(){
+//        return this.props.postId === this.state.post._id? false : true;
+//    }
    
    componentWillMount(){    
     this.changeHeaderTheme(); 
     this.getPost();
    }
-  //  componentDidUpdate(){
-  //   this.setState({ updatedOnce: true})
-  //  }
 
    render(){
     return ( 

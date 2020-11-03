@@ -7,6 +7,27 @@ export default class ListWithImageType extends React.Component{
         e.preventDefault();
         this.props.updateNowPlayingSongId(this.props.song._id);
   }
+
+  renderPostLink = ()=>{
+    const edit = this.props.edit;
+    const del = this.props.del;
+    if(edit){
+      return <Link to={this.props.song? "/post/edit/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="clear" >
+      <span className="block text-ellipsis">{this.props.song? this.props.song.title : "untitled"}</span> <small className="text-muted"><Link to={this.props.song? "/user/"+this.props.song.userName : "#"}>by {this.props.song? this.props.song.artist.artistName : ""}</Link></small> 
+     </Link>
+    }
+    else if(del){
+      return <Link to={this.props.song? "/post/delete/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="clear" >
+      <span className="block text-ellipsis">{this.props.song? this.props.song.title : "untitled"}</span> <small className="text-muted"><Link to={this.props.song? "/user/"+this.props.song.userName : "#"}>by {this.props.song? this.props.song.artist.artistName : ""}</Link></small> 
+     </Link>
+    }
+    else{
+      return <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="clear" >
+      <span className="block text-ellipsis">{this.props.song? this.props.song.title : "untitled"}</span> <small className="text-muted"><Link to={this.props.song? "/user/"+this.props.song.userName : "#"}>by {this.props.song? this.props.song.artist.artistName : ""}</Link></small> 
+     </Link>
+    }
+      
+  }
   render(){
     return ( 
         <li className="list-group-item clearfix">
@@ -17,11 +38,8 @@ export default class ListWithImageType extends React.Component{
                 song={this.props.song}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                  />
-            <a href="#" className="pull-left thumb-sm m-r"><img src={this.props.song? this.props.song.thumbnail.small : ""} alt="..." /> 
-            </a> 
-            <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="clear" >
-                <span className="block text-ellipsis">{this.props.song? this.props.song.title : "untitled"}</span> <small className="text-muted"><Link to={this.props.song? "/user/"+this.props.song.userName : "#"}>by {this.props.song? this.props.song.artist.artistName : ""}</Link></small> 
-            </Link> 
+          <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="pull-left thumb-sm m-r"><img src={this.props.song? this.props.song.thumbnail.small : ""} alt="..." /> </Link>   
+          {this.renderPostLink()}
         </li>
     );
      } 

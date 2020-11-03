@@ -1,0 +1,1 @@
+module.exports = "mongodb+srv://langson:gammarays@cluster0.uuock.mongodb.net/sessions?retryWrites=true&w=majority";

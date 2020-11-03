@@ -30,6 +30,7 @@ router.post("/", (req,res,next)=>{
         }   
         /*response here*/ 
         res.send(response);
+        return {query: "done"};
      }
      /* open connection and run query */
      execQuery(queryPlusResponse);

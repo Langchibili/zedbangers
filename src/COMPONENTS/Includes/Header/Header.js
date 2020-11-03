@@ -1,9 +1,33 @@
 import React from "react";
 import "./Header.css";
 import blankProfilePic from "../../../constants/blankprofile.png";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 export default class Header extends React.Component{
+    constructor(props){
+          super(props);
+          this.state = {
+                keyword: null,
+                searchRedirect: false
+          }
+    }  
+    handleSearch = (e)=>{
+         e.preventDefault();
+         this.setState({
+               searchRedirect: true
+         })
+    }
+    getKeyWord = (e)=>{
+         const keyword = e.target.value;
+         this.setState({
+               keyword: keyword
+         })
+    }
+    searchRedirect = ()=>{
+      if(this.state.searchRedirect){
+            return <Redirect to={"/search/"+this.state.keyword}/>;
+      }
+    }
    render(){
          return (
             <header id="header" className="bg-white-only header header-md navbar navbar-fixed-top-xs"> 
@@ -23,9 +47,10 @@ export default class Header extends React.Component{
             
             <div className="input-group"> 
             
-            <span className="input-group-btn"> <button type="submit" className="btn btn-sm bg-white btn-icon rounded"><i className="fa fa-search" /></button> 
+            <span className="input-group-btn"> <button onClick={this.handleSearch} type="submit" className="btn btn-sm bg-white btn-icon rounded"><i className="fa fa-search" /></button> 
             </span> 
-            <input type="text" className="form-control input-sm no-border rounded" placeholder="Search songs, albums..." /> 
+            <input type="text" onChange={this.getKeyWord} className="form-control input-sm no-border rounded" placeholder="Search songs, albums..." /> 
+            {this.searchRedirect()}
             </div> 
             </div> 
             </form> 

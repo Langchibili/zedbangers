@@ -31,7 +31,8 @@ const postSchema = new mongoose.Schema({
             },   
 			title:String,
 			title_short: String,
-			full_title: String,
+      full_title: String,
+      dashed_title: String,
 			description: String,
 			short_description: String,
 			artist: {
@@ -211,12 +212,13 @@ const postSchema = new mongoose.Schema({
                 },
 				revisions: []
             },
-            tags:[]
+        tags:[]
         });
 
 
 // post model
-const postModel = mongoose.model("posts",postSchema,"posts");                
+const postModel = mongoose.model("posts",postSchema,"posts");        
+  
 module.exports.posts = {
                  /* GET ALL POSTS FROM DATABASE*/
                  getPosts: async function(fields=null,limit=null,arrayOfIds=null, sortObject={_id: -1}){
@@ -298,6 +300,13 @@ module.exports.posts = {
                 },
                 /* ADD A POST TO DATABASE AND RETURN SAVED OBJECT*/
                   addPost: async function(postObject){
+                    let tagsString = postObject.artist.artistName+" "+postObject.title;
+                    tagsString = tagsString.toLowerCase();
+                    tagsString = tagsString.replace(" - "," ");
+                    tagsString = tagsString.replace("-"," ");
+                    const tagsArray = tagsString.split(" ");
+                    postObject.tags = tagsArray;
+                    postObject.dashed_title = tagsArray.join("-");
                     const newPost = new postModel(postObject);
                     return await newPost.save();
                 },
@@ -312,8 +321,17 @@ module.exports.posts = {
                   deletePost: async function(postId){
                     const filterObject = { _id: postId };
                    //delete post
-                   postModel.deleteOne(filterObject, function (err) { if(err) { throw err } return; } );
-
+                    return await postModel.deleteOne(filterObject, function (err) { if(err) { throw err } return {deleted: "yes"}; } );
+                },
+                /* DELETE A POST FROM DATABASE*/
+                searchPost: async function(keyword, fields=null, limit=null){
+                  keyword = keyword.toLowerCase();
+                  return await docApiConcatinator(api, null, await postModel.find({ ["tags"] : keyword },fields,function (err, docs) {
+                    if (err){
+                        throw err;
+                    }
+                    return docs;
+                 }).sort(sortObject={_id: -1}).limit(limit));             
                 },
                 getByQuery: function(){
                      return;

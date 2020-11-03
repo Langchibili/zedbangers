@@ -69,6 +69,7 @@ router.post("/", (req,res,next)=>{
       else{
           res.send({"error": "user not found", "errorType": "username"});
       }
+      return {query: "done"};
     }
 
     /* open connection and run query */
