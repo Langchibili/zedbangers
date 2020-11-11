@@ -23,7 +23,9 @@
 /Server/utilities/constants/db_url.js
 /Server/utilities/secrets
 /TestServer
-testserver.js
+/testserver.js
+/webmusicapp.tar
+
 
 npm-debug.log*
 yarn-debug.log*

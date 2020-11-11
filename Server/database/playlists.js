@@ -1,12 +1,77 @@
 const mongoose = require("mongoose");
+const date =  require('date-and-time');
+const api = require("../utilities/constants/api");
+const docApiConcatinator = require("../functions").docApiConcatinator; // adds current api to uris
+const now = new Date();
 
 //playlist schema
 const playlistSchema = new mongoose.Schema({
-                user_id: String,
+                playlistName: String,
+                userId: String,
                 playlist_type: String,
 								user_picture_xl: String,
 								user_url: String,
-								user_name: String,	
+                userName: String,	
+                userNiceName: String,
+                postIds: [String],
+                counts: {
+                  plays: {
+                              type: Number,
+                              default: 0
+                            },
+                  downloads: {
+                              type: Number,
+                              default: 0
+                            } ,
+                  likes: {
+                              type: Number,
+                              default: 0
+                            },
+                          unique_plays: {
+                              type: Number,
+                              default: 0
+                            },
+                          unique_downloads: {
+                          type: Number,
+                          default: 0
+                          } ,
+                  unique_likes: {
+                              type: Number,
+                              default: 0
+                            },
+                  shares: {
+                              type: Number,
+                              default: 0
+                            },
+                          views: {
+                              type: Number,
+                              default: 0
+                            },
+                          unique_views: {
+                          type: Number,
+                          default: 0
+                          },
+                  totalcounts: {
+                              type: Number,
+                              default: 0
+                            },
+                          reposts: {
+                              type: Number,
+                              default: 0
+                            },
+                          comments: {
+                              type: Number,
+                              default: 0
+                            },
+                          replies: {
+                              type: Number,
+                              default: 0
+                            },
+                          commentsAndReplies: {
+                              type: Number,
+                              default: 0
+                            }
+                },
 								tracks:[{
                     post_url: { type: String },
                     duration:{ type: Number },
@@ -24,10 +89,21 @@ const playlistSchema = new mongoose.Schema({
                   video_snippet_path: { type: String },
                   video_thumbnail: { type: String }
                 }],
-								timestamp: {
-                        type:Date,
-                        default: Date.now()
-                }
+								date:{
+                  uploadedDate: {
+                              type: String,
+                              default: date.format(now, 'ddd, MMM DD YYYY')
+                          },
+                          uploadedTime: {
+                              type: String,
+                              default: date.format(now, 'hh:mm:ss A') 
+                          },
+                          date: {
+                              type: String,
+                              default: Date.now()
+                          },
+                  revisions: []
+                      }
 });
 
 
@@ -56,6 +132,14 @@ module.exports.playlists = {
                      })
 
                 },
+                getPlaylistByUserId: async function(userId=null,fields=null,limit=null,sortObject={_id: -1}){
+                  return await docApiConcatinator(api, null, await playlistModel.find({ userId :userId},fields,function (err, docs) {
+                    if (err){
+                        throw err;
+                    }
+                    return docs;
+                 }).sort(sortObject={_id: -1}).limit(limit));
+               },
                 /* ADD A PLAYLIST TO DATABASE AND RETURN SAVED OBJECT*/
                   addPlaylist: async function(playlistObject){
                     const newPlaylist = new playlistModel(playlistObject);

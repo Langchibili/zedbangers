@@ -7,9 +7,12 @@ export default class Lists extends React.Component{
   renderPostType = ()=>{
     const list_type = this.props.list_type; 
     const items_type = this.props.items_type; 
-    const updateNowPlayingSongId= this.props.updateNowPlayingSongId;
+    const updateNowPlayingSongId = this.props.updateNowPlayingSongId;
+    const nowfocusedSongId = this.props.nowfocusedSongId;
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
+    const pauseAudio = this.props.pauseAudio;
+    const UserInfo= this.props.UserInfo;
     const items = this.props.items;
     const edit = this.props.edit;
     const del = this.props.del;
@@ -21,7 +24,10 @@ export default class Lists extends React.Component{
                     del={del}
                     song={item} 
                     key={item._id} list_type={list_type} 
+                    UserInfo={UserInfo}
+                    pauseAudio={pauseAudio}
                     updateNowPlayingSongId={updateNowPlayingSongId}
+                    nowfocusedSongId={nowfocusedSongId}
                     updateDownload={updateDownload}
                     toggleOnFileIsDownloading={toggleOnFileIsDownloading}
                     />

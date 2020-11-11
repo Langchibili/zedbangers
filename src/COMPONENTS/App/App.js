@@ -27,6 +27,7 @@ export default class App extends React.Component{
       UserInfo: null,
       previousUrl: null,
       updateView: true,
+      pauseAudio: false,
       visitedUrls: [window.location.href]
     }
 }
@@ -34,8 +35,8 @@ async checkUserSession(){
   const userStatus = await api.getItems("/user_status");
   if(userStatus){
      if(userStatus.isLoggedIn){
-      const allusers = await api.getItems("/users");
-      const loggeInUserInfo = await api.getItemByUsername("/users", userStatus.loggedUserName);
+      //const allusers = await api.getItems("/users");
+      const loggeInUserInfo = userStatus.loggedInUser;
       this.setState({
           isLoggedIn: true,
           UserInfo: loggeInUserInfo,
@@ -86,6 +87,12 @@ updateNowPlayingSongId = (songId) =>{
   })
 }
 
+pauseAudio =()=>{
+  this.setState({
+    pauseAudio: true
+  })
+}
+
 logUrl = ()=>{
   console.log("logged");
   const currentUrl =  window.location.href;
@@ -132,6 +139,7 @@ async componentWillMount(){
                           changeHeaderTheme={this.changeHeaderTheme}
                           updateDownload={this.updateDownload}
                           toggleOnFileIsDownloading={this.toggleOnFileIsDownloading}
+                          pauseAudio={this.pauseAudio}
                           updateView={this.state.updateView}
                           isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
 
@@ -152,7 +160,7 @@ async componentWillMount(){
           </section>
           </BrowserRouter>
         </section>
-       <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} />  
+       {this.state.sessionReqDone? <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} pauseAudio={this.state.pauseAudio}/> : ""}  
        <div id="buttomDiv"></div>
       </div>
       );

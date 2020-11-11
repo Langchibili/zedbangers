@@ -52,7 +52,7 @@ export default class ManagePostsDeleteFinalPage extends React.Component{
      }
    render(){
     return (   
-        this.state.deleted? <div>post deleted</div> : this.state.post? <ul><Song list_type ="ListWithImageType" song={this.state.post}/><div style={this.deleteButtonStyles.div}><button className="btn btn-sm btn-default">cancel</button><button onClick={this.handledDelete} className="btn btn-sm btn-danger">{this.state.deletingText}</button></div></ul>: <div>!oops, an error occured, try again.</div>
+        this.state.deleted? <div>post deleted</div> : this.state.post? <ul><Song list_type ="ListWithImageType" song={this.state.post} pauseAudio={this.props.pauseAudio} toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/><div style={this.deleteButtonStyles.div}><button className="btn btn-sm btn-default">cancel</button><button onClick={this.handledDelete} className="btn btn-sm btn-danger">{this.state.deletingText}</button></div></ul>: <div>!oops, an error occured, try again.</div>
        )
       } 
 }

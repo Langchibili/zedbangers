@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.css";
 import blankProfilePic from "../../../constants/blankprofile.png";
+import musicwebapplogo from "../../../constants/musicwebapplogo.png";
 import { Link, Redirect } from "react-router-dom";
 
 export default class Header extends React.Component{
@@ -34,7 +35,7 @@ export default class Header extends React.Component{
             
             <div className="navbar-header aside bg-info dk"> <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> <i className="icon-list" /> </a> <a href="/" className="navbar-brand text-lt"> <i className="icon-earphones" /> <img src="images/logo.png" alt="." className="hide" /> 
             
-            <span className="hidden-nav-xs m-l-sm">MUSICSTREAMBASE
+            <span className="hidden-nav-xs m-l-sm">{/*<img src={musicwebapplogo} style={{width:"200px",height:"200px"}}/>*/} webmusicapp
             </span> </a> <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i className="icon-settings" /> </a> 
             </div> 
             <ul className="nav navbar-nav hidden-xs"> 

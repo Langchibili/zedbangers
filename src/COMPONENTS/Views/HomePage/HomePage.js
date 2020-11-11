@@ -41,6 +41,7 @@ export default class HomePage extends React.Component{
                 items_type="song" items={this.state.posts} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </div>
             <div className="row"> 
@@ -53,74 +54,19 @@ export default class HomePage extends React.Component{
                 items_type="song" items={this.state.posts} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </div>
             </div> 
             
             <div className="col-md-5"> <h3 className="font-thin">Top Songs</h3> 
             
-            <div className="list-group bg-white list-group-lg no-bg auto"> <a href="#" className="list-group-item clearfix"> 
-            
-            <span className="pull-right h2 text-muted m-l">1
-            </span> 
-            
-            <span className="pull-left thumb-sm avatar m-r"> <img src="../../../41.77.4.164_80/flatfull.com/themes/musik/images/a4.png" alt="..." /> 
-            </span> 
-            
-            <span className="clear"> 
-            
-            <span>Little Town
-            </span> <small className="text-muted clear text-ellipsis">by Chris Fox</small> 
-            </span> </a> <a href="#" className="list-group-item clearfix"> 
-            
-            <span className="pull-right h2 text-muted m-l">2
-            </span> 
-            
-            <span className="pull-left thumb-sm avatar m-r"> <img src="images/a5.png" alt="..." /> 
-            </span> 
-            
-            <span className="clear"> 
-            
-            <span>Lementum ligula vitae
-            </span> <small className="text-muted clear text-ellipsis">by Amanda Conlan</small> 
-            </span> </a> <a href="#" className="list-group-item clearfix"> 
-            
-            <span className="pull-right h2 text-muted m-l">3
-            </span> 
-            
-            <span className="pull-left thumb-sm avatar m-r"> <img src="../../../41.77.4.164_80/flatfull.com/themes/musik/images/a6.png" alt="..." /> 
-            </span> 
-            
-            <span className="clear"> 
-            
-            <span>Aliquam sollicitudin venenatis
-            </span> <small className="text-muted clear text-ellipsis">by Dan Doorack</small> 
-            </span> </a> <a href="#" className="list-group-item clearfix"> 
-            
-            <span className="pull-right h2 text-muted m-l">4
-            </span> 
-            
-            <span className="pull-left thumb-sm avatar m-r"> <img src="images/a7.png" alt="..." /> 
-            </span> 
-            
-            <span className="clear"> 
-            
-            <span>Aliquam sollicitudin venenatis ipsum
-            </span> <small className="text-muted clear text-ellipsis">by Lauren Taylor</small> 
-            </span> </a> <a href="#" className="list-group-item clearfix"> 
-            
-            <span className="pull-right h2 text-muted m-l">5
-            </span> 
-            
-            <span className="pull-left thumb-sm avatar m-r"> <img src="../../../41.77.4.164_80/flatfull.com/themes/musik/images/a8.png" alt="..." /> 
-            </span> 
-            
-            <span className="clear"> 
-            
-            <span>Vestibulum ullamcorper
-            </span> <small className="text-muted clear text-ellipsis">by Dan Doorack</small> 
-            </span> </a> 
-            </div> 
+            <div className="list-group bg-white list-group-lg no-bg auto"> 
+            <Lists 
+                divListType
+                list_type="ChatType" 
+                items_type="song" items={this.state.posts} />
+            </div>
             </div> 
             </div> 
             

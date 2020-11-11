@@ -9,6 +9,7 @@ export default class SinglePostPage extends React.Component{
        this.state = {
            post: null,
            songs: [],
+           recentSongs: [],
            updatedOnce: false
        }
    }
@@ -19,7 +20,7 @@ export default class SinglePostPage extends React.Component{
       return
     }
     else{
-    const post = await api.getItemById("/posts", postId, " ");
+     const post = await api.getItemById("/posts", postId, " ");
      this.setState(
         {
           post: post 
@@ -33,10 +34,18 @@ export default class SinglePostPage extends React.Component{
             async ()=>{
                 const song = this.state.songs[0];
                 const userId = this.state.post.userId;
-                const moresongs = await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist more songs to state
-                moresongs.unshift(song)
+                let moresongs = await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist more songs to state
+                moresongs = moresongs.filter((song)=>{ return postId !== song._id});
+                moresongs.unshift(song) // remove this curent song id, add it only to the beginning and add more songs to songs list
                 this.setState({
-                    songs: moresongs // add more songs to songs list
+                    songs: moresongs // remove this curent song id and add more songs to songs list
+                },
+                  async ()=>{
+                    let recentSongs = await api.getItems("/posts","","music","","","",12);
+                    recentSongs = recentSongs.filter((song)=>{ return postId !== song._id});
+                    this.setState({
+                        recentSongs: recentSongs
+                    }) // more songs, recent songs
                 })
             } 
            )
@@ -95,8 +104,11 @@ export default class SinglePostPage extends React.Component{
                 <Lists 
                 list_type="PlainListType" 
                 items_type="song" items={this.state.songs} 
+                UserInfo={this.props.UserInfo}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowfocusedSongId = {this.props.postId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section> 
             </section>
@@ -105,9 +117,11 @@ export default class SinglePostPage extends React.Component{
             <section className="vbox">
                 <section className=" scrollable hover">
                 <Lists list_type="ListWithImageType" 
-                items_type="song" items={this.state.songs} 
+                items_type="song" items={this.state.recentSongs} 
+                UserInfo={this.props.UserInfo}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </section>
             </section>

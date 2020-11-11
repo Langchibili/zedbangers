@@ -37,6 +37,25 @@ router.get("/:id", (req,res,next)=>{
    execQuery(queryPlusResponse);
 });
 
+router.post("/timeline", (req,res,next)=>{
+   // get post from request
+   const playlistObject = req.body;
+   const playlistObjectLimit = parseInt(playlistObject.limit);
+
+   //add to database object and sending response object 
+   async function queryPlusResponse(){
+      /*query runs here*/
+      const playlistsTimeline = await playlists.getPlaylistByUserId(playlistObject.userId, playlistObject.fields || "", playlistObjectLimit);
+      console.log("at least hit",playlistsTimeline);
+      /*response here*/
+      res.send(playlistsTimeline);
+      return {query: "done"};
+   }
+
+   /* open connection and run query */
+   execQuery(queryPlusResponse);
+   
+});
 
 //POST REQUESTS
 

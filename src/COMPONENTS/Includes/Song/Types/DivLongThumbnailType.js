@@ -23,7 +23,9 @@ export default class DivLongThumbnailType extends React.Component{
                 action_type="play"
                 song={this.props.song}
                 linkContent = {<i className="icon-control-play i-2x"></i> }
+                pauseLinkContent = {<i className="icon-control-pause i-2x"></i> }
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                pauseAudio={this.props.pauseAudio}
                  />  
             </div>
             <div className="bottom padder m-b-sm"> <a href="#" className="pull-right"> <i className="fa fa-heart-o"></i> </a> <a href="#"> <i className="fa fa-plus-circle"></i> </a>

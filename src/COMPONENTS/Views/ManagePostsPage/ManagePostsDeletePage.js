@@ -30,6 +30,7 @@ export default class ManagePostsDeletePage extends React.Component{
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
       </section>
       

@@ -80,7 +80,7 @@ export default class SinglePostPage extends React.Component{
                         
                         <a href="#">
                           
-                          <span className="m-b-xs h4 block">245</span>
+                          <span className="m-b-xs h4 block">{this.state.user? this.state.user.counts.plays: 0 }</span>
                           <small className="text-muted">streams</small>
                         </a>
                       </div>
@@ -175,6 +175,7 @@ export default class SinglePostPage extends React.Component{
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div>no songs yet</div>}
                   </div>
                   <div className="tab-pane" id="about">

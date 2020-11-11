@@ -36,6 +36,7 @@ export default class SearchResultsPage extends React.Component{
                     items_type="song" items={this.state.posts} 
                     updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                     updateDownload={this.props.updateDownload}
+                    pauseAudio={this.props.pauseAudio}
                     toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>:
                     <div>Sorry, no results found for your search.</div>:
                     <div></div>

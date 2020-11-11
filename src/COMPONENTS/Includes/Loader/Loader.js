@@ -2,7 +2,10 @@ import React from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function Loader(props){
-    return(<div className="centered" style={{
+    return(props.basicType? 
+      <div style={{textAlign: "center", padding: "5px"}}>
+      <CircularProgress disableShrink color={props.color || "secondary"}/></div> : 
+      <div className="centered" style={{
            position: "fixed",
            top: "50%",
            left: "50%",

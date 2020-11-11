@@ -1,10 +1,26 @@
 import React from "react";
 
 export default class ActionButton extends React.Component{ 
-
+  constructor(props){
+    super(props);
+    this.state = {
+      showPauseBtn: false
+    }
+  }
   updateNowPlayingSong = (e) =>{
       e.preventDefault();
       this.props.updateNowPlayingSongId(this.props.song._id);
+      this.setState({
+        showPauseBtn: true
+      })
+  }
+  
+  pauseAudio = (e)=>{
+    e.preventDefault();
+    document.getElementsByTagName("audio")[0].pause();
+    this.setState({
+      showPauseBtn: false
+    })
   }
   triggerDownload = (e) =>{
     e.preventDefault();
@@ -23,23 +39,29 @@ export default class ActionButton extends React.Component{
     }
   }   
 
-  
-  
 
   renderActionType = ()=>{
     const action_type = this.props.action_type;
     const linkClassList = this.props.linkClassList;
     const linkContent = this.props.linkContent;
+    const pauseLinkContent = this.props.pauseLinkContent;
      
     if(action_type === "play"){
-       return <span href="#" onClick={this.updateNowPlayingSong}  className={linkClassList? linkClassList: "" }> {linkContent} </span>
+       return this.state.showPauseBtn? 
+       <a href="#" onClick={this.pauseAudio}  className={linkClassList? linkClassList: "" }> {pauseLinkContent} </a> : <a href="#" onClick={this.updateNowPlayingSong}  className={linkClassList? linkClassList: "" }> {linkContent} </a>
     }
     else if(action_type === "download"){
        return <a href="#" onClick={this.triggerDownload} className="m-r-sm"><i className="icon-cloud-download" /></a>
     }
-    else{
-    return <div></div>
-    }
+    else if(action_type === "info"){
+      return <a href="#" onClick={this.props.showPostInfo} className="m-r-sm"><i className="icon-info"></i></a>
+   }
+    else if(action_type === "add"){
+      return <a href="#" onClick={this.props.showAddplayListModal} className="m-r-sm"><i className="icon-plus"></i></a>
+   }
+   else{
+     return <div></div>
+   }
    
   }
 

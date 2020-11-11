@@ -1,4 +1,5 @@
 const express = require("express"); // express 
+const mongoose = require("mongoose"); // mongoose
 const cors = require("cors");  // cors
 const app = express();  // express aspp
 const session = require('express-session')// express-session
@@ -45,15 +46,21 @@ const searchRouter = require("./routes/search");
 const rootdirectory = require("./utilities/constants/rootdirectory");
 const static_folder_name = require("./utilities/constants/static_folder_name");
 const sessions_db_url = require("./utilities/constants/sessions_db_url");
+const db_url = require("./utilities/constants/db_url");
 const api = require("./utilities/constants/api");
-require('events').EventEmitter.prototype._maxListeners = 1000;
+require('events').EventEmitter.prototype._maxListeners = 1000000;
 
 const PORT = process.env.PORT || 1000; //port
 
+/* create a sessions store*/
+const store = new MongoDBStore({uri: sessions_db_url, collection: "sessions"})
 
 // SEVER RUNNING ON ENVIRONMENT PORT OR 1000
 const server = app.listen(PORT,()=>{
-    console.log("server running on port "+PORT);
+    console.log("api server running on port "+PORT);
+    store.on("open",()=>{
+      console.log("session database connection established");
+    })
 });
 
 server.timeout = 60 * 60 * 1000;
@@ -85,11 +92,7 @@ app.use(function (req, res, next) {
   }
 });
 app.use(cors(corsOptions));
-/* create a sessions store*/
-const store = new MongoDBStore({
-  uri: sessions_db_url,
-  collection: "sessions"
-});
+
 // create a session 
 app.use(session({
   secret: session_secret,
@@ -106,26 +109,23 @@ app.use(session({
 }));
   
 /* get logged in user */
-app.get("/user_status", (req,res,next)=>{
-  if(req.session.loggedInUser){
-     const loggedInUser = req.session.loggedInUser;
-     const loggedUserName = loggedInUser.username;
-     res.send({
-       isLoggedIn: true,
-       loggedUserName: loggedUserName
-      });
-  }
-  else if(req.session){
-    res.send({ isLoggedIn: false });
-  }
-  else{
-    res.send({ isLoggedIn: false });
-  }
+app.get("/user_status", (req,res,next)=>{ 
+    if(req.session.hasOwnProperty("loggedInUser")){
+      const loggedInUser = req.session.loggedInUser;
+      const loggedUserName = loggedInUser.username;
+      res.send({
+        isLoggedIn: true,
+        loggedInUser: loggedInUser,
+        loggedUserName: loggedUserName
+       });
+   }
+   else{
+     res.send({ isLoggedIn: false });
+   }
 });
 
-
 app.get("/",(req,res,next)=>{
-    if(req.session.loggedInUser){
+    if(req.session.hasOwnProperty("loggedInUser")){
         console.log("user logged in");
     }
     else{
