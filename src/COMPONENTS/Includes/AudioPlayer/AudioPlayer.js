@@ -11,12 +11,14 @@ export default class AudioPlayer extends React.Component{
       this.audioinstance = null
       this.state = {
         playList: [],
+        playedSongs: [],
         clearPriorAudioLists: false
       }
     }
 
       
     options = {
+      autoPlay: false,
       showDownload: false,
       showMediaSession : true
     }
@@ -54,19 +56,30 @@ export default class AudioPlayer extends React.Component{
         }
     }
     logPlay = async (track)=>{
-      console.log(track);
       const songId = track.key;
+      const playedSongs = this.state.playedSongs;
+      this.props.nowPlayingTrackId(track.key);
+      if(playedSongs.includes(songId)){ return }
       const song = await api.getItemById("/posts", songId, ""); // get song once over
+      document.getElementsByTagName("title")[0].innerText = song.title+" | "+song.artist.artistName;
       if(song){ 
         const user = await api.getItemByUsername("/users",song.userName,""); // get song owner
-        user.plays.push(song._id); //push song id into song owner's play array
-        user.counts.plays += user.counts.plays; // update song owner's play count
+        if(!user.plays.includes(song._id)){
+          song.counts.unique_plays = song.counts.unique_plays + 1; // update song's unique_play count
+          user.plays.push(song._id); //push song id into song owner's play array only if not there before
+          user.counts.unique_plays = user.counts.unique_plays + 1; // update song owner's unique_play count
+        }
+        user.counts.plays = user.counts.plays + 1; // update song owner's play count
         if(user){
           const updatedUser = await api.updateItem("/users",user,user._id); // update user's document
           if(updatedUser){
-            song.counts.plays += song.counts.plays; // update song's play count
-            const updatedSong = await api.updateItem("/posts",user,song._id); // post counts
-            if(updatedSong){console.log("song play logged");}
+            song.counts.plays = song.counts.plays + 1; // update song's play count
+            const updatedSong = await api.updateItem("/posts",song,song._id); // post counts
+            const playedSongs = this.state.playedSongs;
+            playedSongs.push(song._id)
+            this.setState({
+              playedSongs: playedSongs
+            })
           }
         }
       } 
@@ -93,7 +106,7 @@ export default class AudioPlayer extends React.Component{
         return(
         <div>
                 <ReactJkMusicPlayer 
-                // onAudioPlay={this.logPlay}
+                onAudioPlay={this.logPlay}
                  defaultPosition = {{right: "0", bottom: "0"}}
                 {...this.options} 
                 clearPriorAudioLists = {this.state.clearPriorAudioLists}

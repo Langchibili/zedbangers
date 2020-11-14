@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const playlists = require("../database/playlists").playlists;
+const posts = require("../database/posts").posts;
 const execQuery = require("../database/connection").amalevelz.runQuery;
 
 
@@ -36,6 +37,28 @@ router.get("/:id", (req,res,next)=>{
    /* open connection and run query */
    execQuery(queryPlusResponse);
 });
+
+
+/* get one playlist by id */
+router.post("/songs", (req,res,next)=>{
+   const postIds = req.body.postIds;
+   async function queryPlusResponse(){
+       /*query runs here*/
+       const result = await posts.getPostsByPostIds("",req.body.limit, postIds);
+       /*response here if found*/ 
+       if(result){
+          res.send(result);
+       }
+       else {
+       /* sending 404 headers if not found*/ 
+          res.sendStatus(404);
+       }
+    }
+    /* open connection and run query */
+    execQuery(queryPlusResponse);
+ });
+
+getPostsByPostIds
 
 router.post("/timeline", (req,res,next)=>{
    // get post from request

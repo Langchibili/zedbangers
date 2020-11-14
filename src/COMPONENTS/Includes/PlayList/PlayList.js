@@ -9,7 +9,7 @@ import AddPlayListForm from "../AddPlayListForm/AddPlayListForm";
 import { Link } from "react-router-dom";
 
 
-export default class Song extends React.Component{ 
+export default class PlayList extends React.Component{ 
   constructor(props){
     super(props);
     this.state = {
@@ -37,21 +37,20 @@ export default class Song extends React.Component{
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
     const UserInfo= this.props.UserInfo;
-    const song = this.props.song;
+    const playlist= this.props.playlist;
     const edit = this.props.edit;
     const del = this.props.del;
  const renderAddPlayListForm = ()=>{
-   if(UserInfo){
-       return <div style={{padding: "10px"}}><AddPlayListForm UserInfo={UserInfo} songId={song._id}/></div>;
-   }
-   else{
-      return <div style={{padding: "10px"}}><Link to="/singup"> Signup </Link>or<Link to="/login"> Login </Link> to create a playlist</div>
-   }
+//    if(UserInfo){
+//        return <div style={{padding: "10px"}}><AddPlayListForm UserInfo={UserInfo} songId={song._id}/></div>;
+//    }
+//    else{
+//       return <div style={{padding: "10px"}}><Link to="/singup"> Signup </Link>or<Link to="/login"> Login </Link> to create a playlist</div>
+//    }
  }   
     if(list_type === "PlainListType"){
        return <div>
             <PlainListType 
-              song={song} 
               pauseAudio={pauseAudio}
               updateNowPlayingSongId={updateNowPlayingSongId} 
               nowPlayingTrackId={nowPlayingTrackId}
@@ -60,26 +59,25 @@ export default class Song extends React.Component{
               hideAddplayListModal={this.hideAddplayListModal}
               updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
-              {this.state.showAddplayLisDiv? renderAddPlayListForm() : ""}
+              {/* {this.state.showAddplayLisDiv? renderAddPlayListForm() : ""} */}
             </div>
     }
     else if(list_type === "ListWithImageType"){
        return <ListWithImageType 
               edit={edit}
               del={del}
-              song={song} 
               pauseAudio={pauseAudio}
               updateNowPlayingSongId={updateNowPlayingSongId}
               updateDownload={updateDownload}
+              playlist={playlist}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }
     else if(list_type === "ChatType"){
       return <ChatType 
-             song={song} />
+              playlist={playlist} />
     }
     else if(list_type === "ThumnailType"){
        return <ThumnailType 
-              song={song} 
               pauseAudio={pauseAudio}
               updateNowPlayingSongId={updateNowPlayingSongId}
               updateDownload={updateDownload}
@@ -87,7 +85,6 @@ export default class Song extends React.Component{
     }
     else if(list_type === "DivThumbnailType"){
       return <DivThumbnailType
-             song={song} 
              pauseAudio={pauseAudio}
              updateNowPlayingSongId={updateNowPlayingSongId}
              updateDownload={updateDownload}
@@ -95,7 +92,6 @@ export default class Song extends React.Component{
    }
    else if(list_type === "DivLongThumbnailType"){
       return <DivLongThumbnailType 
-             song={song} 
              pauseAudio={pauseAudio}
              updateNowPlayingSongId={updateNowPlayingSongId}
              updateDownload={updateDownload}

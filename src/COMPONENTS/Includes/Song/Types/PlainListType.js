@@ -22,7 +22,7 @@ export default class PlainListType extends React.Component{
   render(){
     console.log(this.props.nowfocusedSongId)
     return ( 
-        <li className="list-group-item" style={this.props.nowfocusedSongId == this.props.song._id? this.nowfocusedSongStyles: {}}> 
+        <li className="list-group-item" style={this.props.nowfocusedSongId === this.props.song._id? this.nowfocusedSongStyles: {}}> 
             <div className="pull-right m-l"> 
             <ActionButton
                 action_type="download"
@@ -45,6 +45,7 @@ export default class PlainListType extends React.Component{
                 pauseLinkContent = {<i className="icon-control-pause text"></i> }
                 action_type="play"
                 song={this.props.song}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                  /> 
             <div className="clear text-ellipsis"> 
@@ -53,7 +54,7 @@ export default class PlainListType extends React.Component{
             </span> 
             </Link>
             </div> 
-             {this.state.showPostInfo? <div className="song-description" style={{padding: "10px"}}>{this.props.song? this.props.song.description: ""}</div>: ""}
+    {this.state.showPostInfo? <div className="song-description" style={{padding: "10px"}}>{this.props.song? this.props.song.description: ""}<br/>Full Title: {this.props.song.title}</div>: ""}
         </li> 
     );
      } 

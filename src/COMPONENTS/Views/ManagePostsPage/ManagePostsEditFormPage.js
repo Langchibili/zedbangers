@@ -155,7 +155,19 @@ export default class ManagePostsEditForm extends React.Component{
               if(updatedPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
           })        
      }
-
+     changeHeaderTheme = () =>{
+        const header = document.getElementById("header");
+        const pathArray  = window.location.pathname.split("/");
+        if(pathArray[1] === "song"){
+             header.className = header.className.replace("bg-white-only","bg-black lter");
+        }
+        else{
+             header.className = header.className.replace("bg-black lter","bg-white-only");
+        }
+      }
+      componentWillMount(){
+        this.changeHeaderTheme();
+      }
    render(){
     return (   
         this.state._id? 

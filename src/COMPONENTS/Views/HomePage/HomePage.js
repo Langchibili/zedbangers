@@ -9,6 +9,19 @@ export default class HomePage extends React.Component{
         posts: []
     }
 }
+  changeHeaderTheme = () =>{
+    const header = document.getElementById("header");
+    const pathArray  = window.location.pathname.split("/");
+    if(pathArray[1] === "song"){
+        header.className = header.className.replace("bg-white-only","bg-black lter");
+    }
+    else{
+        header.className = header.className.replace("bg-black lter","bg-white-only");
+    }
+  }
+  componentWillMount(){
+    this.changeHeaderTheme();
+  }
    getPosts  = async ()=>{
       this.setState({
         posts: await api.getItems("/posts","","music","","","",12)
@@ -17,6 +30,7 @@ export default class HomePage extends React.Component{
   componentDidMount(){
     this.getPosts();
   }
+  
    render(){
     return (   
           <section className="scrollable padder-lg w-f-md" id="bjax-target"> <a href="#" className="pull-right text-muted m-t-lg" data-toggle="class:fa-spin"><i className="icon-refresh i-lg inline" id="refresh" /></a> <h2 className="font-thin m-b">Discover 
@@ -40,6 +54,7 @@ export default class HomePage extends React.Component{
                 list_type="DivLongThumbnailType" 
                 items_type="song" items={this.state.posts} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
@@ -53,6 +68,7 @@ export default class HomePage extends React.Component{
                 list_type="DivThumbnailType" 
                 items_type="song" items={this.state.posts} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>

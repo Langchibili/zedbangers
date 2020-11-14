@@ -25,6 +25,7 @@ export default class DivLongThumbnailType extends React.Component{
                 linkContent = {<i className="icon-control-play i-2x"></i> }
                 pauseLinkContent = {<i className="icon-control-pause i-2x"></i> }
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 pauseAudio={this.props.pauseAudio}
                  />  
             </div>

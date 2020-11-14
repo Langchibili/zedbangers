@@ -25,6 +25,7 @@ export default class DivThumbnailType extends React.Component{
                     pauseLinkContent = {<i className="icon-control-pause i-2x"></i> }
                     pauseAudio={this.props.pauseAudio}
                     updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                    nowPlayingTrackId={this.props.nowPlayingTrackId}
                     />  
                 </div>
                 </div> <a href="#"><img src={this.props.song? this.props.song.thumbnail.medium : ""} alt="" className="r r-2x img-full" /></a>

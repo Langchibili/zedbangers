@@ -53,20 +53,25 @@ export default class SinglePostPage extends React.Component{
      );
     }
   }
-
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
-    header.className.replace("bg-white-only","bg-black lter");
+    const pathArray  = window.location.pathname.split("/");
+    if(pathArray[1] === "song"){
+         header.className = header.className.replace("bg-white-only","bg-black lter");
+    }
+    else{
+         header.className = header.className.replace("bg-black lter","bg-white-only");
+    }
+  }
+  componentWillMount(){
+    this.changeHeaderTheme();
+    this.getPost();
   }
 
 //    shouldComponentUpdate(){
 //        return this.props.postId === this.state.post._id? false : true;
 //    }
    
-   componentWillMount(){    
-    this.changeHeaderTheme(); 
-    this.getPost();
-   }
 
    render(){
     return ( 
@@ -105,6 +110,7 @@ export default class SinglePostPage extends React.Component{
                 list_type="PlainListType" 
                 items_type="song" items={this.state.songs} 
                 UserInfo={this.props.UserInfo}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 nowfocusedSongId = {this.props.postId}
                 updateDownload={this.props.updateDownload}

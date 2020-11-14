@@ -1,3 +1,7 @@
+.header.navbar{
+    z-index: 100;
+}
+
 .m-l-sm {
     font-size: 14px;
     font-weight: 900;

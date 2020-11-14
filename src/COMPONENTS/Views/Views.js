@@ -18,10 +18,23 @@ import ManagePostsDeleteFinalPage from "./ManagePostsPage/ManagePostsDeleteFinal
 import SearchResultsPage from "./SearchResultsPage/SearchResultsPage";
 
 export default class Views extends React.Component{
+  changeHeaderTheme = () =>{
+     const header = document.getElementById("header");
+     const pathArray  = window.location.pathname.split("/");
+     if(pathArray[1]){
+          header.className = header.className.replace("bg-white-only","bg-black lter");
+     }
+     else{
+          header.className = header.className.replace("bg-black lter","bg-white-only");
+     }
+   }
    shouldComponentUpdate(nextProp){
         const updateView = nextProp.updateView;
         return updateView;
    }  
+   componentWillMount(){
+        this.changeHeaderTheme();
+   }
    componentDidUpdate(){
           this.props.logUrl();
    }
@@ -34,10 +47,12 @@ export default class Views extends React.Component{
               <Route path="/posts/edit" exact component={props => this.props.UserInfo? <ManagePostsEditPage 
                            UserInfo={this.props.UserInfo} 
                            pauseAudio={this.props.pauseAudio}
+                           nowPlayingTrackId={this.props.nowPlayingTrackId}
                            updateNowPlayingSongId={this.props.updateNowPlayingSongId}/> : <NotFoundPage/>} />  {/* ManagePostsEditPage page route */}
               <Route path="/posts/delete" exact component={props => this.props.UserInfo? <ManagePostsDeletePage 
                             UserInfo={this.props.UserInfo}
                             pauseAudio={this.props.pauseAudio}
+                            nowPlayingTrackId={this.props.nowPlayingTrackId}
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId} /> : <NotFoundPage/>} />  {/* ManagePostsDeletePage page route */}
               {/* <Route path="/user/:username" exact component={props => <SingleUserPage  UserInfo={this.props.UserInfo} postId={props.match.params.id} />} /> */} {/* singleuser page route */}
               <Route path="/account_verification/:username" exact component={props => <AccountVerification  match={props.match} />} />  {/* AccountVerification page route */}
@@ -47,10 +62,12 @@ export default class Views extends React.Component{
               <Route path="/search/:keyword" exact component={props => <SearchResultsPage 
                             keyword={props.match.params.keyword}
                             pauseAudio={this.props.pauseAudio}
+                            nowPlayingTrackId={this.props.nowPlayingTrackId}
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}/>} /> {/* search route */}
               <Route path="/post/edit/:title/:id" exact component={props => this.props.UserInfo? <ManagePostsEditFormPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
               <Route path="/post/delete/:title/:id" exact component={props => this.props.UserInfo? <ManagePostsDeleteFinalPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
-              <Route path="/song/:title/:id" exact component={props => <SinglePostPage  
+              <Route path="/song/:title/:id" exact component={props => <SinglePostPage 
+                            nowPlayingTrackId={this.props.nowPlayingTrackId} 
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                             pauseAudio={this.props.pauseAudio}
                             updateDownload={this.props.updateDownload}
@@ -58,7 +75,8 @@ export default class Views extends React.Component{
                             UserInfo={this.props.UserInfo}
                             postId={props.match.params.id} 
                             changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* singlepost page route */}                            
-               <Route path="/user/:username" exact component={props => <SingleUserPage  
+               <Route path="/user/:username" exact component={props => <SingleUserPage 
+                            nowPlayingTrackId={this.props.nowPlayingTrackId} 
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                             pauseAudio={this.props.pauseAudio}
                             updateDownload={this.props.updateDownload}
@@ -67,6 +85,7 @@ export default class Views extends React.Component{
                             UserInfo={this.props.UserInfo} />} />  {/* singleuserpage route */}
               <Route path="/" component={props => <HomePage
                            pauseAudio={this.props.pauseAudio}
+                           nowPlayingTrackId={this.props.nowPlayingTrackId}
                            updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                            updateDownload={this.props.updateDownload}
                            toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}

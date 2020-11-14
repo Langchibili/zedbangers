@@ -80,7 +80,19 @@ export default class UserUpdatePage extends React.Component{
             if(userUpdated){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
           })
       } 
-
+      changeHeaderTheme = () =>{
+        const header = document.getElementById("header");
+        const pathArray  = window.location.pathname.split("/");
+        if(pathArray[1] === "song"){
+             header.className = header.className.replace("bg-white-only","bg-black lter");
+        }
+        else{
+             header.className = header.className.replace("bg-black lter","bg-white-only");
+        }
+      }
+      componentWillMount(){
+        this.changeHeaderTheme();
+      }
    render(){
     return (   
         <section className="panel panel-default"> 

@@ -94,7 +94,19 @@ export default class Login extends React.Component{
           });
         }
       }
-      
+      changeHeaderTheme = () =>{
+        const header = document.getElementById("header");
+        const pathArray  = window.location.pathname.split("/");
+        if(pathArray[1] === "song"){
+             header.className = header.className.replace("bg-white-only","bg-black lter");
+        }
+        else{
+             header.className = header.className.replace("bg-black lter","bg-white-only");
+        }
+      }
+      componentWillMount(){
+        this.changeHeaderTheme();
+      }
        render(){
          return (
           <section className="m-t-lg wrapper-md animated fadeInUp" aria-describedby="main-loader" aria-busy="false">

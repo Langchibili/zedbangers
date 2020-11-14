@@ -105,6 +105,19 @@ export default class NewSongForm extends React.Component{
             }
             this.getSelectedLyricsType = this.getSelectedLyricsType.bind(this);
         }
+        changeHeaderTheme = () =>{
+          const header = document.getElementById("header");
+          const pathArray  = window.location.pathname.split("/");
+          if(pathArray[1] === "song"){
+               header.className = header.className.replace("bg-white-only","bg-black lter");
+          }
+          else{
+               header.className = header.className.replace("bg-black lter","bg-white-only");
+          }
+        }
+        componentWillMount(){
+          this.changeHeaderTheme();
+        }
         getSelectedLyricsType(value){
             if(value === "yes"){
                 let updatedStated = {

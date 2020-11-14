@@ -1,7 +1,8 @@
 import React from "react";
+import PlayList from "../PlayList/PlayList";
 import Song from "../Song/Song";
 
-export default class Lists extends React.Component{ 
+export default class PlayLists extends React.Component{ 
    
 
   renderPostType = ()=>{
@@ -19,11 +20,11 @@ export default class Lists extends React.Component{
     const del = this.props.del;
 
     return items.map((item)=>{ 
-         if(items_type === "song"){
-            return <Song 
+         if(items_type === "songlist"){
+            return <PlayList 
                     edit={edit}
                     del={del}
-                    song={item} 
+                    playlist={item} 
                     key={item._id} list_type={list_type} 
                     UserInfo={UserInfo}
                     pauseAudio={pauseAudio}

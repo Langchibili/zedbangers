@@ -21,7 +21,19 @@ export default class ManagePostsDeleteFinalPage extends React.Component{
             deletingText: "delete"
         })
      }
-
+     changeHeaderTheme = () =>{
+      const header = document.getElementById("header");
+      const pathArray  = window.location.pathname.split("/");
+      if(pathArray[1] === "song"){
+           header.className = header.className.replace("bg-white-only","bg-black lter");
+      }
+      else{
+           header.className = header.className.replace("bg-black lter","bg-white-only");
+      }
+    }
+    componentWillMount(){
+      this.changeHeaderTheme();
+    }
     
      componentDidMount(){
         this.getPost();

@@ -38,9 +38,21 @@ export default class SinglePostPage extends React.Component{
        return this.state.updatedOnce? false : true;
    }
    
-   componentWillMount(){    
+   changeHeaderTheme = () =>{
+    const header = document.getElementById("header");
+    const pathArray  = window.location.pathname.split("/");
+    if(pathArray[1] === "song"){
+         header.className = header.className.replace("bg-white-only","bg-black lter");
+    }
+    else{
+         header.className = header.className.replace("bg-black lter","bg-white-only");
+    }
+  }
+  componentWillMount(){
+    this.changeHeaderTheme();
     this.getUser();
-   }
+  }
+   
   //  componentDidUpdate(){
   //   this.setState({ updatedOnce: true})
   //  }
@@ -172,11 +184,12 @@ export default class SinglePostPage extends React.Component{
                   
                   <div className="tab-pane active" id="usersongs">
                   {this.state.songs.length > 0? <Lists list_type="ListWithImageType" 
-                items_type="song" items={this.state.songs} 
-                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                updateDownload={this.props.updateDownload}
-                pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div>no songs yet</div>}
+                  items_type="song" items={this.state.songs} 
+                  nowPlayingTrackId={this.props.nowPlayingTrackId}
+                  updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                  updateDownload={this.props.updateDownload}
+                  pauseAudio={this.props.pauseAudio}
+                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div>no songs yet</div>}
                   </div>
                   <div className="tab-pane" id="about">
                     

@@ -2,6 +2,20 @@ import React from "react";
 import {Link} from  "react-router-dom";
 
 export default class Navigation extends React.Component{
+
+   toggleNav = ()=>{
+     const width = window.outerWidth;
+     const nav = document.getElementById("nav");
+     const navHeader = document.getElementsByClassName("navbar-header")[0];
+     if(width <= 768){
+      nav.className = nav.className + " nav-off-screen";
+      navHeader.className = navHeader.className + " nav-off-screen";
+     }
+     else{
+      nav.className = nav.className + " nav-xs";
+      navHeader.className = navHeader.className + " nav-xs";
+     }
+   }
    render(){
         return (
                 <aside className="bg-black dk aside hidden-print" id="nav"> <section className="vbox"> <section className="w-f-md scrollable"> 
@@ -11,7 +25,7 @@ export default class Navigation extends React.Component{
                 <div className="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance={0} data-size="10px" data-railopacity="0.2" style={{overflow: 'hidden', width: 'auto', height: '166px'}}> {/* nav */} <nav className="nav-primary hidden-xs"> 
                 <ul className="nav bg clearfix"> 
                     <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> Discover </li> 
-                    <li> <Link to="/"> <i className="icon-disc icon text-success" /> 
+                    <li> <Link  onClick={this.toggleNav} to="/"> <i className="icon-disc icon text-success" /> 
                     
                     <span className="font-bold">What's new
                     </span> </Link> </li> 
@@ -23,12 +37,12 @@ export default class Navigation extends React.Component{
                     
                     <span className="font-bold">Events
                     </span> </Link> </li>  */}
-                    <li> <Link to={this.props.isLoggedIn? "/upload/song" : "/signup"}> <i className="icon-list icon text-info-dker" /> 
+                    <li> <Link onClick={this.toggleNav} to={this.props.isLoggedIn? "/upload/song" : "/signup"}> <i className="icon-cloud-upload icon text-info-dker" /> 
                     
                     <span className="font-bold">upload
                     </span> </Link> </li> 
-                    {this.props.isLoggedIn? "" : <li> <Link to="/signup"> <i className="icon-list icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
-                    {this.props.isLoggedIn? "" : <li> <Link to="/login"> <i className="icon-list icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
+                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/signup"> <i className="icon-user icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
+                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/login"> <i className="icon-user icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
                       {/* <li> <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true"> <i className="icon-social-youtube icon text-primary" /> 
                     
                     <span className="font-bold">Video
@@ -46,7 +60,7 @@ export default class Navigation extends React.Component{
                     <span>Songs
                     </span> </a> 
                     <ul className="nav dk text-sm"> 
-                    <li> <Link to="/posts/edit" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    <li> <Link onClick={this.toggleNav} to="/posts/edit" className="auto"> <i className="fa fa-angle-right text-xs" /> 
                     
                     <span>edit song
                     </span> </Link> </li> 
@@ -135,7 +149,7 @@ export default class Navigation extends React.Component{
                 </span> Notifications </a> </li> 
                 <li> <a href="#">Help</a> </li> 
                 <li className="divider" /> 
-                <li> <Link to="/logout" data-toggle="ajaxModal">Logout</Link> </li> 
+                <li> <Link onClick={this.toggleNav} to="/logout" data-toggle="ajaxModal">Logout</Link> </li> 
                 </ul> 
                 </div> 
                 </div> 

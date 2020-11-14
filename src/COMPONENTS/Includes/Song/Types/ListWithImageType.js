@@ -38,6 +38,7 @@ export default class ListWithImageType extends React.Component{
                 action_type="play"
                 song={this.props.song}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
                 pauseAudio={this.props.pauseAudio}
                  />
           <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"} className="pull-left thumb-sm m-r"><img src={this.props.song? this.props.song.thumbnail.small : ""} alt="..." /> </Link>   

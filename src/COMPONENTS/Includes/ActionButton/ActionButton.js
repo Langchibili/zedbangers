@@ -64,10 +64,21 @@ export default class ActionButton extends React.Component{
    }
    
   }
-
+  // shouldComponentUpdate(prevProps, nextState){
+  //     this.props.song?  this.props.song._id === this.props.nowPlayingTrackId && this.state.showPauseBtn : true
+  // }
+  // componentDidUpdate(){
+  //   if(this.props.song){
+  //     if(this.props.song._id === this.props.nowPlayingTrackId){
+  //       this.setState({
+  //         showPauseBtn: true
+  //       })
+  //     }
+  //   }
+  // }
   render(){
     return ( 
       this.renderActionType()
     );
-     } 
+  } 
 }
