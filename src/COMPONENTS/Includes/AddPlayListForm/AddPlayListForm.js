@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import api from "../../../Store/api";
 import Loader from "../Loader/Loader";
+import './AddPlayListForm.css';
 
 function PlaylistSelector(props) {
    const selectPlaylist = props.selectPlaylist;
@@ -48,12 +49,13 @@ export default class AddPlayListForm extends React.Component{
             super(props);
             this.state = {
                 playlistName: null,
+                thumbnail: null,
                 playLists: [],
                 playlistsExist: false,
                 selectedPlaylist: null,
                 numberOfPlaylists: 0,
-                postingText: "add new playlist",
-                updatingText: "add song to playlist",
+                postingText: "ADD NEW PLAYLIST",
+                updatingText: "ADD SONG TO PLAYLIST",
                 buttonState: {backgroundColor: "lightgrey",disabled:true},
                 button2State: {backgroundColor: "lightgrey",disabled:true},
                 requestDone: false
@@ -80,6 +82,7 @@ export default class AddPlayListForm extends React.Component{
                 button2State: {backgroundColor:"#cd0829",disabled:false}
             })
             playlist.postIds.push(this.props.songId);
+            playlist.thumbnail = this.props.songThumbnail;
             // playlist.userName = this.props.UserInfo.username; 
             // playlist.userNiceName = this.props.UserInfo.niceName; 
             this.setState({
@@ -94,7 +97,7 @@ export default class AddPlayListForm extends React.Component{
         updatePlaylist = async (e)=>{
             e.preventDefault();
             this.setState({
-                updatingText: "updating playlist...",
+                updatingText: "UPDATING PLAYLIST...",
             })
             if(this.state.selectedPlaylist){
                 const updatedPlaylistResponse = await api.updateItem("/playlists",this.state.selectedPlaylist,this.state.selectedPlaylist._id);
@@ -129,7 +132,7 @@ export default class AddPlayListForm extends React.Component{
                 user_picture_xl: this.props.UserInfo.picture.small
             }
             this.setState({
-                postingText: "adding playlist...",
+                postingText: "ADDING PLAYLIST...",
             })
             const newPlaylistResponse = await api.createItem("/playlists",newPlayList);
             if(newPlaylistResponse){
@@ -151,8 +154,10 @@ export default class AddPlayListForm extends React.Component{
         render(){
             return(
                 this.state.requestDone?  
-                  <div>
-                    <strong>{this.state.numberOfPlaylists}</strong> Playlists found
+                  <div className="playlist-form-wrapper">
+                    <span className="num-of-playlists-found"> 
+                       <strong>{this.state.numberOfPlaylists}</strong> Playlists Found
+                    </span> <hr/>
                     {this.state.numberOfPlaylists > 0? 
                     <div><p>Select playlist to add song into.</p>
                     <PlaylistSelector 
@@ -160,14 +165,14 @@ export default class AddPlayListForm extends React.Component{
                      playlists = {this.state.playLists}
                      unselectPlaylist = {this.unselectPlaylist}
                      />
-                     <button className="btn btn-sm btn-default" onClick={this.updatePlaylist} disabled={this.state.button2State.disabled} style={{backgroundColor: this.state.button2State.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.updatingText}</button>
+                     <button className="btn btn-sm btn-danger" onClick={this.updatePlaylist} disabled={this.state.button2State.disabled} style={{backgroundColor: this.state.button2State.backgroundColor, color:"#fff", fontWeight:"bold"}}>{this.state.updatingText}</button>
                       <hr/></div>: ""}
                      <p>Add new playlist.</p>
                      <div className="form-group">
                         <input type="text" className="form-control" placeholder="title" onChange={this.setPlaylistTitle} /> 
                      </div> 
-                     <div><button className="btn btn-sm btn-default" onClick={this.addPlaylist} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button></div>
-                     <div><button className="btn btn-sm btn-default" onClick={this.props.hideAddplayListModal}>done</button></div>
+                     <div><button className="btn btn-sm btn-danger" onClick={this.addPlaylist} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"#fff", fontWeight:"bold"}}>{this.state.postingText}</button></div><br/>
+                     <div><button className="btn btn-sm btn-danger" onClick={this.props.hideAddplayListModal}>done</button></div>
                   </div>:
                 <Loader basicType loaderContent="loading..."/>
             );

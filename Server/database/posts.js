@@ -257,7 +257,7 @@ module.exports.posts = {
                        }).sort(sortObject={_id: -1}).limit(limit));
                   },
                   getPostsByPostIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
-                    return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
+                    return await docApiConcatinator(api, null, await postModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){
                               throw err;
                           }
@@ -298,12 +298,12 @@ module.exports.posts = {
                   /* GET ONE POST FROM DATABASE*/
                   getPost: async function(postId,fields=null){
                     const filterObject = { _id: postId };
-                    return docApiConcatinator(api,await postModel.findOne(filterObject, fields, function (err, doc) {
+                    return await docApiConcatinator(api, await postModel.findOne(filterObject, fields, function (err, doc) {
                       if (err){
                           throw err;
                       }
-                      return doc;
-                   }));
+                      
+                   }),[]);
 
                 },
                 /* ADD A POST TO DATABASE AND RETURN SAVED OBJECT*/

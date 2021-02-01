@@ -1,12 +1,14 @@
 import React from "react";
 import api from "../../../Store/api";
 import Lists from "../../Includes/Lists/Lists";
+import PlayLists from "../../Includes/Lists/PlayLists";
 
 export default class HomePage extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-        posts: []
+        posts: [],
+        playlists: []
     }
 }
   changeHeaderTheme = () =>{
@@ -24,7 +26,8 @@ export default class HomePage extends React.Component{
   }
    getPosts  = async ()=>{
       this.setState({
-        posts: await api.getItems("/posts","","music","","","",12)
+        posts: await api.getItems("/posts","","music","","","",12),
+        playlists: await api.getItems("/playlists","","music","","","",12)
       },()=>{console.log(this.state);})
    }
   componentDidMount(){
@@ -69,6 +72,20 @@ export default class HomePage extends React.Component{
                 items_type="song" items={this.state.posts} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
+                updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+            </div>
+            
+            <div className="row row-sm"> 
+            <h3 className="font-thin">PlayLists</h3> 
+             <PlayLists 
+                divListType
+                list_type="ListWithImageType" 
+                items_type="songlist" items={this.state.playlists} 
+                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
+                updateNowPlayingListId={this.props.updateNowPlayingListId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>

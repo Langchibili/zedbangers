@@ -44,9 +44,11 @@ router.post("/songs", (req,res,next)=>{
    const postIds = req.body.postIds;
    async function queryPlusResponse(){
        /*query runs here*/
-       const result = await posts.getPostsByPostIds("",req.body.limit, postIds);
+       const result = await posts.getPostsByPostIds(null,req.body.limit, postIds);
+       console.log("plylist songs.....\n", result);
        /*response here if found*/ 
        if(result){
+          console.log("playlist songs two...\n",result);
           res.send(result);
        }
        else {
@@ -56,9 +58,8 @@ router.post("/songs", (req,res,next)=>{
     }
     /* open connection and run query */
     execQuery(queryPlusResponse);
- });
-
-getPostsByPostIds
+});
+  //getPostsByPostIds
 
 router.post("/timeline", (req,res,next)=>{
    // get post from request

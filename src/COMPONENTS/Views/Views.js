@@ -36,7 +36,7 @@ export default class Views extends React.Component{
         this.changeHeaderTheme();
    }
    componentDidUpdate(){
-          this.props.logUrl();
+        this.props.logUrl();
    }
    render(){
     return ( 
@@ -87,6 +87,7 @@ export default class Views extends React.Component{
                            pauseAudio={this.props.pauseAudio}
                            nowPlayingTrackId={this.props.nowPlayingTrackId}
                            updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                           updateNowPlayingListId={this.props.updateNowPlayingListId}
                            updateDownload={this.props.updateDownload}
                            toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
                            UserInfo={this.props.UserInfo}/>} /> {/* home route */}

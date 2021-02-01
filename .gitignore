@@ -25,6 +25,10 @@
 /TestServer
 /testserver.js
 /webmusicapp.tar
+Server/Server.zip
+/build-old-version
+/build.zip
+/zedbangers.zip
 
 
 npm-debug.log*

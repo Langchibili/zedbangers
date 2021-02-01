@@ -1,6 +1,5 @@
 /* UTILITY FUNCTIONS */
 
-const { valueOf } = require("./utilities/constants/api");
 
 /*  document api concatinator  */
 
@@ -429,57 +428,87 @@ module.exports = {
              return await fetchObjectArray(fields,limit,actionIds); // get user's followings' user objects from ids
         } 
     },
-    docApiConcatinator: function (api, doc=null, docs=[]){
+    // adds an api url to the docs file paths like http/https://domain.com/files/filtype/filename
+    docApiConcatinator: function (api, doc={}, docs=[]){
         concatinatedDoc = doc;
-        if(doc){
+        if(doc){ // this intels the doc is a single document 
                 doc = doc._doc;
                 const allProps = Object.keys(doc);
-                allProps.forEach(function(prop){
-                    if(doc[prop] && typeof doc[prop] === "object"){
+                allProps.forEach(function(prop){ // loop through array of inner objects or strings
+                    if(doc[prop] && typeof doc[prop] === "object"){ // check if property is an object (an inner object)
                         const innerObj = doc[prop];
-                        const innerObjProps = Object.keys(innerObj);
+                        const innerObjProps = Object.keys(innerObj); // get inner objects keys
                         innerObjProps.forEach(function(innerObjProp){
-                            if(typeof innerObj[innerObjProp] === "string")
+                            if(typeof innerObj[innerObjProp] === "string") // check if property is just a string
                             {
-                                if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
-                                    doc[prop][innerObjProp] = api + doc[prop][innerObjProp]; //change document value 
-                                }
+                                let arrayWithColon = innerObj[innerObjProp].split(":"); // if true then it's a uri with http://domain/ or https://domain/
+                                    if(arrayWithColon.length > 1){
+                                       const splitFileUri = innerObj[innerObjProp].split("/");
+                                       const newFilePathArray = splitFileUri.filter((uri)=>{ return splitFileUri.indexOf(uri) > 2}); // filter off the first 3 elements
+                                       const newFilePathString = "/" + newFilePathArray.join("/");
+                                       doc[prop][innerObjProp] = api + newFilePathString; //change document value 
+                                    }
+                                    else if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
+                                        doc[prop][innerObjProp] = api + doc[prop][innerObjProp]; //change document value 
+                                    }
                             }
                         });
                     }
                     else{
-                        if(typeof doc[prop] === "string")
+                        if(typeof doc[prop] === "string") // check if property is just a string 
                         {
-                            if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
-                                doc[prop] = api + doc[prop]; //change document value completely
-                            }
+                                let arrayWithColon = doc[prop].split(":"); // if true then it's a uri with http://domain/ or https://domain/
+                                if(arrayWithColon.length > 1){
+                                    const splitFileUri = doc[prop].split("/");
+                                    const newFilePathArray = splitFileUri.filter((uri)=>{ return splitFileUri.indexOf(uri) > 2}); // filter off the first 3 elements
+                                    const newFilePathString = "/" + newFilePathArray.join("/");
+                                    doc[prop] = api + newFilePathString; //change document value 
+                                }
+                                else if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
+                                    doc[prop] = api + doc[prop]; //change document value completely
+                                }
                         }
                     }
                     concatinatedDoc = doc;
                 });
             }
-            else if(docs){
+            else if(docs){ // this intels that the docs are an array, so loop through them and change them one at a time
                 if(docs){  
-                    concatinatedDoc = docs.map(function(doc) {
+                    concatinatedDoc = docs.map(function(doc) { // make a new set of docs with the new api concatinated
                     doc = doc._doc; 
                     const allProps = Object.keys(doc);
                     allProps.forEach(function(prop){
-                        if(doc[prop] && typeof doc[prop] === "object"){
+                        if(doc[prop] && typeof doc[prop] === "object"){  // check if property is an object (an inner object)
                             const innerObj = doc[prop];
                             const innerObjProps = Object.keys(innerObj);
                             innerObjProps.forEach(function(innerObjProp){
-                                if(typeof innerObj[innerObjProp] === "string")
+                                if(typeof innerObj[innerObjProp] === "string") // check if property is just a string
                                 {
-                                    if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
+                                    let arrayWithColon = innerObj[innerObjProp].split(":"); // if true then it's a uri with http://domain/ or https://domain/
+                                    if(arrayWithColon.length > 1){
+                                       const splitFileUri = innerObj[innerObjProp].split("/");
+                                       const newFilePathArray = splitFileUri.filter((uri)=>{ return splitFileUri.indexOf(uri) > 2}); // filter off the first 3 elements
+                                       const newFilePathString = "/" + newFilePathArray.join("/");
+                                       doc[prop][innerObjProp] = api + newFilePathString; //change document value 
+                                    }
+                                    else if(innerObj[innerObjProp].startsWith("/files") || innerObj[innerObjProp].startsWith("/downloads")){
                                         doc[prop][innerObjProp] = api + doc[prop][innerObjProp]; //change document value 
                                     }
+                                    
                                 }
                             });
                         }
                         else{
                             if(typeof doc[prop] === "string")
                             {
-                                if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
+                                let arrayWithColon = doc[prop].split(":"); // if true then it's a uri with http://domain/ or https://domain/
+                                if(arrayWithColon.length > 1){
+                                    const splitFileUri = doc[prop].split("/");
+                                    const newFilePathArray = splitFileUri.filter((uri)=>{ return splitFileUri.indexOf(uri) > 2}); // filter off the first 3 elements
+                                    const newFilePathString = "/" + newFilePathArray.join("/");
+                                    doc[prop] = api + newFilePathString; //change document value 
+                                }
+                                else if(doc[prop].startsWith("/files") || doc[prop].startsWith("/downloads")){
                                     doc[prop] = api + doc[prop]; //change document value completely
                                 }
                             }
@@ -492,13 +521,24 @@ module.exports = {
             return concatinatedDoc;
     },
     
+    externalSiteUserAuth: async function(authData){
+        /*  check if user exists by using username  */
+          // if exists, log user in
+          // if not, create new user with the external site data
+          // must add externalSiteUSerId
+          // in creation of new user, skip verification, by running a user.verification = 'activated'
+          // remember to fill up the authData
+        /*  */
+        
+    },
+
     deletePostAction: async function(){
 
     },
     updatePlayOrViewCount: async function(){
 
     }
-
+   
      /* MISCELLANEOUS FUNCTIONS */
     
      

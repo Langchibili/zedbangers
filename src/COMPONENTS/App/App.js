@@ -21,6 +21,7 @@ export default class App extends React.Component{
     this.state = {
       nowPlayingSongId: null,
       nowPlayingTrackId: null,
+      nowPlayingListId: null,
       download: null,
       fileIsDownloading: false,
       isLoggedIn: false,
@@ -93,6 +94,12 @@ nowPlayingTrackId = (songId)=>{
     updateView: false
   })
 }
+updateNowPlayingListId = (playingListId)=>{
+  this.setState({
+    nowPlayingListId: playingListId,
+    updateView: false
+  })
+}
 pauseAudio =()=>{
   this.setState({
     pauseAudio: true
@@ -143,6 +150,7 @@ async componentWillMount(){
                           logUrl={this.logUrl}
                           updateNowPlayingSongId={this.updateNowPlayingSongId} 
                           nowPlayingTrackId={this.state.nowPlayingTrackId}
+                          updateNowPlayingListId={this.updateNowPlayingListId}
                           UserInfo={this.state.UserInfo} 
                           changeHeaderTheme={this.changeHeaderTheme}
                           updateDownload={this.updateDownload}
@@ -168,7 +176,11 @@ async componentWillMount(){
           </section>
           </BrowserRouter>
         </section>
-       {this.state.sessionReqDone? <AudioPlayer nowPlayingSongId={this.state.nowPlayingSongId} nowPlayingTrackId={this.nowPlayingTrackId} pauseAudio={this.state.pauseAudio}/> : ""}  
+       {this.state.sessionReqDone? <AudioPlayer 
+                                    nowPlayingSongId={this.state.nowPlayingSongId} 
+                                    nowPlayingTrackId={this.nowPlayingTrackId} 
+                                    nowPlayingListId={this.state.nowPlayingListId}
+                                    pauseAudio={this.state.pauseAudio}/> : ""}  
        <div id="buttomDiv"></div>
       </div>
       );

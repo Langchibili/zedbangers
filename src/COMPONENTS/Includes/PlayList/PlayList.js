@@ -33,6 +33,8 @@ export default class PlayList extends React.Component{
     const updateNowPlayingSongId= this.props.updateNowPlayingSongId;
     const nowPlayingTrackId=this.props.nowPlayingTrackId;
     const nowfocusedSongId = this.props.nowfocusedSongId;
+    const nowPlayingListId = this.props.nowPlayingListId;
+    const updateNowPlayingListId = this.props.updateNowPlayingListId;
     const pauseAudio = this.props.pauseAudio;
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
@@ -69,6 +71,8 @@ export default class PlayList extends React.Component{
               pauseAudio={pauseAudio}
               updateNowPlayingSongId={updateNowPlayingSongId}
               updateDownload={updateDownload}
+              nowPlayingListId={nowPlayingListId}
+              updateNowPlayingListId={updateNowPlayingListId}
               playlist={playlist}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
     }

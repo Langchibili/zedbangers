@@ -8,8 +8,8 @@ export default class Navigation extends React.Component{
      const nav = document.getElementById("nav");
      const navHeader = document.getElementsByClassName("navbar-header")[0];
      if(width <= 768){
-      nav.className = nav.className + " nav-off-screen";
-      navHeader.className = navHeader.className + " nav-off-screen";
+      nav.className = nav.className.replace("nav-off-screen","");
+      //navHeader.className = navHeader.className + " nav-off-screen";
      }
      else{
       nav.className = nav.className + " nav-xs";

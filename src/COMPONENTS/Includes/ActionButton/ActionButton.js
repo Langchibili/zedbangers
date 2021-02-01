@@ -14,6 +14,11 @@ export default class ActionButton extends React.Component{
         showPauseBtn: true
       })
   }
+
+  updateNowPlayingList = (e) =>{
+    e.preventDefault();
+    this.props.updateNowPlayingListId(this.props.playlist._id);
+}
   
   pauseAudio = (e)=>{
     e.preventDefault();
@@ -49,6 +54,9 @@ export default class ActionButton extends React.Component{
     if(action_type === "play"){
        return this.state.showPauseBtn? 
        <a href="#" onClick={this.pauseAudio}  className={linkClassList? linkClassList: "" }> {pauseLinkContent} </a> : <a href="#" onClick={this.updateNowPlayingSong}  className={linkClassList? linkClassList: "" }> {linkContent} </a>
+    }
+    else if(action_type === "play list"){
+      return <a href="#" onClick={this.updateNowPlayingList}  className={linkClassList? linkClassList: "" }> {linkContent} </a>
     }
     else if(action_type === "download"){
        return <a href="#" onClick={this.triggerDownload} className="m-r-sm"><i className="icon-cloud-download" /></a>

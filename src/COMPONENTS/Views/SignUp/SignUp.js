@@ -5,6 +5,7 @@ import { Link, Redirect } from "react-router-dom";
 import api from "../../../Store/api";
 import Loader from '../../Includes/Loader/Loader';
 import Display from '../../Includes/Display/Display';
+import ExternalSiteAuthButtons from '../../Includes/ExternalSiteAuthButtons/ExternalSiteAuthButtons';
 
 
 export default class SignUp extends React.Component{
@@ -160,7 +161,8 @@ export default class SignUp extends React.Component{
                                 contactNumber: contactNumber,
                                 first_name: firstName,
                                 last_name: lastName,
-                                sex:userSex  
+                                sex:userSex,
+                                authentication: { type: "local"}
                             }
                             const apiResponse = await api.createItem("/signup",newUserObject);
                             if(apiResponse)
@@ -225,7 +227,8 @@ export default class SignUp extends React.Component{
           <div className="container aside-xl">
              <Display isVisible={this.state.showloader} > <Loader loaderContent="Signing you up..." /></Display>
              <Display isVisible={this.state.showContent} >
-             <h2 className="log-title">Register</h2>
+             <ExternalSiteAuthButtons />
+             <h2 className="log-title">Or Register</h2>
              <form method="post">
                 <div className="form-group">	
                 <input ref={this.firstNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>

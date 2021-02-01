@@ -12,7 +12,7 @@ export default class AudioPlayer extends React.Component{
       this.state = {
         playList: [],
         playedSongs: [],
-        clearPriorAudioLists: false
+        clearPriorAudioLists: true
       }
     }
 
@@ -28,7 +28,13 @@ export default class AudioPlayer extends React.Component{
         playList: songs.map((song)=>{ return { key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
       })
     }
-
+    PlayNewList = async (nowPlayingListId) =>{
+      const playlistObject = await api.getItemById("/playlists", nowPlayingListId, " "); // playlist object with song ids
+      const playListSongs= await api.createItem("/playlists/songs", {postIds: playlistObject.postIds, limit: 20}); // playlist with song objects
+      this.setState({
+        playList: playListSongs.map((song)=>{ return { key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
+      })
+    }
     addSongToPlaylist = async (nowPlayingSongId)=>{
         if(nowPlayingSongId){
           const song = await api.getItemById("/posts", nowPlayingSongId, "");
@@ -92,6 +98,9 @@ export default class AudioPlayer extends React.Component{
     componentWillReceiveProps(nextProps){
       if(this.props.nowPlayingSongId != nextProps.nowPlayingSongId){
         this.addSongToPlaylist(nextProps.nowPlayingSongId); //update list then
+      }
+      if(this.props.nowPlayingListId != nextProps.nowPlayingListId){
+        this.PlayNewList(nextProps.nowPlayingListId); //update list then
       }
     }
     componentWillUpdate(){

@@ -7,6 +7,7 @@ import DivThumbnailType from "./Types/DivThumbnailType";
 import DivLongThumbnailType from "./Types/DivLongThumbnailType";
 import AddPlayListForm from "../AddPlayListForm/AddPlayListForm";
 import { Link } from "react-router-dom";
+import ExternalSiteAuthButtons from "../ExternalSiteAuthButtons/ExternalSiteAuthButtons";
 
 
 export default class Song extends React.Component{ 
@@ -42,10 +43,10 @@ export default class Song extends React.Component{
     const del = this.props.del;
  const renderAddPlayListForm = ()=>{
    if(UserInfo){
-       return <div style={{padding: "10px"}}><AddPlayListForm UserInfo={UserInfo} songId={song._id}/></div>;
+       return <div style={{padding: "10px"}}><AddPlayListForm UserInfo={UserInfo} songId={song._id} songThumbnail={song.thumbnail}/></div>;
    }
    else{
-      return <div style={{padding: "10px"}}><Link to="/singup"> Signup </Link>or<Link to="/login"> Login </Link> to create a playlist</div>
+      return <div style={{padding: "10px"}}><Link to="/singup"> Signup </Link>or<Link to="/login"> Login </Link> to create a playlist<hr/> <ExternalSiteAuthButtons /></div>
    }
  }   
     if(list_type === "PlainListType"){

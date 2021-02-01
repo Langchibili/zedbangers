@@ -10,14 +10,40 @@ const userSchema = new mongoose.Schema({
       type: String,
       default: "inactived"
     },
+    authentication:{
+      type:  { 
+        type: String,
+        default: "local" // external
+      },
+      externalSite: { 
+        type: String,
+        default: "none" // thenetworkzambia, google, or facebook, etc
+      },
+      externalSiteUSerId: String
+    },
     activation_code: {
       type:Number,
       required: true
     },
     user_type: {
         type: String,
-        default: "normal"
+        default: "normal" // artist, uploader, etc
     },
+    user_priviledges: {
+      canUpload: {
+        type: Boolean,
+        default: false 
+      },
+      canHaveFans: {
+        type: Boolean,
+        default: false 
+      }
+    },
+    // user_settings: {
+    //   privacy_settings: {
+        
+    //   }
+    // },
     username: {
         type: String,
         required: true
@@ -272,10 +298,10 @@ module.exports.users = {
             },
                 /* ADD A USER TO DATABASE AND RETURN SAVED OBJECT*/
                   addUser: async function(userObject){
-                    postObject.username = postObject.username.toLowerCase();
-                    postObject.first_name = postObject.first_name.toLowerCase();
-                    postObject.last_name = postObject.last_name.toLowerCase();
-                    postObject.tags = [postObject.first_name, postObject.last_name];
+                    userObject.username = userObject.username.toLowerCase();
+                    userObject.first_name = userObject.first_name.toLowerCase();
+                    userObject.last_name = userObject.last_name.toLowerCase();
+                    userObject.tags = [userObject.first_name, userObject.last_name];
                     const newUser = new userModel(userObject);
                     return await newUser.save();
                 },
