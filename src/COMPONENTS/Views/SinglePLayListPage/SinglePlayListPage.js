@@ -3,12 +3,14 @@ import api from "../../../Store/api";
 import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
 import PlayLists from "../../Includes/Lists/PlayLists";
+import PlayList from "../../Includes/PlayList/PlayList";
 
 export default class SinglePlayListPage extends React.Component{ 
    constructor(props){
        super(props);
        this.state = {
-           playlist: [],
+           playlist: null,
+           playListSongs : [],
            recentSongs: []
         //    playlists: [],
         //    updatedOnce: false
@@ -21,16 +23,17 @@ export default class SinglePlayListPage extends React.Component{
       return
     }
     else{
-     const playlistObject = await api.getItemById("/playlists", playListId, " "); // playlist object with song ids
-     const playlist = await api.createItem("/playlists/songs", {postIds: playlistObject.postIds, limit: 12}); // playlist with song objects
-
+     const playlist = await api.getItemById("/playlists", playListId, ""); // playlist object with song ids
+     const playListSongs = await api.createItem("/playlists/songs", {postIds: playlist.postIds, limit: 12}); // playlist with song objects
+     const morePlayLists = await api.getItems("/playlists","","music","","","",12)
      this.setState(
         {
-          playlist: playlist 
+          playlist: playlist,
+          playListSongs: playListSongs
         },
         async ()=>{
           let recentSongs = await api.getItems("/posts","","music","","","",12);
-          recentSongs = recentSongs.filter((song)=>{ return !playlistObject.postIds.includes(song._id)});
+          recentSongs = recentSongs.filter((song)=>{ return !playlist.postIds.includes(song._id)});
           this.setState({
               recentSongs: recentSongs
           }) // more songs, recent songs
@@ -68,16 +71,16 @@ export default class SinglePlayListPage extends React.Component{
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
     const pathArray  = window.location.pathname.split("/");
-    if(pathArray[1] === "song"){
+    if(pathArray[1] === "song" || pathArray[1] === "playlist"){
          header.className = header.className.replace("bg-white-only","bg-black lter");
     }
     else{
          header.className = header.className.replace("bg-black lter","bg-white-only");
     }
   }
-  componentWillMount(){
-    this.changeHeaderTheme();
-  }
+  // componentWillMount(){
+  //   this.changeHeaderTheme();
+  // }
 
 //    shouldComponentUpdate(){
 //        return this.props.playListId === this.state.playlist._id? false : true;
@@ -113,24 +116,36 @@ export default class SinglePlayListPage extends React.Component{
                 
                 <div className="bottom gd bg-info wrapper-lg"> 
                 
-                <span className="pull-right text-sm">{this.state.playlist? this.state.playlist.length : ""}
-                <br />Songs
+                <span className="pull-right text-sm">{this.state.playlist? this.state.playlist.counts.plays : ""}
+                <br />Streams
                 </span> 
                 
                 <span className="h2 font-thin">{this.state.playlist? this.state.playlist.userNiceName : "unknown"}
                 </span> 
-                    </div> <img className="img-full" src={this.state.playlist? this.state.playlist[0].thumbnail.cover : ""} alt="song thumnail" />  
+                    </div> 
+                    {this.state.playlist? <img className="img-full" src={ this.state.playlist.thumbnail? this.state.playlist.thumbnail.cover : ""} alt="song thumnail" /> : ""} 
                 </div> 
-                <PlayLists 
+                {this.state.playlist? <PlayList
                 list_type="ListWithImageType" 
-                items_type="songlist" items={this.state.playlist} 
+                items_type="songlist" playlist={this.state.playlist} 
                 UserInfo={this.props.UserInfo}
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                updateNowPlayingListId={this.props.updateNowPlayingListId}
                 nowfocusedplayListId = {this.props.playListId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>: ""}
+             {this.state.recentSongs? <Lists 
+                list_type="PlainListType" 
+                items_type="song" items={this.state.playListSongs} 
+                UserInfo={this.props.UserInfo}
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
+                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowfocusedSongId = {this.props.postId}
+                updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>:""}
             </section> 
             </section>
         </aside>

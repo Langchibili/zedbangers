@@ -16,6 +16,7 @@ import ManagePostsEditPage from "./ManagePostsPage/ManagePostsEditPage";
 import ManagePostsDeletePage from "./ManagePostsPage/ManagePostsDeletePage";
 import ManagePostsDeleteFinalPage from "./ManagePostsPage/ManagePostsDeleteFinalPage";
 import SearchResultsPage from "./SearchResultsPage/SearchResultsPage";
+import SinglePlayListPage from "./SinglePLayListPage/SinglePlayListPage";
 
 export default class Views extends React.Component{
   changeHeaderTheme = () =>{
@@ -74,7 +75,17 @@ export default class Views extends React.Component{
                             toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
                             UserInfo={this.props.UserInfo}
                             postId={props.match.params.id} 
-                            changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* singlepost page route */}                            
+                            changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* singlepost page route */}  
+               <Route path="/playlist/:title/:id" exact component={props => <SinglePlayListPage 
+                            nowPlayingTrackId={this.props.nowPlayingTrackId} 
+                            updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                            pauseAudio={this.props.pauseAudio}
+                            updateDownload={this.props.updateDownload}
+                            toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
+                            updateNowPlayingListId={this.props.updateNowPlayingListId}
+                            UserInfo={this.props.UserInfo}
+                            playListId={props.match.params.id} 
+                            changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* single playlist page route */}                                         
                <Route path="/user/:username" exact component={props => <SingleUserPage 
                             nowPlayingTrackId={this.props.nowPlayingTrackId} 
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}

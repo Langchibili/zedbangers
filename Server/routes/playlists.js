@@ -45,10 +45,8 @@ router.post("/songs", (req,res,next)=>{
    async function queryPlusResponse(){
        /*query runs here*/
        const result = await posts.getPostsByPostIds(null,req.body.limit, postIds);
-       console.log("plylist songs.....\n", result);
        /*response here if found*/ 
        if(result){
-          console.log("playlist songs two...\n",result);
           res.send(result);
        }
        else {
