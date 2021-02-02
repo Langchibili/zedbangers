@@ -248,6 +248,15 @@ module.exports.posts = {
                       return docs;
                    }).sort(sortObject={_id: -1}).limit(limit));
                  },
+
+                 getPostsByPostCount: async function(postId=null,count,fields=null,limit=null,sortObject={_id: -1}){
+                  return await docApiConcatinator(api, null, await postModel.find({ _id :postId},fields,function (err, docs) {
+                    if (err){
+                        throw err;
+                    }
+                    return docs;
+                 }).sort(sortObject={counts: {[count]: -1}}).limit(limit));
+                 },
                   getPostsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
                     return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
                           if (err){

@@ -58,7 +58,7 @@ router.get("/chat", (req,res,next)=>{
    let fields = req.query.fields;
    async function queryPlusResponse(){
        /*query runs here*/
-       const result = await posts.getPosts(fields=fields,limit=limit);
+       const result = await posts.getPostsByPostCount(fields=fields,"totalcounts",limit=limit);
        /*response here*/ 
        res.send(result);
        return {query: "done"};

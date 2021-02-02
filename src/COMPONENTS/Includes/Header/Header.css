@@ -6,3 +6,23 @@
     font-size: 14px;
     font-weight: 900;
 }
+.xs-search-wrapper{
+    padding: 0px !important;
+    margin: 0px !important;
+    margin-top: 0px !important;
+    margin-right: -30px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;
+}
+.xs-search-bar{
+    width: 100% !important;
+    display: inline-flex;
+    margin: -10px -40px 0px 10px;
+    justify-content: space-between;
+}
+.xs-search-bar .input-group-btn{
+  margin-right: 40px;
+}
+.xs-search-bar .close-icon{
+    margin-left: 10px;
+}

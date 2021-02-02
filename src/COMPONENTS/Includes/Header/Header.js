@@ -3,15 +3,29 @@ import "./Header.css";
 import blankProfilePic from "../../../constants/blankprofile.png";
 import musicwebapplogo from "../../../constants/musicwebapplogo.png";
 import { Link, Redirect } from "react-router-dom";
+import Display from "../Display/Display";
 
 export default class Header extends React.Component{
     constructor(props){
           super(props);
           this.state = {
                 keyword: null,
-                searchRedirect: false
+                searchRedirect: false,
+                showSearchBar: false
           }
     }  
+    showSearchBar = (e)=>{
+          e.preventDefault();
+          this.setState({
+                showSearchBar: true
+          })
+    }
+    hideSearchBar = (e)=>{
+      e.preventDefault();
+      this.setState({
+            showSearchBar: false
+      })
+    }
     handleSearch = (e)=>{
          e.preventDefault();
          this.setState({
@@ -32,11 +46,33 @@ export default class Header extends React.Component{
    render(){
          return (
             <header id="header" className="bg-white-only header header-md navbar navbar-fixed-top-xs"> 
-            
-            <div className="navbar-header aside bg-info dk"> <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> <i className="icon-list" /> </a> <a href="/" className="navbar-brand text-lt"> <i className="icon-earphones" /> <img src="images/logo.png" alt="." className="hide" /> 
-            
-            <span className="hidden-nav-xs m-l-sm">{/*<img src={musicwebapplogo} style={{width:"200px",height:"200px"}}/>*/} thenetworkmusic
-            </span> </a> <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i className="icon-settings" /> </a> 
+            <Display isVisible={this.state.showSearchBar}>
+                  <form className="navbar-form navbar-left input-s-lg m-t m-l-n-xs .xs-search-wrapper" role="search"> 
+                  
+                  <div className="form-group"> 
+                  
+                  <div className="input-group xs-search-bar"> 
+                  
+                  <span className="input-group-btn"> <button onClick={this.handleSearch} type="submit" className="btn btn-sm bg-white btn-icon rounded"><i className="fa fa-search" /></button> 
+                  </span> 
+                  <input type="text" onChange={this.getKeyWord} className="form-control input-sm no-border rounded" placeholder="Search songs, albums..." /> 
+                  <span className="close-icon"> <a href="#" onClick={this.hideSearchBar}><i className="fa fa-times" /></a></span>
+                  {this.searchRedirect()}
+                  </div> 
+                  </div> 
+                  </form> 
+            </Display>
+            <Display isVisible={!this.state.showSearchBar}>
+            <div className="navbar-header aside bg-info dk">
+               <a className="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html"> 
+               <i className="icon-list" /> </a> 
+               <div className="navbar-brand text-lt"> 
+                  <i className="icon-earphones" /> 
+                  <img src="images/logo.png" alt="." className="hide" /> 
+                     <span className="hidden-nav-xs m-l-sm">{/*<img src={musicwebapplogo} style={{width:"200px",height:"200px"}}/>*/} <a href="/">thenetworkmusic</a></span> 
+                  <a href="#" className="hidden-md hidden-lg" onClick={this.showSearchBar} style={{marginLeft: "10px"}}><i className="fa fa-search" /></a>
+               </div> 
+            <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i className="icon-settings" /> </a> 
             </div> 
             <ul className="nav navbar-nav hidden-xs"> 
             <li> <a href="#nav,.navbar-header" data-toggle="class:nav-xs,nav-xs" className="text-muted"> <i className="fa fa-indent text" /> <i className="fa fa-dedent text-active" /> </a> </li> 
@@ -123,6 +159,7 @@ export default class Header extends React.Component{
             </li> 
             </ul> 
             </div>
+            </Display>
             </header>
            );
       } 
