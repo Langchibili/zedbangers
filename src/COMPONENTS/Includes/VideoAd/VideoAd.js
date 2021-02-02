@@ -14,7 +14,7 @@ export default class VideoAd extends React.Component{
         videoCurrentTime: 0,
         showFileDownloader: false
       }
-      this.video = React.createRef();
+      // this.video = React.createRef();
     }
 
     /*  
@@ -47,47 +47,48 @@ export default class VideoAd extends React.Component{
         return <UserExperience uxType="file_download_process"/>
      }
    }
-  componentDidMount(){
-    const video = this.video.current;
-    video.oncanplay = ()=>{
-      this.setState({
-        showUx: true
-      })
-    }
-    // video.onerror = ()=>{
-    //   video.play();
-    // }
-  }
+  // componentDidMount(){
+  //   const video = this.video.current;
+  //   video.oncanplay = ()=>{
+  //     this.setState({
+  //       showUx: true
+  //     })
+  //   }
+  //   // video.onerror = ()=>{
+  //   //   video.play();
+  //   // }
+  // }
 
-  componentDidUpdate(){
-    const video = this.video.current;
-    const toggleOffFileIsDownloading = this.props.toggleOffFileIsDownloading;
-    if(video.currentTime && video.currentTime <= 40){
-      this.setState({
-        videoCurrentTime: video.currentTime
-      })
-      if(this.state.videoCurrentTime >= 30){
-        this.setState({
-          showFileDownloader: true
-        },()=>{
-          toggleOffFileIsDownloading();
-        })
+  // componentDidUpdate(){
+  //   const video = this.video.current;
+  //   const toggleOffFileIsDownloading = this.props.toggleOffFileIsDownloading;
+  //   if(video.currentTime && video.currentTime <= 40){
+  //     this.setState({
+  //       videoCurrentTime: video.currentTime
+  //     })
+  //     if(this.state.videoCurrentTime >= 30){
+  //       this.setState({
+  //         showFileDownloader: true
+  //       },()=>{
+  //         toggleOffFileIsDownloading();
+  //       })
         
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
     
     render(){ 
         return(
         <div className="video-ad-container">
-          <span>wait while we process your file</span>
+          <FileDownloader downloadObject={this.props.download}/>
+          {/* <span>wait while we process your file</span>
           {this.renderDownloadProcessUx(this.state.showUx)}
           <p>Ad</p>
           <video id="advideo" ref={this.video} width="320" height="240" controls>
            <source src="/files/videos/Chris Brown, Young Thug - Go Crazy (Official Video)[via torchbrowser.com].mp4" type="video/mp4" />
            Your browser does not support the video tag.
-          </video>
-          {/*<Display isVisible={this.state.showFileDownloader}>*/}<FileDownloader downloadObject={this.props.download}/>{/*</Display>*/}
+          </video> */}
+          {/*<Display isVisible={this.state.showFileDownloader}>*<FileDownloader downloadObject={this.props.download}/>{/*</Display>*/}
         </div>
         );
     }

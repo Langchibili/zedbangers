@@ -4,6 +4,7 @@ import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
 import PlayLists from "../../Includes/Lists/PlayLists";
 import PlayList from "../../Includes/PlayList/PlayList";
+import Loader from "../../Includes/Loader/Loader";
 
 export default class SinglePlayListPage extends React.Component{ 
    constructor(props){
@@ -11,6 +12,8 @@ export default class SinglePlayListPage extends React.Component{
        this.state = {
            playlist: null,
            playListSongs : [],
+           currentPostUrl: this.props.match.url,
+           postRequestDone: false,
            recentSongs: []
         //    playlists: [],
         //    updatedOnce: false
@@ -90,10 +93,12 @@ export default class SinglePlayListPage extends React.Component{
     this.changeHeaderTheme(); 
     this.getPlayList();
    }
-
+   componentDidUpdate(prevProps){
+    if(prevProps.match.url !== this.props.match.url) this.getPlayList();
+   }
    render(){
     return ( 
-        <section className="hbox stretch bg-black dker">
+        this.state.postRequestDone? <section className="hbox stretch bg-black dker">
             <aside className="col-sm-5 no-padder" id="sidebar"> <section className="vbox animated fadeInUp"> <section className="scrollable"> 
 
                 <div className="m-t-n-xxs item pos-rlt"> 
@@ -162,7 +167,7 @@ export default class SinglePlayListPage extends React.Component{
             </section>
             </section>
         </section>
-        </section>
+        </section>: <Loader />
      );
   } 
 }

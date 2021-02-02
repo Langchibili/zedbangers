@@ -4,6 +4,7 @@ import SignUp from '../SignUp/SignUp';
 import Display from '../../Includes/Display/Display';
 import { Link } from 'react-router-dom';
 import api from "../../../Store/api";
+import ExternalSiteAuthButtons from '../../Includes/ExternalSiteAuthButtons/ExternalSiteAuthButtons';
 
 
 export default class Login extends React.Component{
@@ -115,6 +116,7 @@ export default class Login extends React.Component{
                   <header className="wrapper text-center"> <strong>Sign in to upload</strong> </header>
                     <div className="row merged">
                             <h2 className="log-title">{this.state.loginText}</h2>
+                             <ExternalSiteAuthButtons buttonPreText="LOGIN" />
                               <p>
                                 Not on musicbase Yet? <Link to="/" title="">Take the tour</Link> or <Link to="/signup" title="">Join now</Link>
                               </p>

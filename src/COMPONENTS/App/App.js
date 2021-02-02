@@ -33,6 +33,14 @@ export default class App extends React.Component{
       visitedUrls: [window.location.href]
     }
 }
+
+redirectToHttps = () => {
+  const httpUrl = window.location.href;
+  const httpsUrl = httpUrl.replace("http", "https")
+  if(window.location.protocol === "http:"){
+     window.location = httpsUrl;
+  }
+}
 async checkUserSession(){
   const userStatus = await api.getItems("/user_status");
   if(userStatus){
@@ -107,7 +115,6 @@ pauseAudio =()=>{
 }
 
 logUrl = ()=>{
-  console.log("logged");
   const currentUrl =  window.location.href;
   const urlArray = this.state.visitedUrls;
   const previousUrl = urlArray[urlArray.length-2];
@@ -120,7 +127,9 @@ logUrl = ()=>{
   }
 }
 
+
 async componentWillMount(){
+  //this.redirectToHttps(); // redirect http requests to https
   //window.toolbar.visible = false;
   await this.checkUserSession();
 }

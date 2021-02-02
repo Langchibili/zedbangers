@@ -25,11 +25,13 @@
 /TestServer
 /testserver.js
 /webmusicapp.tar
-Server/Server.zip
+/Server/Server.zip
 /build-old-version
 /build.zip
 /zedbangers.zip
-
+/build - previous state/
+/Server/database/database.zip
+/.gitgnore
 
 npm-debug.log*
 yarn-debug.log*

@@ -47,8 +47,8 @@ export default class ListWithImageType extends React.Component{
                  /> */}
                  <ActionButton
                 linkClassList = "pull-right m-r"
-                linkContent = {<><i class="icon-playlist icon text-success-lter"></i> 
-                                        <b class="badge bg-success dker pull-right">{this.props.playlist.postIds.length}</b>
+                linkContent = {<><i className="icon-playlist icon text-success-lter"></i> 
+                                        <b className="badge bg-success dker pull-right">{this.props.playlist.postIds.length}</b>
                                         <span>PlayAll</span> </>}
                 action_type="play list"
                 playlist={this.props.playlist}

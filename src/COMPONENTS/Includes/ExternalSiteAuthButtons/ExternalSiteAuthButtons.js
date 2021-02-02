@@ -10,7 +10,7 @@ export default class ExternalSiteAuthButtons extends React.Component{
         <div>
               {/* <div>Continue With: </div>
               <hr/> */}
-              <div> <FacebookAuth /></div> <br />
+              {/* <div> <FacebookAuth /></div> <br /> */}
               <div> <GoogleAuth /></div> 
               <hr/>
         </div>

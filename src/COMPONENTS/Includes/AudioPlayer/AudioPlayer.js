@@ -12,6 +12,7 @@ export default class AudioPlayer extends React.Component{
       this.state = {
         playList: [],
         playedSongs: [],
+        autoPlay: false,
         clearPriorAudioLists: true
       }
     }
@@ -23,16 +24,30 @@ export default class AudioPlayer extends React.Component{
       showMediaSession : true
     }
     getDefaultPlaylist = async ()=>{
-      const songs = await api.getItems("/posts","","music","","","",10);
-      this.setState({
-        playList: songs.map((song)=>{ return { key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
-      })
+      // this.audioinstance.oncanplay = () =>{ 
+      //   this.audioinstance.pause();
+      // }
+      // this.audioinstance.onerror = (e)=>{
+      //   this.audioinstance.load();
+      //   this.audioinstance.oncanplay = () =>{
+      //     this.audioinstance.play();
+      //   }
+      //   console.log(e);
+      // }
+      // const songs = await api.getItems("/posts","","music","","","",10);
+      // this.setState({
+      //   playList: songs.map((song)=>{ return { key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
+      // })
     }
     PlayNewList = async (nowPlayingListId) =>{
       const playlistObject = await api.getItemById("/playlists", nowPlayingListId, " "); // playlist object with song ids
       const playListSongs= await api.createItem("/playlists/songs", {postIds: playlistObject.postIds, limit: 20}); // playlist with song objects
       this.setState({
         playList: playListSongs.map((song)=>{ return { key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium}})
+      },()=>{
+        this.setState({
+          autoPlay: true
+        })
       })
     }
     addSongToPlaylist = async (nowPlayingSongId)=>{
@@ -116,6 +131,7 @@ export default class AudioPlayer extends React.Component{
         <div>
                 <ReactJkMusicPlayer 
                 onAudioPlay={this.logPlay}
+                autoPlay={this.state.autoPlay}
                  defaultPosition = {{right: "0", bottom: "0"}}
                 {...this.options} 
                 clearPriorAudioLists = {this.state.clearPriorAudioLists}

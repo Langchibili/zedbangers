@@ -103,9 +103,9 @@ const userSchema = new mongoose.Schema({
     uploadatistsfor: [],
     picture: {
       cover: { type: String, default : "/files/images/blankcover.jpg" },
-      medium: { type: String },
+      medium: { type: String, default : "/files/images/blankprofile.png" },
       thumbnail: { type: String, default : "/files/images/blankprofile.png" },
-      small: { type: String }     
+      small: { type: String, default : "/files/images/blankprofile.png"}     
     },
     picture_small: String,
     picture_medium: String,

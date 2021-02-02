@@ -32,16 +32,17 @@ export default class ActionButton extends React.Component{
     const downloadObject = {}
     downloadObject.title = this.props.song.title;
     downloadObject.file = this.props.song.track;
+    downloadObject.songId = this.props.song._id;
     this.props.updateDownload(downloadObject);
     this.props.toggleOnFileIsDownloading();
-    const video = document.getElementById("advideo");
-    video.load();
-    video.oncanplay = () =>{
-      video.play();
-    }
-    video.onerror = (e)=>{
-      console.log(e);
-    }
+    // const video = document.getElementById("advideo");
+    // video.load();
+    // video.oncanplay = () =>{
+    //   video.play();
+    // }
+    // video.onerror = (e)=>{
+    //   console.log(e);
+    // }
   }   
 
 

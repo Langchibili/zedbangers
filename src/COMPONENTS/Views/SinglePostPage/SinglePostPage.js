@@ -2,6 +2,9 @@ import React from "react";
 import api from "../../../Store/api";
 import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
+import { Redirect } from "react-router-dom";
+import Loader from "../../Includes/Loader/Loader";
+import "./SinglePostPage.css";
 
 export default class SinglePostPage extends React.Component{ 
    constructor(props){
@@ -9,6 +12,8 @@ export default class SinglePostPage extends React.Component{
        this.state = {
            post: null,
            songs: [],
+           currentPostUrl: this.props.match.url,
+           postRequestDone: false,
            recentSongs: [],
            updatedOnce: false
        }
@@ -26,17 +31,18 @@ export default class SinglePostPage extends React.Component{
           post: post 
         },
         ()=>{
-            const songs = this.state.songs;
-            songs.push(this.state.post) // add current song
+            //const songs = this.state.songs;
+            //songs.push(this.state.post) // add current song
             this.setState({
-                songs: songs
+               // songs: songs,
+                postRequestDone: true
             },
             async ()=>{
                 const song = this.state.songs[0];
                 const userId = this.state.post.userId;
                 let moresongs = await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist more songs to state
                 moresongs = moresongs.filter((song)=>{ return postId !== song._id});
-                moresongs.unshift(song) // remove this curent song id, add it only to the beginning and add more songs to songs list
+               // moresongs.unshift(song) // remove this curent song id, add it only to the beginning and add more songs to songs list
                 this.setState({
                     songs: moresongs // remove this curent song id and add more songs to songs list
                 },
@@ -53,6 +59,9 @@ export default class SinglePostPage extends React.Component{
      );
     }
   }
+
+ 
+
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
     const pathArray  = window.location.pathname.split("/");
@@ -67,15 +76,13 @@ export default class SinglePostPage extends React.Component{
     this.changeHeaderTheme();
     this.getPost();
   }
-
-//    shouldComponentUpdate(){
-//        return this.props.postId === this.state.post._id? false : true;
-//    }
-   
-
+  
+  componentDidUpdate(prevProps){
+    if(prevProps.match.url !== this.props.match.url) this.getPost();
+  }
    render(){
     return ( 
-        <section className="hbox stretch bg-black dker">
+        this.state.postRequestDone? <section className="hbox stretch bg-black dker">
             <aside className="col-sm-5 no-padder" id="sidebar"> <section className="vbox animated fadeInUp"> <section className="scrollable"> 
 
                 <div className="m-t-n-xxs item pos-rlt"> 
@@ -106,6 +113,17 @@ export default class SinglePostPage extends React.Component{
                 </span> 
                     </div> <img className="img-full" src={this.state.post? this.state.post.thumbnail.cover : ""} alt="song thumnail" />  
                 </div> 
+                <Song
+                list_type="PlainListType" 
+                items_type="song" song={this.state.post} 
+                UserInfo={this.props.UserInfo}
+                nowPlayingSongClass = "list-group-item now-play-song"
+                nowPlayingTrackId={this.props.nowPlayingTrackId}
+                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                nowfocusedSongId = {this.props.postId}
+                updateDownload={this.props.updateDownload}
+                pauseAudio={this.props.pauseAudio}
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
                 <Lists 
                 list_type="PlainListType" 
                 items_type="song" items={this.state.songs} 
@@ -132,7 +150,7 @@ export default class SinglePostPage extends React.Component{
             </section>
             </section>
         </section>
-        </section>
+        </section>: <Loader />
      );
   } 
 }

@@ -77,18 +77,18 @@ export default class HomePage extends React.Component{
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </div>
             
-            <div className="row row-sm"> 
-            <h3 className="font-thin">PlayLists</h3> 
-             <PlayLists 
-                divListType
-                list_type="ListWithImageType" 
-                items_type="songlist" items={this.state.playlists} 
-                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                nowPlayingTrackId={this.props.nowPlayingTrackId}
-                updateNowPlayingListId={this.props.updateNowPlayingListId}
-                updateDownload={this.props.updateDownload}
-                pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+            <div className="row row-sm" style={{padding: "10px"}}>
+              <h3 className="font-thin">PlayLists</h3> 
+              <PlayLists 
+                  divListType
+                  list_type="ListWithImageType" 
+                  items_type="songlist" items={this.state.playlists} 
+                  updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                  nowPlayingTrackId={this.props.nowPlayingTrackId}
+                  updateNowPlayingListId={this.props.updateNowPlayingListId}
+                  updateDownload={this.props.updateDownload}
+                  pauseAudio={this.props.pauseAudio}
+                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </div>
             </div> 
             

@@ -44,7 +44,7 @@ router.get("/download",(req,res,next)=>{
       else if(type === "attachment"){
          subPath = "attachements/";
       }
-      const downloadDir = rootdirectory + static_folder_name + '/files/'+subPath+filename;
+      const downloadDir = rootdirectory + '/files/'+subPath+filename;
       // send download response, meaning, download the file
       res.download(downloadDir, filename)
       

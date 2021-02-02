@@ -1,0 +1,9 @@
+.now-play-song{
+    margin-bottom: 0;
+    border: none !important;
+    border-radius: 0px !important;
+    background-color: #66023c !important;
+    border-bottom: 2px solid #191f23 !important;
+    border-bottom-right-radius: 0px !important; 
+    border-bottom-left-radius: 0px !important;
+}

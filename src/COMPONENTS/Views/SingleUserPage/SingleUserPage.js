@@ -2,6 +2,7 @@ import React from "react";
 import api from "../../../Store/api";
 import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
+import PlayLists from "../../Includes/Lists/PlayLists";
 
 export default class SinglePostPage extends React.Component{ 
    constructor(props){
@@ -9,6 +10,7 @@ export default class SinglePostPage extends React.Component{
        this.state = {
            user: null,
            songs: [],
+           playlists: [],
            updatedOnce: false
        }
    }
@@ -26,7 +28,8 @@ export default class SinglePostPage extends React.Component{
         async ()=>{
           const userId = this.state.user._id;
           this.setState({
-            songs: await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist songs to state
+            songs: await api.createItem("/posts/timeline",{userId: userId, limit: 20}), // add artist songs to state
+            playlists: await api.createItem("/playlists/timeline",{userId: userId, limit: 20})// add artist songs to state            
            })
         }
      );
@@ -100,7 +103,7 @@ export default class SinglePostPage extends React.Component{
                         
                         <a href="#">
                           
-                          <span className="m-b-xs h4 block">55</span>
+                          <span className="m-b-xs h4 block">{this.state.user? this.state.user.counts.downloads: 0 }</span>
                           <small className="text-muted">downloads</small>
                         </a>
                       </div>
@@ -167,13 +170,13 @@ export default class SinglePostPage extends React.Component{
                     </a>
                   </li>
                   <li className>
-                    <a href="#events" data-toggle="tab">
-                      Events
+                    <a href="#playlists" data-toggle="tab">
+                      PlayLists
                     </a>
                   </li>
                   <li className>
-                    <a href="#interaction" data-toggle="tab">
-                      Interaction
+                    <a href="#about" data-toggle="tab">
+                      About
                     </a>
                   </li>
                 </ul>
@@ -189,16 +192,27 @@ export default class SinglePostPage extends React.Component{
                   updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                   updateDownload={this.props.updateDownload}
                   pauseAudio={this.props.pauseAudio}
-                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div>no songs yet</div>}
+                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div style={{padding: '10px'}}>no songs yet</div>}
                   </div>
-                  <div className="tab-pane" id="about">
+                  <div className="tab-pane" id="playlists">
                     
                     <div className="text-center wrapper">
-                      
+                    {this.state.playlists.length > 0? 
+                    <PlayLists 
+                    divListType
+                    list_type="ListWithImageType" 
+                    items_type="songlist" items={this.state.playlists} 
+                    updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                    nowPlayingTrackId={this.props.nowPlayingTrackId}
+                    updateNowPlayingListId={this.props.updateNowPlayingListId}
+                    updateDownload={this.props.updateDownload}
+                    pauseAudio={this.props.pauseAudio}
+                    toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div style={{padding: '10px'}}>no playlists yet</div>}
+                    
                       <i className="fa fa-spinner fa fa-spin fa fa-large" />
                     </div>
                   </div>
-                  <div className="tab-pane" id="activities">
+                  <div className="tab-pane" id="about">
                     
                     <div className="text-center wrapper">
                       

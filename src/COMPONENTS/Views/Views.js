@@ -75,6 +75,7 @@ export default class Views extends React.Component{
                             toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}
                             UserInfo={this.props.UserInfo}
                             postId={props.match.params.id} 
+                            match={props.match} 
                             changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* singlepost page route */}  
                <Route path="/playlist/:title/:id" exact component={props => <SinglePlayListPage 
                             nowPlayingTrackId={this.props.nowPlayingTrackId} 
@@ -85,10 +86,12 @@ export default class Views extends React.Component{
                             updateNowPlayingListId={this.props.updateNowPlayingListId}
                             UserInfo={this.props.UserInfo}
                             playListId={props.match.params.id} 
+                            match={props.match} 
                             changeHeaderTheme={this.props.changeHeaderTheme}/>} />  {/* single playlist page route */}                                         
                <Route path="/user/:username" exact component={props => <SingleUserPage 
                             nowPlayingTrackId={this.props.nowPlayingTrackId} 
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+                            updateNowPlayingListId={this.props.updateNowPlayingListId}
                             pauseAudio={this.props.pauseAudio}
                             updateDownload={this.props.updateDownload}
                             username={props.match.params.username}

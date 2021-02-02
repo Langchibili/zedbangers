@@ -72,6 +72,18 @@ const playlistSchema = new mongoose.Schema({
                               default: 0
                             }
                 },
+                thumbnail:{
+                  size:  { type: Number },
+                  user_id: { type: String },
+                  cover: { type: String, default : "/files/images/blankthumbnail-full-width.jpg" },
+                  medium: { type: String, default : "/files/images/blankthumbnail-mid-width.png" },
+                  thumbnail: { type: String, default : "/files/images/blankthumbnail-thumb-width.png" },
+                  small: { type: String, default : "/files/images/blankthumbnail-small-width.png"},
+                  cover_big: { type: String },
+                  cover_xl: { type: String },
+                  type: { type: String },
+                  size: Number
+                },
 								tracks:[{
                     post_url: { type: String },
                     duration:{ type: Number },

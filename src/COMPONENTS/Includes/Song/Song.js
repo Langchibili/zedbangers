@@ -34,6 +34,7 @@ export default class Song extends React.Component{
     const updateNowPlayingSongId= this.props.updateNowPlayingSongId;
     const nowPlayingTrackId=this.props.nowPlayingTrackId;
     const nowfocusedSongId = this.props.nowfocusedSongId;
+    const nowPlayingSongClass = this.props.nowPlayingSongClass;
     const pauseAudio = this.props.pauseAudio;
     const updateDownload= this.props.updateDownload;
     const toggleOnFileIsDownloading= this.props.toggleOnFileIsDownloading;
@@ -54,7 +55,8 @@ export default class Song extends React.Component{
             <PlainListType 
               song={song} 
               pauseAudio={pauseAudio}
-              updateNowPlayingSongId={updateNowPlayingSongId} 
+              updateNowPlayingSongId={updateNowPlayingSongId}
+              nowPlayingSongClass = {nowPlayingSongClass} 
               nowPlayingTrackId={nowPlayingTrackId}
               nowfocusedSongId={nowfocusedSongId}
               showAddplayListModal={this.showAddplayListModal}
