@@ -21,6 +21,7 @@
 /public/aboutwebapp.txt
 /Server/utilities/ffmpeg
 /Server/utilities/constants/db_url.js
+/src/constants/social_login_ids.js
 /Server/utilities/secrets
 /TestServer
 /testserver.js

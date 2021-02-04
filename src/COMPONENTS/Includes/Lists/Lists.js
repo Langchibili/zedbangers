@@ -39,6 +39,8 @@ export default class Lists extends React.Component{
             return <div>
                     <Embed 
                       post={item}
+                      edit={edit}
+                      del={del}
                       key={item._id} 
                       UserInfo={UserInfo}/>
                   </div>

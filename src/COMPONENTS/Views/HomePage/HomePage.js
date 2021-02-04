@@ -8,7 +8,9 @@ export default class HomePage extends React.Component{
     super(props);
     this.state = {
         posts: [],
-        playlists: []
+        embeds: [],
+        playlists: [],
+        chatsongs: []
     }
 }
   changeHeaderTheme = () =>{
@@ -21,14 +23,25 @@ export default class HomePage extends React.Component{
         header.className = header.className.replace("bg-black lter","bg-white-only");
     }
   }
+  // updateChatSongs(songs){
+  //   const songsWithAddedMetrics = songs.map((song)=>{
+  //     const songDownloads = song.counts.downloads;
+  //     const songPlays = song.counts.plays;
+  //     const songTotalCounts = songDownloads + songPlays;
+  //     song.songTatalCounts = songTotalCounts;
+  //     return song;
+  //   })  
+  // }
   componentWillMount(){
     this.changeHeaderTheme();
   }
    getPosts  = async ()=>{
       this.setState({
         posts: await api.getItems("/posts","","music","","","",12),
-        playlists: await api.getItems("/playlists","","music","","","",12)
-      },()=>{console.log(this.state);})
+        embeds: await api.getItems("/posts","","embed","","","",12),
+        playlists: await api.getItems("/playlists","","music","","","",12),
+        chatsongs: await api.getItems("/posts","","music","","","",12)
+      })
    }
   componentDidMount(){
     this.getPosts();
@@ -62,6 +75,14 @@ export default class HomePage extends React.Component{
                 pauseAudio={this.props.pauseAudio}
                 toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
             </div>
+            <div className="row"> 
+               <h3 className="font-thin" style={{padding: "15px"}}>Videos</h3>
+                <Lists 
+                items_type="embed" 
+                items={this.state.embeds} 
+                UserInfo={this.props.UserInfo}
+                />
+             </div>
             <div className="row"> 
             
             <div className="col-md-7"> <h3 className="font-thin">New Songs</h3> 
@@ -98,7 +119,7 @@ export default class HomePage extends React.Component{
             <Lists 
                 divListType
                 list_type="ChatType" 
-                items_type="song" items={this.state.posts} />
+                items_type="song" items={this.state.chatsongs} />
             </div>
             </div> 
             </div> 

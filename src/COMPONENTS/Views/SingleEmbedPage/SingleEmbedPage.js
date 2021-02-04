@@ -75,7 +75,7 @@ export default class SingleEmbedPage extends React.Component{
          }}
          src={`https://www.youtube.com/embed/${youtubeId}`}
          frameBorder="0"
-         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen
        />
      </div>
 }

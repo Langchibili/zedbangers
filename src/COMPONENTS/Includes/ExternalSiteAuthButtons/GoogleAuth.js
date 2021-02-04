@@ -1,6 +1,7 @@
 import React from "react";
 import GoogleLogin from 'react-google-login';
 import api from "../../../Store/api";
+import socialLoginIds from "../../../constants/social_login_ids";
 
 export default class GoogleAuth extends React.Component{ 
 
@@ -39,7 +40,7 @@ export default class GoogleAuth extends React.Component{
   }
   render(){
     return <GoogleLogin
-            clientId="224948820632-c8f8mqf9nh54v8gvup03vntr2u9ktjra.apps.googleusercontent.com"
+            clientId={socialLoginIds.googleClientIdLocalhost}
             buttonText="CONTINUE WITH GOOGLE"
             onSuccess={this.googleResponse}
             onFailure={this.googleResponse}

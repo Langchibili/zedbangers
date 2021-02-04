@@ -15,6 +15,10 @@ import ManagePostsEditFormPage from "./ManagePostsPage/ManagePostsEditFormPage";
 import ManagePostsEditPage from "./ManagePostsPage/ManagePostsEditPage";
 import ManagePostsDeletePage from "./ManagePostsPage/ManagePostsDeletePage";
 import ManagePostsDeleteFinalPage from "./ManagePostsPage/ManagePostsDeleteFinalPage";
+import ManageEmbedsEditFormPage from "./ManageEmbedsEditPage/ManageEmbedsFormPage";
+import ManageEmbedsEditPage from "./ManageEmbedsEditPage/ManageEmbedsEditPage";
+import ManageEmbedsDeletePage from "./ManageEmbedsEditPage/ManageEmbedsDeletePage";
+import ManageEmbedsDeleteFinalPage from "./ManageEmbedsEditPage/ManageEmbedsDeleteFinalPage";
 import SearchResultsPage from "./SearchResultsPage/SearchResultsPage";
 import SingleEmbedPage from "./SingleEmbedPage/SingleEmbedPage";
 import SinglePlayListPage from "./SinglePLayListPage/SinglePlayListPage";
@@ -57,6 +61,17 @@ export default class Views extends React.Component{
                             nowPlayingTrackId={this.props.nowPlayingTrackId}
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId} /> : <NotFoundPage/>} />  {/* ManagePostsDeletePage page route */}
               {/* <Route path="/user/:username" exact component={props => <SingleUserPage  UserInfo={this.props.UserInfo} postId={props.match.params.id} />} /> */} {/* singleuser page route */}
+              <Route path="/embeds/edit" exact component={props => this.props.UserInfo? <ManageEmbedsEditPage
+                           UserInfo={this.props.UserInfo} 
+                           pauseAudio={this.props.pauseAudio}
+                           nowPlayingTrackId={this.props.nowPlayingTrackId}
+                           updateNowPlayingSongId={this.props.updateNowPlayingSongId}/> : <NotFoundPage/>} />  {/* ManageEmbedsEditPage page route */}
+               <Route path="/embeds/delete" exact component={props => this.props.UserInfo? <ManageEmbedsDeletePage
+                           UserInfo={this.props.UserInfo} 
+                           pauseAudio={this.props.pauseAudio}
+                           nowPlayingTrackId={this.props.nowPlayingTrackId}
+                           updateNowPlayingSongId={this.props.updateNowPlayingSongId}/> : <NotFoundPage/>} />  {/* ManageEmbedsEditPage page route */}
+              <Route path="/account_verification/:username" exact component={props => <AccountVerification  match={props.match} />} />  {/* AccountVerification page route */}
               <Route path="/account_verification/:username" exact component={props => <AccountVerification  match={props.match} />} />  {/* AccountVerification page route */}
               <Route path="/signup" exact component={props => !this.props.UserInfo? <SignUp />: <div>You already have an account.</div>} /> {/* signup route */}
               <Route path="/login" exact component={props => !this.props.UserInfo? <Login /> : <div>You are already loged in.</div>} /> {/* login route */}
@@ -68,6 +83,8 @@ export default class Views extends React.Component{
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}/>} /> {/* search route */}
               <Route path="/post/edit/:title/:id" exact component={props => this.props.UserInfo? <ManagePostsEditFormPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
               <Route path="/post/delete/:title/:id" exact component={props => this.props.UserInfo? <ManagePostsDeleteFinalPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
+              <Route path="/embed/edit/:title/:id" exact component={props => this.props.UserInfo? <ManageEmbedsEditFormPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
+              <Route path="/embed/delete/:title/:id" exact component={props => this.props.UserInfo? <ManageEmbedsDeleteFinalPage UserInfo={this.props.UserInfo} postId={props.match.params.id} /> : <NotFoundPage/>} />  {/* singlepost page route */}
               <Route path="/song/:title/:id" exact component={props => <SinglePostPage 
                             nowPlayingTrackId={this.props.nowPlayingTrackId} 
                             updateNowPlayingSongId={this.props.updateNowPlayingSongId}

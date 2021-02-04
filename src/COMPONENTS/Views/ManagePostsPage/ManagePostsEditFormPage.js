@@ -2,6 +2,7 @@ import React from "react";
 import NewSongForm from "../UploadPage/NewSongForm/NewSongForm";
 import NewVideoForm from "../UploadPage/NewVideoForm/NewVideoForm";
 import api from "../../../Store/api";
+import { Link } from "react-router-dom";
 
 export default class ManagePostsEditForm extends React.Component{
     constructor(props){
@@ -10,6 +11,7 @@ export default class ManagePostsEditForm extends React.Component{
         this.state = {
               postingText: "update",
               showTitleBox: false,
+              post_link: null,
               buttonState: {backgroundColor: "lightgrey",disabled:true}
         }
       //   this.addUserInfo();
@@ -76,6 +78,45 @@ export default class ManagePostsEditForm extends React.Component{
           }
       }
 
+      handleEmbed = (e) =>{
+        let linkSplit = ''; // initalize empty string
+        let embedLinkEnd = "" // initalize empty string
+        let youtubeId =  "" // initalize empty string
+        let linkIndexInSplit = 0; // initalize empty number
+        const embed = {}; // initialize empty embed object
+        let embedLink = e.target.value;
+        const isWatchTypeLink = embedLink.includes("watch");
+        if(isWatchTypeLink){
+            linkSplit = embedLink.split("=");
+            linkIndexInSplit = linkSplit.length - 1;
+            embedLinkEnd = linkSplit[linkIndexInSplit];
+            youtubeId = embedLinkEnd;
+            embed.embedUri = 'https://www.youtube.com/embed/'+embedLinkEnd;
+            embed.embedHtml = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+embedLinkEnd+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
+        else{
+            const containsOtherParts = embedLink.includes("?");
+            if(containsOtherParts){
+                const mixedLink = embedLink.split("?");
+                embedLink = mixedLink[0];
+            }
+            linkSplit = embedLink.split("/");
+            linkIndexInSplit = linkSplit.length - 1;
+            embedLinkEnd = linkSplit[linkIndexInSplit];
+            youtubeId = embedLinkEnd;
+            embed.embedUri = 'https://www.youtube.com/embed/'+embedLinkEnd;
+            embed.embedHtml = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+embedLinkEnd+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
+        const hasEmbeddedMusicVideo = this.state.post_type === "music"
+        embed.youtubeId = youtubeId;
+        embed.belongsToSong = hasEmbeddedMusicVideo;
+        this.setState({
+            embed: embed,
+            hasEmbeddedMusicVideo: hasEmbeddedMusicVideo, 
+            buttonState: {backgroundColor:"#cd0829",disabled:false}
+        })
+      }
+
       addPhoto = (photoObject) =>{
            this.setState({
                thumbnail: photoObject
@@ -105,7 +146,7 @@ export default class ManagePostsEditForm extends React.Component{
               }, ()=>{ console.log(this.state)})
           }
      }
-
+   
 
      removeGenre = (genreValuesLeft) => {
       if(genreValuesLeft === "clear"){
@@ -124,6 +165,13 @@ export default class ManagePostsEditForm extends React.Component{
          this.setState({
              isExplicit: value
          })
+     }
+     
+     renderPostTypeOnLink = ()=>{
+         if(this.state.post_type === "music"){
+             return "song";
+         }
+         return this.state.post_type
      }
 
       handleSubmit(e){
@@ -145,6 +193,7 @@ export default class ManagePostsEditForm extends React.Component{
               let stateObjectclone = Object.assign({}, this.state);
               delete stateObjectclone.buttonState; // remove buttonstate property from state 
               delete stateObjectclone.postingText; // remove postingText property from state 
+              delete stateObjectclone.post_link; // remove post_link property from state
               if(this.state.post_type === "video"){
               delete stateObjectclone.artist; // remove artist property from state if song
               delete stateObjectclone.genres; // remove genres property from state if song
@@ -152,6 +201,7 @@ export default class ManagePostsEditForm extends React.Component{
               delete stateObjectclone.featuredArtists; // remove genres property from state if song
               }
               const updatedPost = await api.updateItem("/posts",stateObjectclone, this.state._id);
+              this.state.post_link = '/'+this.renderPostTypeOnLink()+'/'+this.state.title+'/'+this.state._id;
               if(updatedPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
           })        
      }
@@ -186,7 +236,12 @@ export default class ManagePostsEditForm extends React.Component{
         <div><img src={this.state.thumbnail.medium} style={{maxWidth: 200, marginBottom: "10px"}}/></div>
         <textarea id="editor" defaultValue={this.state.description} onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.state.description} />
         <br/>
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder={this.state.hasEmbeddedMusicVideo? 'https://youtube.com/embed/'+this.state.embed.youtubeId : "youtube video link"} onChange={this.handleEmbed} /> 
+        </div> 
+        <br/>
         <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
+        <br/>{this.state.post_link? <Link to={this.state.post_link} className="text-success">View Updated Post</Link> : ""}
         </form> 
         </div> 
        </section> : <div></div>

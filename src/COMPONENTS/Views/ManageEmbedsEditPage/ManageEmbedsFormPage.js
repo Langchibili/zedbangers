@@ -1,75 +1,50 @@
 import React from "react";
-import NewSongForm from "./NewSongForm/NewSongForm";
-import NewVideoForm from "./NewVideoForm/NewVideoForm";
 import api from "../../../Store/api";
 import { Link } from "react-router-dom";
 
-export default class UploadPage extends React.Component{
+export default class ManageEmbedsEditFormPage extends React.Component{
     constructor(props){
         super(props);
         // set text as default, if this.props.initialPostObject is not set
         this.state = {
-              post_type: 'music',
-              post_link: null,
-              postingText: "post",
+              postingText: "update",
               showTitleBox: false,
+              post_link: null,
               buttonState: {backgroundColor: "lightgrey",disabled:true}
         }
       //   this.addUserInfo();
         this.postBox = React.createRef();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.renderFormType = this.renderFormType.bind(this);
+     //   this.renderFormType = this.renderFormType.bind(this);
+     }
+     
+     getPost = async ()=>{ 
+        const post = await api.getItemById("/posts", this.props.postId);
+        this.setState({
+            ...post,
+            postingText: "update",
+            showTitleBox: false,
+            buttonState: {backgroundColor: "lightgrey",disabled:true}
+        })
      }
 
-     renderFormType(addPhotoFunction, addAudioFunction, addVideoFunction, addGenre, removeGenre, toggleLyricsType){
-         if(this.props.post_type === "song"){
-          return <NewSongForm 
-                 addPhoto={addPhotoFunction} 
-                 addAudio={addAudioFunction}
-                 addGenre={addGenre}
-                 removeGenre={removeGenre} 
-                 toggleLyricsType={toggleLyricsType} 
-                 />;
-        }
-         else {
-          return <NewVideoForm addPhoto={addPhotoFunction} addVideo={addVideoFunction}/>;
-         }
-     }
-     componentWillMount(){
-      // set initial uploading user state   
-      this.addUserInfo();
-     }
-
-
-     addUserInfo = () =>{
-      let post_type = this.props.post_type === "song"? "music" : "video";
-      if(this.props.post_type === "embed") post_type = "embed";
-      let updatedStated = {
-          ...this.state,
-          post_type: post_type,
-          title: "untitled",
-          genres: [],
-          description: "",
-          short_description: "",
-          isExplicit: false,
-          artist: {
-              artistName: this.props.UserInfo.niceName,
-              artistId: this.props.UserInfo._id,
-              picture_xl: this.props.UserInfo.picture.small? this.props.UserInfo.picture.small : "",
-              artistUserName: this.props.UserInfo.username
-          },
-          author: {
-              authorName: this.props.UserInfo.niceName,
-              authorId: this.props.UserInfo._id,
-              picture_xl: this.props.UserInfo.picture.small? this.props.UserInfo.picture.small : "",
-              authorUserName: this.props.UserInfo.username
-          },
-          categories: ["music"],
-          userName: this.props.UserInfo.username,
-          userId: this.props.UserInfo._id,
-          userFullName: this.props.UserInfo.niceName
-      }
-      this.setState(updatedStated);
+    //  renderFormType(addPhotoFunction, addAudioFunction, addVideoFunction, addGenre, removeGenre, toggleLyricsType){
+    //      if(this.state.post_type === "music"){
+    //       return <NewSongForm 
+    //              addPhoto={addPhotoFunction} 
+    //              addAudio={addAudioFunction}
+    //              addGenre={addGenre}
+    //              removeGenre={removeGenre} 
+    //              toggleLyricsType={toggleLyricsType} 
+    //              />;
+    //     }
+    //      else {
+    //       return <NewVideoForm addPhoto={addPhotoFunction} addVideo={addVideoFunction}/>;
+    //      }
+    //  }
+    
+     componentDidMount(){
+        this.getPost();
      }
 
     
@@ -100,7 +75,7 @@ export default class UploadPage extends React.Component{
               this.setState(updatedStated);
           }
       }
-     
+
       handleEmbed = (e) =>{
         let linkSplit = ''; // initalize empty string
         let embedLinkEnd = "" // initalize empty string
@@ -130,7 +105,7 @@ export default class UploadPage extends React.Component{
             embed.embedUri = 'https://www.youtube.com/embed/'+embedLinkEnd;
             embed.embedHtml = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+embedLinkEnd+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
         }
-        const hasEmbeddedMusicVideo = this.props.post_type === "song"
+        const hasEmbeddedMusicVideo = this.state.post_type === "song"
         embed.youtubeId = youtubeId;
         embed.belongsToSong = hasEmbeddedMusicVideo;
         this.setState({
@@ -140,69 +115,65 @@ export default class UploadPage extends React.Component{
         })
       }
 
-      addPhoto = (photoObject) =>{
-           this.setState({
-               thumbnail: photoObject
-           })
-      }
-      addAudio = (audioObject) =>{
-          this.setState({
-              track: audioObject
-          })
-     }
-     addVideo = (videoObject) =>{
-          this.setState({
-              video: videoObject.video,
-              thumbnail: videoObject.image
-          })
-     }
+    //   addPhoto = (photoObject) =>{
+    //        this.setState({
+    //            thumbnail: photoObject
+    //        })
+    //   }
+    //   addAudio = (audioObject) =>{
+    //       this.setState({
+    //           track: audioObject
+    //       })
+    //  }
+    //  addVideo = (videoObject) =>{
+    //       this.setState({
+    //           video: videoObject.video,
+    //           thumbnail: videoObject.image
+    //       })
+    //  }
      
-     addGenre = (genre) => {
-          const initialState = this.state.genres;
-          if(initialState.includes(genre)){
-              return;
-          }
-          else{
-              initialState.push(genre)
-              this.setState({
-                  genres: initialState
-              })
-          }
-     }
+    //  addGenre = (genre) => {
+    //       const initialState = this.state.genres;
+    //       if(initialState.includes(genre)){
+    //           return;
+    //       }
+    //       else{
+    //           initialState.push(genre)
+    //           this.setState({
+    //               genres: initialState
+    //           }, ()=>{ console.log(this.state)})
+    //       }
+    //  }
+   
 
-
-     removeGenre = (genreValuesLeft) => {
-      if(genreValuesLeft === "clear"){
-          this.setState({
-              genres: []
-          })
-      }
-      else{
-          this.setState({
-              genres: genreValuesLeft
-          })
-      } 
-    }
+    //  removeGenre = (genreValuesLeft) => {
+    //   if(genreValuesLeft === "clear"){
+    //       this.setState({
+    //           genres: []
+    //       })
+    //   }
+    //   else{
+    //       this.setState({
+    //           genres: genreValuesLeft
+    //       })
+    //   } 
+    // }
      
-     toggleLyricsType  = (value) =>{
-         this.setState({
-             isExplicit: value
-         })
+    //  toggleLyricsType  = (value) =>{
+    //      this.setState({
+    //          isExplicit: value
+    //      })
+    //  }
+     
+     renderPostTypeOnLink = ()=>{
+         if(this.state.post_type === "music"){
+             return "song";
+         }
+         return this.state.post_type
      }
 
       handleSubmit(e){
           e.preventDefault();
-          if(this.props.post_type === "embed" && !this.state.hasOwnProperty("embed")){
-              this.setState({
-                  buttonState: {backgroundColor: "lightgrey",disabled:true}
-              })
-          } // dissable upload button if post_type is embed and youtube video is not set
-          if(this.state.title.length < 0){
-            this.setState({
-                buttonState: {backgroundColor: "lightgrey",disabled:true}
-            })
-           } // dissable upload button if title is reset to nothing
-        
           const description = this.postBox.current.value;
           let shortDescription;
           if(description.length > 120){
@@ -212,7 +183,7 @@ export default class UploadPage extends React.Component{
           let updatedStated = {
               ...this.state,
               description: description,
-              postingText: "posting...",
+              postingText: "updating...",
               short_description: shortDescription ? shortDescription : description
           }
           this.setState(updatedStated, async ()=>{
@@ -226,40 +197,52 @@ export default class UploadPage extends React.Component{
               delete stateObjectclone.genres; // remove genres property from state if song
               delete stateObjectclone.isExplicit; // remove artist property from state if song
               delete stateObjectclone.featuredArtists; // remove genres property from state if song
-            }
-              const newPost = await api.createItem("/posts",stateObjectclone);
-              this.addUserInfo.post_link = '/'+this.props.post_type+'/'+newPost.title+'/'+newPost._id;
-              if(newPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}, ...this.addUserInfo})}  
-            })        
+              }
+              const updatedPost = await api.updateItem("/posts",stateObjectclone, this.state._id);
+              this.state.post_link = '/'+this.renderPostTypeOnLink()+'/'+this.state.title+'/'+this.state._id;
+              if(updatedPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
+          })        
      }
-     renderUploaderName = ()=>{
-        return this.props.post_type === "song"? "Song" : "Video";
-     }
-
+     changeHeaderTheme = () =>{
+        const header = document.getElementById("header");
+        const pathArray  = window.location.pathname.split("/");
+        if(pathArray[1] === "song"){
+             header.className = header.className.replace("bg-white-only","bg-black lter");
+        }
+        else{
+             header.className = header.className.replace("bg-black lter","bg-white-only");
+        }
+      }
+      componentWillMount(){
+        this.changeHeaderTheme();
+      }
    render(){
     return (   
+        this.state._id? 
         <section className="panel panel-default"> 
 
-        <header className="panel-heading font-bold">{this.props.post_type === "embed"? "Embed Video": "Upload "+this.renderUploaderName()} </header> 
+        <header className="panel-heading font-bold">Update Embed</header> 
         
         <div className="panel-body"> 
         
         <form role="form"> 
         
         <div className="form-group">
-        <input type="text" className="form-control" required={window.location.pathname === "/upload/song"} placeholder="title" onChange={this.setTitle} /> 
+        <input type="text" className="form-control" defaultValue={this.state.title} placeholder={this.state.title} onChange={this.setTitle} /> 
         </div> 
-        {this.props.post_type === "embed"? "" : this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
-        <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "song"? "about song..." : "about video..." } />
+        {/* {this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
+        <div><img src={this.state.thumbnail.medium} style={{maxWidth: 200, marginBottom: "10px"}}/></div> */}
+        <textarea id="editor" defaultValue={this.state.description} onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.state.description} />
         <br/>
         <div className="form-group">
-          <input type="text" className="form-control" placeholder="youtube video link" onChange={this.handleEmbed} /> 
+          <input type="text" className="form-control" placeholder={this.state.hasEmbeddedMusicVideo? 'https://youtube.com/embed/'+this.state.embed.youtubeId : "youtube video link"} onChange={this.handleEmbed} /> 
         </div> 
+        <br/>
         <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
-        <br/>{this.state.post_link? <Link to={this.state.post_link} className="text-success">View Post</Link> : ""}
+        <br/>{this.state.post_link? <Link to={this.state.post_link} className="text-success">View Updated Embed</Link> : ""}
         </form> 
         </div> 
-       </section>
+       </section> : <div></div>
         );
       } 
 }

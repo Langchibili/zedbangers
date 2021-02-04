@@ -10,11 +10,20 @@ export default class SinglePostPage extends React.Component{
        this.state = {
            user: null,
            songs: [],
+           embeds: [],
            playlists: [],
            updatedOnce: false
        }
    }
-
+   renderUserType = ()=>{
+     const user_type = this.state.user.user_type;
+       if(user_type === "normal"){
+         return "Streamer"
+       }
+       else{
+         return this.state.user.user_type;
+       }
+   }
    getUser = async () =>{
     const username = this.props.username;
     if(!username){
@@ -28,7 +37,8 @@ export default class SinglePostPage extends React.Component{
         async ()=>{
           const userId = this.state.user._id;
           this.setState({
-            songs: await api.createItem("/posts/timeline",{userId: userId, limit: 20}), // add artist songs to state
+            songs: await api.createItem("/posts/timeline",{userId: userId, post_type: "music", limit: 20}), // add artist songs to state
+            embeds: await api.createItem("/posts/timeline",{userId: userId, post_type: "embed", limit: 20}), // add user video embeds to state
             playlists: await api.createItem("/playlists/timeline",{userId: userId, limit: 20})// add artist songs to state            
            })
         }
@@ -132,7 +142,7 @@ export default class SinglePostPage extends React.Component{
                     <small className="text-uc text-xs text-muted">
                       about me
                     </small>
-                    <p>Artist</p>
+                    <p>{this.state.user? this.renderUserType(): ""}</p>
                     <small className="text-uc text-xs text-muted">info</small>
                     <p>
                     {this.state.user? this.state.user.bio.about: "" }
@@ -175,8 +185,8 @@ export default class SinglePostPage extends React.Component{
                     </a>
                   </li>
                   <li className>
-                    <a href="#about" data-toggle="tab">
-                      About
+                    <a href="#videos" data-toggle="tab">
+                      Videos
                     </a>
                   </li>
                 </ul>
@@ -212,10 +222,14 @@ export default class SinglePostPage extends React.Component{
                       <i className="fa fa-spinner fa fa-spin fa fa-large" />
                     </div>
                   </div>
-                  <div className="tab-pane" id="about">
+                  <div className="tab-pane" id="videos">
                     
                     <div className="text-center wrapper">
-                      
+                      <Lists 
+                      items_type="embed" 
+                      items={this.state.embeds} 
+                      UserInfo={this.props.UserInfo}
+                      />
                       <i className="fa fa-spinner fa fa-spin fa fa-large" />
                     </div>
                   </div>

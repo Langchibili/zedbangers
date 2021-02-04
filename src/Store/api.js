@@ -37,7 +37,7 @@ import api_url from "../constants/api_url";
       for(let query in otherQueriesObject){
           otherQueries = otherQueries + "&" + query + "=" + otherQueriesObject[query];
       }
-      const response = await fetch(api_url+apiEndPoint+'/?fields='+fields+'&postId='+postId+'&postType='+postType+'&commentType='+commentType+'&userId='+userId+'&limit='+limit+otherQueries,{credentials: "include"});
+      const response = await fetch(api_url+apiEndPoint+'/?fields='+fields+'&postId='+postId+'&post_type='+postType+'&commentType='+commentType+'&userId='+userId+'&limit='+limit+otherQueries,{credentials: "include"});
       const myResponse = await response.json();
       return myResponse;
     }

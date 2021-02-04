@@ -73,9 +73,29 @@ export default class Navigation extends React.Component{
                     <span>delete song
                     </span> </Link> </li> 
                     </ul> 
+                   </li>
+                   <li>
+                    <a href="#" className="auto"> 
+                         
+                    <span className="pull-right text-muted"> <i className="fa fa-angle-left text" /> <i className="fa fa-angle-down text-active" /> 
+                    </span> <i className="icon-grid icon"> </i> 
+                    
+                    <span>Video Embeds
+                    </span> </a>  
+                    <ul className="nav dk text-sm"> 
+                    <li> <Link onClick={this.toggleNav} to="/embeds/edit" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    
+                    <span>edit embed
+                    </span> </Link> </li> 
+                    <li> <Link to="/embeds/delete" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    
+                    <span>delete embed
+                    </span> </Link> </li> 
+                    </ul> 
                     </li> 
                 </ul> : ""
                }
+               
                 <ul className="nav" data-ride="collapse"> 
                     <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> about us </li> 
                     <li> <a href="#" className="auto"> 

@@ -48,8 +48,8 @@ export default class PlainListType extends React.Component{
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                  /> 
             <div className="clear text-ellipsis"> 
-            <Link to={this.props.song? "/song/"+this.props.song.title+"/"+this.props.song._id  : "#"}>
-            <span>{this.props.song? this.props.song.title : "untitled"}
+            <Link to={this.props.song? "/song/"+this.props.song.dashed_title+"/"+this.props.song._id  : "#"}>
+            <span>{this.props.song? this.props.song.dashed_title : "untitled"}
             </span> 
             </Link>
             </div> 

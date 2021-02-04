@@ -2,19 +2,19 @@ import React from "react";
 import api from "../../../Store/api";
 import Lists from "../../Includes/Lists/Lists";
 
-export default class ManagePostsEditPage extends React.Component{ 
+export default class ManageEmbedsDeletePage extends React.Component{ 
    constructor(props){
        super(props);
        this.state = {
-           songs: [],
+           embeds: [],
            updatedOnce: false
        }
    }
 
-   getUserSongs = async () =>{
+   getUserEmbeds = async () =>{
     const userId = this.props.UserInfo._id;
     this.setState({
-      songs: await api.createItem("/posts/timeline",{userId: userId, post_type: "music", limit: 20})// add artist songs to state
+      embeds: await api.createItem("/posts/timeline",{userId: userId, post_type: "embed", limit: 20})// add artist songs to state
      })
   }
   changeHeaderTheme = () =>{
@@ -29,21 +29,17 @@ export default class ManagePostsEditPage extends React.Component{
   }
   componentWillMount(){
     this.changeHeaderTheme();
-    this.getUserSongs();
+    this.getUserEmbeds();
   }
-   
 
    render(){
     return (
       <section className="scrollable">
-           <Lists list_type="ListWithImageType" 
-                edit
-                items_type="song" items={this.state.songs} 
-                nowPlayingTrackId={this.props.nowPlayingTrackId}
-                updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                updateDownload={this.props.updateDownload}
-                pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+           <Lists  
+              del
+              items_type="embed" 
+              items={this.state.embeds} 
+              />
       </section>
       
     );

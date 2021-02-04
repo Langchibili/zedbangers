@@ -13,9 +13,17 @@ const execQuery = require("../database/connection").amalevelz.runQuery;
 router.get("/", (req,res,next)=>{
    let limit =  parseInt(req.query.limit);
    let fields = req.query.fields;
+   let post_type = req.query.post_type;
+   let result;
    async function queryPlusResponse(){
        /*query runs here*/
-       const result = await posts.getPosts(fields=fields,limit=limit);
+       if(!post_type){
+         result = await posts.getPosts(fields=fields,limit=limit);
+       }
+       else{
+         result = await posts.getPostsByType(post_type,fields=fields,limit=limit);
+       }
+       
        /*response here*/ 
        res.send(result);
        return {query: "done"};
@@ -33,7 +41,6 @@ router.get("/:post_type/:taxonomy/:taxonomyValue", (req,res,next)=>{
    let taxonomyValue = req.params.taxonomyValue;
    let limit =  parseInt(req.query.limit); 
    let fields = req.query.fields;
-   console.log(query);
    async function queryPlusResponse(){
        let result;
        /*query runs here*/
@@ -138,7 +145,7 @@ router.post("/timeline", (req,res,next)=>{
    //add to database object and sending response object 
    async function queryPlusResponse(){
       /*query runs here*/
-      const timeline = await posts.getPostsByUserId(postObject.userId, postObject.fields || "", postObjectLimit);
+      const timeline = await posts.getPostsByUserId(postObject.userId, postObject.post_type, postObject.fields || "", postObjectLimit);
       /*response here*/
       res.send(timeline);
       return {query: "done"};
@@ -176,7 +183,7 @@ router.delete("/:id", (req,res,next)=>{
   const postId = req.params.id;
   async function queryPlusResponse(){
       /*query runs here*/
-      await posts.deletePost(postId);
+      const deletedDoc = await posts.deletePost(postId);
       /*RESPOND THAT DELETE WAS SUCCESSFULL*/ 
       res.send({success: "deleted"});
       return {query: "done"};
