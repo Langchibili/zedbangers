@@ -27,7 +27,7 @@ export default class Navigation extends React.Component{
                     <li className="hidden-nav-xs padder m-t m-b-sm text-xs text-muted"> Discover </li> 
                     <li> <Link  onClick={this.toggleNav} to="/"> <i className="icon-disc icon text-success" /> 
                     
-                    <span className="font-bold">What's new
+                    <span className="font-bold">What's New
                     </span> </Link> </li> 
                     {/* <li> <Link to="/genres"> <i className="icon-music-tone-alt icon text-info" /> 
                     
@@ -39,10 +39,14 @@ export default class Navigation extends React.Component{
                     </span> </Link> </li>  */}
                     <li> <Link onClick={this.toggleNav} to={this.props.isLoggedIn? "/upload/song" : "/signup"}> <i className="icon-cloud-upload icon text-info-dker" /> 
                     
-                    <span className="font-bold">upload
+                    <span className="font-bold">Upload Song
                     </span> </Link> </li> 
-                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/signup"> <i className="icon-user icon text-info-dker" /><span className="font-bold">signup</span> </Link> </li> }
-                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/login"> <i className="icon-user icon text-info-dker" /> <span className="font-bold">login</span> </Link> </li> }
+                    <li> <Link onClick={this.toggleNav} to={this.props.isLoggedIn? "/upload/embed" : "/signup"}> <i className="icon-social-youtube icon text-danger-dker"/> 
+                    
+                    <span className="font-bold">Embed Video
+                    </span> </Link> </li> 
+                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/signup"> <i className="icon-user icon text-info-dker" /><span className="font-bold">Signup</span> </Link> </li> }
+                    {this.props.isLoggedIn? "" : <li> <Link onClick={this.toggleNav} to="/login"> <i className="icon-user icon text-info-dker" /> <span className="font-bold">Login</span> </Link> </li> }
                       {/* <li> <a href="video.html" data-target="#content" data-el="#bjax-el" data-replace="true"> <i className="icon-social-youtube icon text-primary" /> 
                     
                     <span className="font-bold">Video
@@ -82,20 +86,20 @@ export default class Navigation extends React.Component{
                     <span>More
                     </span> </a> 
                     <ul className="nav dk text-sm"> 
-                    <li> <a href="profile.html" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    <li> <a href="#" className="auto"> <i className="fa fa-angle-right text-xs" /> 
                     
                     <span>About us
                     </span> </a> </li> 
-                    <li> <a href="blog.html" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    <li> <a href="#" className="auto"> <i className="fa fa-angle-right text-xs" /> 
                     
                     <span>Blog
                     </span> </a> </li> 
-                    <li> <a href="invoice.html" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    <li> <a href="#" className="auto"> <i className="fa fa-angle-right text-xs" /> 
                     
                     <span>contact us 
 
                     </span> </a> </li> 
-                    <li> <a href="gmap.html" className="auto"> <i className="fa fa-angle-right text-xs" /> 
+                    <li> <a href="#" className="auto"> <i className="fa fa-angle-right text-xs" /> 
                     
                     <span>help
                     </span> </a> </li> 

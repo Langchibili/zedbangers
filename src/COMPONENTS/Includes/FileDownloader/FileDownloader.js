@@ -15,7 +15,6 @@ export default class FileDownloader extends React.Component{
   getFileExtension = (file)=>{
     let fileArray = file.split(".");
     const lastItem = fileArray.length - 1;
-    console.log(fileArray[lastItem]);
     return fileArray[lastItem]; // the extension
   }
 
@@ -49,16 +48,25 @@ export default class FileDownloader extends React.Component{
   }
 
   async componentDidUpdate(){
-    if(!this.state.downloadEd && this.props.downloadObject){
+    if(this.props.downloadObject){
       const downloadObject = this.props.downloadObject;
-      let download_link = downloadObject.file.download_link;
-      const fileExtension = download_link = download_link.replace(window.location.origin, api_url);
-      this.getFileExtension(download_link)
-      const res = await fetch(download_link);
-      const blob = await res.blob();
+      // let download_link = downloadObject.file.download_link;
+      // download_link = download_link.replace("https://thenetworkmusic.thenetworkzambia.com", api_url);
+      // console.log(download_link);
+      const fileExtension = this.getFileExtension(downloadObject.file.uri_path)
+      // const res = await fetch("https://thenetworkmusicapi.thenetworkzambia.com/downloads/download/?type=audio&filename=06 101 -Interlude- - -www-SongsLover-pk--MUSICSTREAMBASE.COM-f27bd7be-56dd-11eb-9234-0123456789ab.mp3");
+      // console.log(res.body.getReader());
+      // const blob = await res.blob();
+      const link_url = downloadObject.file.uri_path.replace(window.location.origin, "");
+      const link = document.createElement('a');
+      link.href = link_url;
+      document.body.appendChild(link);
+      link.setAttribute("download", downloadObject.title+"."+fileExtension)
+      link.click(); // click n created link and download file
+      //document.body.removeChild(link);
       this.logDownload(downloadObject.songId); // log download data
       //const data = get
-      download(blob, downloadObject.title+"."+fileExtension,"audio/"+fileExtension);
+      //download(blob, downloadObject.title+"."+fileExtension,"audio/"+fileExtension);
     }
   }
     

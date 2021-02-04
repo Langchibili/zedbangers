@@ -54,7 +54,11 @@ const postSchema = new mongoose.Schema({
 			isSingle:Boolean,
 			isofficial: Boolean,
 			isVerifiedUploader: Boolean,
-			copyrightText: String,
+      copyrightText: String,
+      hasEmbeddedMusicVideo: {
+        type: Boolean,
+        default: false
+       },
 			ediited:{
 				status:{
                     type: Boolean,
@@ -81,7 +85,15 @@ const postSchema = new mongoose.Schema({
                 externalUrl: {
                     link:String
                 }
-			},
+      },
+      embed:{
+        type: {type: String, default: "video"},
+        srcOrigin: {type: String, default: "youtube"},
+        belongsToSong: {type: Boolean, default: false},
+        embedUri: {type: String},
+        embedHtml: {type: String},
+        youtubeId: {type: String}
+      },
 			thumbnail:{
                   size:  { type: Number },
                   user_id: { type: String },

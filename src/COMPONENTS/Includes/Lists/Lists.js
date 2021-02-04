@@ -1,4 +1,5 @@
 import React from "react";
+import Embed from "../Embed/Embed";
 import Song from "../Song/Song";
 
 export default class Lists extends React.Component{ 
@@ -34,9 +35,17 @@ export default class Lists extends React.Component{
                     toggleOnFileIsDownloading={toggleOnFileIsDownloading}
                     />
          }
-         else if(items_type === "video"){
-            return <div></div>
+         else if(items_type === "embed"){
+            return <div>
+                    <Embed 
+                      post={item}
+                      key={item._id} 
+                      UserInfo={UserInfo}/>
+                  </div>
          }
+         else if(items_type === "video"){
+          return <div></div>
+       }
          else{
            return <div></div>
          }

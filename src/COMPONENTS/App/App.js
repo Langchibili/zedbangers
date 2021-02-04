@@ -129,7 +129,7 @@ logUrl = ()=>{
 
 
 async componentWillMount(){
-  this.redirectToHttps(); // redirect http requests to https
+  //this.redirectToHttps(); // redirect http requests to https
   //window.toolbar.visible = false;
   await this.checkUserSession();
 }
@@ -169,9 +169,9 @@ async componentWillMount(){
                           isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
 
                         <Display isVisible={this.state.fileIsDownloading}>
-                          {/* <VideoAd 
+                          <VideoAd 
                            download={this.state.download} 
-                           toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/> */}
+                           toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
                         </Display>
                         <ScrowDownBtn />
                         <Footer />

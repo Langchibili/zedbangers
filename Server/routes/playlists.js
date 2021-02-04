@@ -68,7 +68,6 @@ router.post("/timeline", (req,res,next)=>{
    async function queryPlusResponse(){
       /*query runs here*/
       const playlistsTimeline = await playlists.getPlaylistByUserId(playlistObject.userId, playlistObject.fields || "", playlistObjectLimit);
-      console.log("at least hit",playlistsTimeline);
       /*response here*/
       res.send(playlistsTimeline);
       return {query: "done"};
@@ -92,7 +91,6 @@ router.post("/", (req,res,next)=>{
        const AddedPost = await playlists.addPlaylist(playlistObject);
        
        /*response here*/
-       console.log(AddedPost);
        res.send(AddedPost);
        
     }

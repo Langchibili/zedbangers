@@ -20,7 +20,6 @@ export default class PlainListType extends React.Component{
   }
   
   render(){
-    console.log(this.props.nowfocusedSongId)
     return ( 
         <li className={this.props.nowPlayingSongClass? this.props.nowPlayingSongClass : "list-group-item"} style={this.props.nowfocusedSongId === this.props.song._id? this.nowfocusedSongStyles: {}}> 
             <div className="pull-right m-l"> 

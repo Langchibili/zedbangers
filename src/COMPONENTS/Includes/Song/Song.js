@@ -29,6 +29,33 @@ export default class Song extends React.Component{
       showAddplayLisDiv: false
     })
   }
+  renderEmbed = (youtubeId, hasEmbeddedMusicVideo)=>{
+    if(hasEmbeddedMusicVideo){
+         return <div
+            className="video"
+            style={{
+              position: "relative",
+              paddingBottom: "56.25%" /* 16:9 */,
+              paddingTop: 25,
+              height: 0
+            }}
+          >
+            <h3>Watch Video</h3>
+            <iframe
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%"
+              }}
+              src={`https://www.youtube.com/embed/${youtubeId}`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+            />
+          </div>
+    }
+  }
   renderSongType = ()=>{
     const list_type = this.props.list_type; 
     const updateNowPlayingSongId= this.props.updateNowPlayingSongId;
@@ -42,6 +69,7 @@ export default class Song extends React.Component{
     const song = this.props.song;
     const edit = this.props.edit;
     const del = this.props.del;
+    
  const renderAddPlayListForm = ()=>{
    if(UserInfo){
        return <div style={{padding: "10px"}}><AddPlayListForm UserInfo={UserInfo} songId={song._id} songThumbnail={song.thumbnail}/></div>;
@@ -64,6 +92,7 @@ export default class Song extends React.Component{
               updateDownload={updateDownload}
               toggleOnFileIsDownloading={toggleOnFileIsDownloading}/>
               {this.state.showAddplayLisDiv? renderAddPlayListForm() : ""}
+              {this.renderEmbed(song.embed.youtubeId, song.hasEmbeddedMusicVideo)}
             </div>
     }
     else if(list_type === "ListWithImageType"){

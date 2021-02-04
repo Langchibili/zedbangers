@@ -33,7 +33,7 @@ router.get("/:post_type/:taxonomy/:taxonomyValue", (req,res,next)=>{
    let taxonomyValue = req.params.taxonomyValue;
    let limit =  parseInt(req.query.limit); 
    let fields = req.query.fields;
-   
+   console.log(query);
    async function queryPlusResponse(){
        let result;
        /*query runs here*/
@@ -54,6 +54,21 @@ router.get("/:post_type/:taxonomy/:taxonomyValue", (req,res,next)=>{
 
 /* get all posts by categories */
 router.get("/chat", (req,res,next)=>{
+   let limit =  parseInt(req.query.limit);
+   let fields = req.query.fields;
+   async function queryPlusResponse(){
+       /*query runs here*/
+       const result = await posts.getPostsByPostCount(fields=fields,"totalcounts",limit=limit);
+       /*response here*/ 
+       res.send(result);
+       return {query: "done"};
+    }
+    /* open connection and run query */
+    execQuery(queryPlusResponse);
+});
+
+/* get all embeds by categories */
+router.get("/embeds", (req,res,next)=>{
    let limit =  parseInt(req.query.limit);
    let fields = req.query.fields;
    async function queryPlusResponse(){

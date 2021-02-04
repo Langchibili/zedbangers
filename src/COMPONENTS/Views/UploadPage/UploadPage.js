@@ -8,7 +8,7 @@ export default class UploadPage extends React.Component{
         super(props);
         // set text as default, if this.props.initialPostObject is not set
         this.state = {
-              post_type: this.props.post_type === "song"? "music" : "video",
+              post_type: 'music',
               postingText: "post",
               showTitleBox: false,
               buttonState: {backgroundColor: "lightgrey",disabled:true}
@@ -40,8 +40,11 @@ export default class UploadPage extends React.Component{
 
 
      addUserInfo = () =>{
+      let post_type = this.props.post_type === "song"? "music" : "video";
+      if(this.props.post_type === "embed") post_type = "embed";
       let updatedStated = {
           ...this.state,
+          post_type: post_type,
           title: "untitled",
           genres: [],
           description: "",
@@ -64,7 +67,7 @@ export default class UploadPage extends React.Component{
           userId: this.props.UserInfo._id,
           userFullName: this.props.UserInfo.niceName
       }
-      this.setState(updatedStated, ()=>{ console.log(this.state)});
+      this.setState(updatedStated);
      }
 
     
@@ -95,6 +98,45 @@ export default class UploadPage extends React.Component{
               this.setState(updatedStated);
           }
       }
+     
+      handleEmbed = (e) =>{
+        let linkSplit = ''; // initalize empty string
+        let embedLinkEnd = "" // initalize empty string
+        let youtubeId =  "" // initalize empty string
+        let linkIndexInSplit = 0; // initalize empty number
+        const embed = {}; // initialize empty embed object
+        let embedLink = e.target.value;
+        const isWatchTypeLink = embedLink.includes("watch");
+        if(isWatchTypeLink){
+            linkSplit = embedLink.split("=");
+            linkIndexInSplit = linkSplit.length - 1;
+            embedLinkEnd = linkSplit[linkIndexInSplit];
+            youtubeId = embedLinkEnd;
+            embed.embedUri = 'https://www.youtube.com/embed/'+embedLinkEnd;
+            embed.embedHtml = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+embedLinkEnd+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
+        else{
+            const containsOtherParts = embedLink.includes("?");
+            if(containsOtherParts){
+                const mixedLink = embedLink.split("?");
+                embedLink = mixedLink[0];
+            }
+            linkSplit = embedLink.split("/");
+            linkIndexInSplit = linkSplit.length - 1;
+            embedLinkEnd = linkSplit[linkIndexInSplit];
+            youtubeId = embedLinkEnd;
+            embed.embedUri = 'https://www.youtube.com/embed/'+embedLinkEnd;
+            embed.embedHtml = '<iframe width="560" height="315" src="https://www.youtube.com/embed/'+embedLinkEnd+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+        }
+        const hasEmbeddedMusicVideo = this.props.post_type === "song"
+        embed.youtubeId = youtubeId;
+        embed.belongsToSong = hasEmbeddedMusicVideo;
+        this.setState({
+            embed: embed,
+            hasEmbeddedMusicVideo: hasEmbeddedMusicVideo, 
+            buttonState: {backgroundColor:"#cd0829",disabled:false}
+        })
+      }
 
       addPhoto = (photoObject) =>{
            this.setState({
@@ -122,7 +164,7 @@ export default class UploadPage extends React.Component{
               initialState.push(genre)
               this.setState({
                   genres: initialState
-              }, ()=>{ console.log(this.state)})
+              })
           }
      }
 
@@ -148,6 +190,17 @@ export default class UploadPage extends React.Component{
 
       handleSubmit(e){
           e.preventDefault();
+          if(this.props.post_type === "embed" && !this.state.hasOwnProperty("embed")){
+              this.setState({
+                  buttonState: {backgroundColor: "lightgrey",disabled:true}
+              })
+          } // dissable upload button if post_type is embed and youtube video is not set
+          if(this.state.title.length < 0){
+            this.setState({
+                buttonState: {backgroundColor: "lightgrey",disabled:true}
+            })
+           } // dissable upload button if title is reset to nothing
+        
           const description = this.postBox.current.value;
           let shortDescription;
           if(description.length > 120){
@@ -172,26 +225,32 @@ export default class UploadPage extends React.Component{
               delete stateObjectclone.featuredArtists; // remove genres property from state if song
               }
               const newPost = await api.createItem("/posts",stateObjectclone);
-              if(newPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
-          })        
+              if(newPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}, ...this.addUserInfo})}  
+            })        
+     }
+     renderUploaderName = ()=>{
+        return this.props.post_type === "song"? "Song" : "Video";
      }
 
    render(){
     return (   
         <section className="panel panel-default"> 
 
-        <header className="panel-heading font-bold">Upload {this.props.post_type === "song"? "Song" : "Video" }</header> 
+        <header className="panel-heading font-bold">{this.props.post_type === "embed"? "Embed Video": "Upload "+this.renderUploaderName()} </header> 
         
         <div className="panel-body"> 
         
         <form role="form"> 
         
         <div className="form-group">
-        <input type="text" className="form-control" placeholder="title" onChange={this.setTitle} /> 
+        <input type="text" className="form-control" required={window.location.pathname === "/upload/song"} placeholder="title" onChange={this.setTitle} /> 
         </div> 
-        {this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
+        {this.props.post_type === "embed"? "" : this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
         <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "song"? "about song..." : "about video..." } />
         <br/>
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder="youtube video link" onChange={this.handleEmbed} /> 
+        </div> 
         <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
         </form> 
         </div> 
