@@ -32,7 +32,8 @@ export default class SinglePlayListPage extends React.Component{
      this.setState(
         {
           playlist: playlist,
-          playListSongs: playListSongs
+          playListSongs: playListSongs,
+          postRequestDone: true
         },
         async ()=>{
           let recentSongs = await api.getItems("/posts","","music","","","",12);
@@ -92,6 +93,9 @@ export default class SinglePlayListPage extends React.Component{
    componentWillMount(){    
     this.changeHeaderTheme(); 
     this.getPlayList();
+   }
+   componentDidMount(){
+    this.props.logUrl();
    }
    componentDidUpdate(prevProps){
     if(prevProps.match.url !== this.props.match.url) this.getPlayList();
@@ -167,7 +171,7 @@ export default class SinglePlayListPage extends React.Component{
             </section>
             </section>
         </section>
-        </section>: <Loader />
+        </section>: <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>
      );
   } 
 }

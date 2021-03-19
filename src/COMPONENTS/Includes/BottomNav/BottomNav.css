@@ -1,0 +1,24 @@
+.bottom-nav .makeStyles-root-1{
+    width: 100% !important;
+    position: fixed !important;
+    bottom: 0 !important;
+}
+.bottom-nav .MuiBottomNavigationAction-label{
+    opacity: 10;
+}
+
+.bottom-nav .white-theme .makeStyles-root-1{
+    background-color: #fff !important;
+}
+
+.bottom-nav .white-theme .MuiBottomNavigationAction-label .MuiSvgIcon-colorSecondary, .bottom-nav .white-theme .MuiBottomNavigationAction-label .MuiSvgIcon-root{
+    background-color: grey !important;
+}
+
+.bottom-nav .black-theme .makeStyles-root-1{
+    background-color: #66023c !important;
+}
+
+.bottom-nav .black-theme .MuiBottomNavigationAction-label .MuiSvgIcon-colorSecondary, .bottom-nav .white-theme .MuiBottomNavigationAction-label .MuiSvgIcon-root{
+    background-color:white !important;
+}

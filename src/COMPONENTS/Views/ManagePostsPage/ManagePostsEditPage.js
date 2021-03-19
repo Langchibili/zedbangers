@@ -7,7 +7,7 @@ export default class ManagePostsEditPage extends React.Component{
        super(props);
        this.state = {
            songs: [],
-           updatedOnce: false
+           postRequestDone: false
        }
    }
 
@@ -15,7 +15,7 @@ export default class ManagePostsEditPage extends React.Component{
     const userId = this.props.UserInfo._id;
     this.setState({
       songs: await api.createItem("/posts/timeline",{userId: userId, post_type: "music", limit: 20})// add artist songs to state
-     })
+     },()=>{this.setState({postRequestDone: true})})
   }
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
@@ -31,19 +31,21 @@ export default class ManagePostsEditPage extends React.Component{
     this.changeHeaderTheme();
     this.getUserSongs();
   }
-   
+  componentDidMount(){
+    this.props.logUrl();
+  } 
 
    render(){
     return (
       <section className="scrollable">
-           <Lists list_type="ListWithImageType" 
+            {this.state.postRequestDone? <Lists list_type="ListWithImageType" 
                 edit
                 items_type="song" items={this.state.songs} 
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>: <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
       </section>
       
     );

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const posts = require("../database/posts").posts;
-// const users = require("../database/users").users;
-// const activities = require("../database/activities").activities;
-// const notifications = require("../database/notifications").notifications;
-// const logActivityAndSendNotification = require("../functions").logActivityAndSendNotification;
+const users = require("../database/users").users;
+const activities = require("../database/activities").activities;
+const notifications = require("../database/notifications").notifications;
+const logActivityAndSendNotification = require("../functions").logActivityAndSendNotification;
 const execQuery = require("../database/connection").amalevelz.runQuery;
 
 
@@ -126,7 +126,7 @@ router.post("/", (req,res,next)=>{
        /*query runs here*/
        const AddedPost = await posts.addPost(postObject);
        /*log new activity and send notification */
-      //  await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
+       await logActivityAndSendNotification(AddedPost.userId, AddedPost._id, AddedPost.privacy, "posted", [activities.addActivity,notifications.addNotification],[users.getUser,posts.getPost], users.updateUser, users.updateUsers);
        /*response here*/
        res.send(AddedPost);
        return {query: "done"};

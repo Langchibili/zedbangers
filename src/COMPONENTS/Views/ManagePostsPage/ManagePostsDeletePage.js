@@ -7,7 +7,7 @@ export default class ManagePostsDeletePage extends React.Component{
        super(props);
        this.state = {
            songs: [],
-           updatedOnce: false
+           postRequestDone: false
        }
    }
 
@@ -15,6 +15,10 @@ export default class ManagePostsDeletePage extends React.Component{
     const userId = this.props.UserInfo._id;
     this.setState({
       songs: await api.createItem("/posts/timeline",{userId: userId, limit: 20})// add artist songs to state
+     }, ()=>{
+       this.setState({
+        postRequestDone: true
+       })
      })
   }
   changeHeaderTheme = () =>{
@@ -31,18 +35,20 @@ export default class ManagePostsDeletePage extends React.Component{
     this.changeHeaderTheme();
     this.getUserSongs();
   }
-
+  componentDidMount(){
+    this.props.logUrl();
+  }
    render(){
     return (
       <section className="scrollable">
-           <Lists list_type="ListWithImageType" 
+           {this.state.postRequestDone? <Lists list_type="ListWithImageType" 
                 del
                 items_type="song" items={this.state.songs} 
                 updateNowPlayingSongId={this.props.updateNowPlayingSongId}
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> :  <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
       </section>
       
     );

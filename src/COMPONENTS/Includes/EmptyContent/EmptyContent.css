@@ -1,0 +1,26 @@
+.gif-container {
+    position: relative;
+    text-align: center;
+    color: rgb(250, 239, 239);
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  .gif-container img {
+      width: 100%;
+  }
+  .centered {
+    width: 100%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: darkgray;
+  }
+  .bottom-right {
+    width: 100%;
+    position: absolute;
+    bottom: 10%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    color: darkgray;
+  }

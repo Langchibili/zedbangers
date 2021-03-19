@@ -2,6 +2,7 @@ import React from "react";
 import api from "../../../Store/api";
 import Lists from "../../Includes/Lists/Lists";
 import PlayLists from "../../Includes/Lists/PlayLists";
+import { Link } from "react-router-dom";
 
 export default class HomePage extends React.Component{
   constructor(props){
@@ -10,7 +11,8 @@ export default class HomePage extends React.Component{
         posts: [],
         embeds: [],
         playlists: [],
-        chatsongs: []
+        chatsongs: [],
+        postRequestDone: false
     }
 }
   changeHeaderTheme = () =>{
@@ -41,9 +43,14 @@ export default class HomePage extends React.Component{
         embeds: await api.getItems("/posts","","embed","","","",12),
         playlists: await api.getItems("/playlists","","music","","","",12),
         chatsongs: await api.getItems("/posts","","music","","","",12)
+      }, ()=>{
+        this.setState({
+          postRequestDone: true
+        })
       })
    }
   componentDidMount(){
+    this.props.logUrl();
     this.getPosts();
   }
   
@@ -65,7 +72,7 @@ export default class HomePage extends React.Component{
             </span></h2> 
             
             <div className="row row-sm"> 
-             <Lists 
+             {this.state.postRequestDone? <Lists 
                 divListType
                 list_type="DivLongThumbnailType" 
                 items_type="song" items={this.state.posts} 
@@ -73,21 +80,21 @@ export default class HomePage extends React.Component{
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
             </div>
             <div className="row"> 
                <h3 className="font-thin" style={{padding: "15px"}}>Videos</h3>
-                <Lists 
+                {this.state.postRequestDone? <Lists 
                 items_type="embed" 
                 items={this.state.embeds} 
                 UserInfo={this.props.UserInfo}
-                />
+                /> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
              </div>
             <div className="row"> 
             
             <div className="col-md-7"> <h3 className="font-thin">New Songs</h3> 
             <div className="row row-sm"> 
-             <Lists 
+            { this.state.postRequestDone? <Lists 
                 divListType
                 list_type="DivThumbnailType" 
                 items_type="song" items={this.state.posts} 
@@ -95,12 +102,12 @@ export default class HomePage extends React.Component{
                 nowPlayingTrackId={this.props.nowPlayingTrackId}
                 updateDownload={this.props.updateDownload}
                 pauseAudio={this.props.pauseAudio}
-                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
             </div>
             
             <div className="row row-sm" style={{padding: "10px"}}>
               <h3 className="font-thin">PlayLists</h3> 
-              <PlayLists 
+              {this.state.postRequestDone? <PlayLists 
                   divListType
                   list_type="ListWithImageType" 
                   items_type="songlist" items={this.state.playlists} 
@@ -109,17 +116,17 @@ export default class HomePage extends React.Component{
                   updateNowPlayingListId={this.props.updateNowPlayingListId}
                   updateDownload={this.props.updateDownload}
                   pauseAudio={this.props.pauseAudio}
-                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>
+                  toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
             </div>
             </div> 
             
             <div className="col-md-5"> <h3 className="font-thin">Top Songs</h3> 
             
             <div className="list-group bg-white list-group-lg no-bg auto"> 
-            <Lists 
+           {this.state.postRequestDone? <Lists 
                 divListType
                 list_type="ChatType" 
-                items_type="song" items={this.state.chatsongs} />
+                items_type="song" items={this.state.chatsongs} /> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
             </div>
             </div> 
             </div> 
@@ -128,17 +135,17 @@ export default class HomePage extends React.Component{
             
             <div className="col-sm-6"> 
             
-            <div className="bg-primary wrapper-md r"> <a href="#"> 
+            <div className="bg-primary wrapper-md r"> <Link to="/signup"> 
             
             <span className="h4 m-b-xs block"><i className=" icon-user-follow i-lg" /> Login or Create account
             </span> 
             
             <span className="text-muted">Save and share your playlist with your friends when you log in or create an account.
-            </span> </a> 
+            </span> </Link> 
             </div> 
             </div> 
             
-            <div className="col-sm-6"> 
+            {/* <div className="col-sm-6"> 
             
             <div className="bg-black wrapper-md r"> <a href="#"> 
             
@@ -148,7 +155,7 @@ export default class HomePage extends React.Component{
             <span className="text-muted">Get the apps for desktop and mobile to start listening music at anywhere and anytime.
             </span> </a> 
             </div> 
-            </div> 
+            </div>  */}
             </div> 
         </section>
       );

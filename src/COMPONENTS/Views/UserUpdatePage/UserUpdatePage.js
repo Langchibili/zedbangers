@@ -93,6 +93,9 @@ export default class UserUpdatePage extends React.Component{
       componentWillMount(){
         this.changeHeaderTheme();
       }
+      componentDidMount(){
+        this.props.logUrl();
+      }
    render(){
     return (   
         <section className="panel panel-default"> 

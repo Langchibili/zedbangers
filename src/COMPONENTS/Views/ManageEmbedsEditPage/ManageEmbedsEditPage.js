@@ -7,7 +7,7 @@ export default class ManageEmbedsPage extends React.Component{
        super(props);
        this.state = {
            embeds: [],
-           updatedOnce: false
+           postRequestDone: false
        }
    }
 
@@ -15,6 +15,10 @@ export default class ManageEmbedsPage extends React.Component{
     const userId = this.props.UserInfo._id;
     this.setState({
       embeds: await api.createItem("/posts/timeline",{userId: userId, post_type: "embed", limit: 20})// add artist songs to state
+     }, ()=>{
+       this.setState({
+        postRequestDone: true
+       })
      })
   }
   changeHeaderTheme = () =>{
@@ -32,15 +36,18 @@ export default class ManageEmbedsPage extends React.Component{
     this.getUserEmbeds();
   }
    
+  componentDidMount(){
+    this.props.logUrl();
+  }
 
    render(){
     return (
       <section className="scrollable">
-           <Lists 
+          {this.state.postRequestDone? <Lists 
             edit
             items_type="embed" 
             items={this.state.embeds} 
-            />
+            /> : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
       </section>
       
     );

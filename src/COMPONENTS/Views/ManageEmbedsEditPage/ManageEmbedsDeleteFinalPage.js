@@ -36,6 +36,7 @@ export default class ManageEmbedsDeleteFinalPage extends React.Component{
     }
     
      componentDidMount(){
+        this.props.logUrl();
         this.getPost();
      }
 

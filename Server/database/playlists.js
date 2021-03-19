@@ -144,7 +144,7 @@ module.exports.playlists = {
                      })
 
                 },
-                getPlaylistByUserId: async function(userId=null,fields=null,limit=null,sortObject={_id: -1}){
+                getPlaylistsByUserId: async function(userId=null,fields=null,limit=null,sortObject={_id: -1}){
                   return await docApiConcatinator(api, null, await playlistModel.find({ userId :userId},fields,function (err, docs) {
                     if (err){
                         throw err;
@@ -152,6 +152,30 @@ module.exports.playlists = {
                     return docs;
                  }).sort(sortObject={_id: -1}).limit(limit));
                },
+               getPlaylistsByUserIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
+                return await docApiConcatinator(api, null, await playlistModel.find({ userId : { $in : arrayOfIds } },fields,function (err, docs) {
+                      if (err){
+                          throw err;
+                      }
+                      return docs;
+                   }).sort(sortObject={_id: -1}).limit(limit));
+              },
+              getPlaylistsByTypeAndUserIds: async function(fields=null,limit=null,arrayOfIds=null,post_type="music",sortObject={_id: -1}){
+                return await docApiConcatinator(api, null, await playlistModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
+                  if (err){
+                      throw err;
+                  }
+                  return docs;
+               }).sort(sortObject={_id: -1}).limit(limit));
+              },
+              getPlaylistByPostIds: async function(fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
+                return await docApiConcatinator(api, null, await playlistModel.find({ _id : { $in : arrayOfIds } },fields,function (err, docs) {
+                      if (err){
+                          throw err;
+                      }
+                      return docs;
+                   }).sort(sortObject={_id: -1}).limit(limit));
+              },
                 /* ADD A PLAYLIST TO DATABASE AND RETURN SAVED OBJECT*/
                   addPlaylist: async function(playlistObject){
                     const newPlaylist = new playlistModel(playlistObject);

@@ -40,7 +40,7 @@ export default class Embed extends React.Component{
             return <Link to={this.props.post? this.renderPath(this.props.post.hasEmbeddedMusicVideo)+'delete/'+this.props.post.dashed_title+"/"+this.props.post._id : "#"} className="text-danger">{this.props.post? "Delete"+this.props.post.title : ""}</Link>
         }
         else{
-            return <Link to={this.props.post? this.renderPath(this.props.post.hasEmbeddedMusicVideo)+this.props.post.dashed_title+"/"+this.props.post._id : "#"} className="text-ellipsis">{this.props.post? this.props.post.title : ""}</Link>
+            return '';
         }
           
       }
@@ -51,7 +51,7 @@ export default class Embed extends React.Component{
             <div className="pos-rlt"> 
             {this.renderEmbed(this.props.post.embed.youtubeId)}
             <div className="padder-v"> 
-                <Link to={this.props.post? this.renderPath(this.props.post.hasEmbeddedMusicVideo)+this.props.post.title+"/"+this.props.post._id : "#"} className="text-ellipsis">{this.props.post? this.props.post.title : ""}</Link>
+                <Link to={this.props.post? this.renderPath(this.props.post.hasEmbeddedMusicVideo)+this.props.post.dashed_title+"/"+this.props.post._id : "#"} className="text-ellipsis">{this.props.post? this.props.post.title : ""}</Link>
                 <Link to={this.props.post? "/user/"+this.props.post.userName : "#"} className="text-ellipsis text-xs text-muted">{this.props.post? this.props.post.artist.artistName : ""}</Link>
                 {this.renderEmbedManageLink()}
             </div> 

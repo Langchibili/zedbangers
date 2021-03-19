@@ -67,7 +67,7 @@ router.post("/timeline", (req,res,next)=>{
    //add to database object and sending response object 
    async function queryPlusResponse(){
       /*query runs here*/
-      const playlistsTimeline = await playlists.getPlaylistByUserId(playlistObject.userId, playlistObject.fields || "", playlistObjectLimit);
+      const playlistsTimeline = await playlists.getPlaylistsByUserId(playlistObject.userId, playlistObject.fields || "", playlistObjectLimit);
       /*response here*/
       res.send(playlistsTimeline);
       return {query: "done"};

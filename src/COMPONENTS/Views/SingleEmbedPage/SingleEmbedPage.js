@@ -98,7 +98,9 @@ export default class SingleEmbedPage extends React.Component{
   componentDidUpdate(prevProps){
     if(prevProps.match.url !== this.props.match.url) this.getPost();
   }
-
+  componentDidMount(){
+    this.props.logUrl();
+  }
    render(){
     return ( 
         this.state.postRequestDone? 

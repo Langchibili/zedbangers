@@ -4,7 +4,9 @@ import Song from "../../Includes/Song/Song";
 import Lists from "../../Includes/Lists/Lists";
 
 export default class NotFoundPage extends React.Component{ 
-
+   componentDidMount(){
+    this.props.logUrl();
+   }
    render(){
     return ( 
         <div className="row m-n"> 

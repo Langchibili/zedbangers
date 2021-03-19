@@ -36,6 +36,7 @@ export default class ManagePostsDeleteFinalPage extends React.Component{
     }
     
      componentDidMount(){
+        this.props.logUrl();
         this.getPost();
      }
 

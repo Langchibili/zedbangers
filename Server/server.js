@@ -61,6 +61,7 @@ const server = app.listen(PORT,()=>{
     store.on("open",()=>{
       console.log("session database connection established");
     })
+
 });
 
 server.timeout = 60 * 60 * 1000;
@@ -81,7 +82,6 @@ const corsOptions = {
 
 
 app.use(function (req, res, next) {
-  console.log(req.headers.origin);
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

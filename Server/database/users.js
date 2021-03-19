@@ -8,7 +8,7 @@ const now = new Date();
 const userSchema = new mongoose.Schema({
     account_status: {
       type: String,
-      default: "inactived"
+      default: "activated"
     },
     authentication:{
       type:  { 

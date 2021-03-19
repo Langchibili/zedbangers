@@ -60,11 +60,20 @@ export default class SinglePostPage extends React.Component{
     }
   }
 
- 
-
+  changeBottonNavTheme = ()=>{
+    const BottomNav = document.querySelector(".white-theme");
+    const pathArray  = window.location.pathname.split("/");
+    if(pathArray[1] === "song"){
+         BottomNav.className = BottomNav.className.replace("white-theme","black-theme");
+    }
+    else{
+         BottomNav.className = BottomNav.className.replace("black-theme","white-theme");
+    }
+  }
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
     const pathArray  = window.location.pathname.split("/");
+    this.changeBottonNavTheme();
     if(pathArray[1] === "song"){
          header.className = header.className.replace("bg-white-only","bg-black lter");
     }
@@ -76,15 +85,19 @@ export default class SinglePostPage extends React.Component{
     this.changeHeaderTheme();
     this.getPost();
   }
-  
+  componentDidMount(){
+    this.props.logUrl();
+  }
   componentDidUpdate(prevProps){
-    if(prevProps.match.url !== this.props.match.url) this.getPost();
+    if(prevProps.match.url !== this.props.match.url) {
+      this.props.logUrl();
+      this.getPost();
+    }
   }
    render(){
     return ( 
         this.state.postRequestDone? <section className="hbox stretch bg-black dker">
             <aside className="col-sm-5 no-padder" id="sidebar"> <section className="vbox animated fadeInUp"> <section className="scrollable"> 
-
                 <div className="m-t-n-xxs item pos-rlt"> 
                 
                 <div className="top text-right"> 
@@ -150,7 +163,7 @@ export default class SinglePostPage extends React.Component{
             </section>
             </section>
         </section>
-        </section>: <Loader />
+        </section>: <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>
      );
   } 
 }

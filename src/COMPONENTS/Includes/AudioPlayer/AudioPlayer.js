@@ -59,16 +59,18 @@ export default class AudioPlayer extends React.Component{
             playList: [{key: song._id, musicSrc: song.track.uri_path, name: song.title, singer: song.artist.artistName, cover: song.thumbnail.medium},...playList]
           }, 
           ()=>{
-            this.audioinstance.oncanplay = () =>{ 
-              this.audioinstance.play();
-            }
-            this.audioinstance.onerror = (e)=>{
-              this.audioinstance.load();
-              this.audioinstance.oncanplay = () =>{
-                this.audioinstance.play();
-              }
-              console.log(e);
-            }
+            // this.audioinstance.load();
+            // this.audioinstance.oncanplay = () =>{ 
+              
+            // }
+            // this.audioinstance.onerror = (e)=>{
+              
+            //   this.audioinstance.oncanplay = () =>{
+            //     this.audioinstance.play();
+            //   }
+            //   console.log(e);
+            // }
+            //this.audioinstance.play();
           }
           )
         }
@@ -132,7 +134,7 @@ export default class AudioPlayer extends React.Component{
                 <ReactJkMusicPlayer 
                 onAudioPlay={this.logPlay}
                 autoPlay={this.state.autoPlay}
-                 defaultPosition = {{right: "0", bottom: "0"}}
+                 defaultPosition = {{right: "0", bottom: "55px"}}
                 {...this.options} 
                 clearPriorAudioLists = {this.state.clearPriorAudioLists}
                 playIndex = {0}

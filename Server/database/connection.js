@@ -12,6 +12,7 @@ module.exports.amalevelz = {
                          query();
                          db.on('error', console.error.bind(console, 'connection error:'));
                          db.on('open', function() {
+                               process.removeAllListeners();
                                // const qry = await
                                   // run the query
                                 //db.close();
@@ -19,7 +20,11 @@ module.exports.amalevelz = {
                               // if(mongoose.connections.length > 2){
                               //      await db.close();
                               // }
+                              
                          });
+                         db.on("data", function(){
+                               db.removeAllListeners();
+                         })
                          // db.on("close",()=>{
                          // mongoose.connect(db_url, {useNewUrlParser: true, useUnifiedTopology: true });
                          // });

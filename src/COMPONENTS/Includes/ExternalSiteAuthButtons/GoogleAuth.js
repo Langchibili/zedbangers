@@ -32,7 +32,7 @@ export default class GoogleAuth extends React.Component{
     }
     const apiResponse = await api.createItem("/signup",newUserObject);
     if(apiResponse.hasOwnProperty("success")){
-        window.location = "/";
+        window.location = "/newsfeed";
     }
     else{
         window.alert("couldn't sing you in, check your internet connection");

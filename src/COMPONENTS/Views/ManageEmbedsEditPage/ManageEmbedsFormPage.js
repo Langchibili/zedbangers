@@ -199,7 +199,7 @@ export default class ManageEmbedsEditFormPage extends React.Component{
               delete stateObjectclone.featuredArtists; // remove genres property from state if song
               }
               const updatedPost = await api.updateItem("/posts",stateObjectclone, this.state._id);
-              this.state.post_link = '/'+this.renderPostTypeOnLink()+'/'+this.state.title+'/'+this.state._id;
+              this.state.post_link = '/'+this.renderPostTypeOnLink()+'/'+this.state.dashed_title+'/'+this.state._id;
               if(updatedPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}})}
           })        
      }
@@ -215,6 +215,9 @@ export default class ManageEmbedsEditFormPage extends React.Component{
       }
       componentWillMount(){
         this.changeHeaderTheme();
+      }
+      componentDidMount(){
+        this.props.logUrl();
       }
    render(){
     return (   

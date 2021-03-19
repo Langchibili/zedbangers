@@ -49,11 +49,11 @@ export default class PlainListType extends React.Component{
                  /> 
             <div className="clear text-ellipsis"> 
             <Link to={this.props.song? "/song/"+this.props.song.dashed_title+"/"+this.props.song._id  : "#"}>
-            <span>{this.props.song? this.props.song.dashed_title : "untitled"}
+            <span>{this.props.song? this.props.song.title : "untitled"}
             </span> 
             </Link>
             </div> 
-    {this.state.showPostInfo? <div className="song-description" style={{padding: "10px"}}>{this.props.song? this.props.song.description: ""}<br/>Full Title: {this.props.song.title}</div>: ""}
+    {this.state.showPostInfo? <div className="song-description" style={{padding: "10px"}}>{this.props.song? this.props.song.description: ""}<br/>Full Title: <strong>{this.props.song.title}</strong></div>: ""}
         </li> 
     );
      } 

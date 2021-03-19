@@ -127,6 +127,7 @@ export default class AccountVerification extends React.Component{
         
     }
    componentDidMount(){
+       this.props.logUrl();
        this.getUserData();
    }
    render(){

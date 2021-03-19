@@ -87,13 +87,16 @@ export default class SignUp extends React.Component{
               });
         }
         
-        redirectUser(){
+        redirectUser = () =>{
           if(this.state.redirectUser){
             const username =  this.usernameRef.current.value;
-            return <Redirect to={"/account_verification/"+username}/>;
+            const password = this.passwordRef.current.value;
+            // return <Redirect to={"/account_verification/"+username}/>;
+            api.createItem("/login",{username: username, password: password});
+            return <Redirect to={"/user/"+username}/>;
           }
           else{
-            return
+            return <></> 
           }
         }
 
@@ -221,6 +224,9 @@ export default class SignUp extends React.Component{
         componentWillMount(){
           this.changeHeaderTheme();
         }
+        componentDidMount(){
+          this.props.logUrl();
+        }
        render(){
          return (
           <section className="m-t-lg wrapper-md animated fadeInUp" aria-describedby="main-loader" aria-busy="false">
@@ -228,24 +234,24 @@ export default class SignUp extends React.Component{
              <Display isVisible={this.state.showloader} > <Loader loaderContent="Signing you up..." /></Display>
              <Display isVisible={this.state.showContent} >
              <ExternalSiteAuthButtons />
-             <h2 className="log-title">Or Register</h2>
+             <h2 className="log-title">Or Register</h2><hr/>
              <form method="post">
                 <div className="form-group">	
-                <input ref={this.firstNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <label className="control-label" htmlFor="input">FirstName</label><i className="mtrl-select"></i>
+                <input ref={this.firstNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 </div>
-                <div className="form-group">	
+                <div className="form-group">
+                <label className="control-label" htmlFor="input">LastName</label><i className="mtrl-select"></i>	
                 <input ref={this.lastNameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
-                <label className="control-label" htmlFor="input">LastName</label><i className="mtrl-select"></i>
                 </div>
                 <div className="form-group">	
-                <input ref={this.usernameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <label className="control-label" htmlFor="input">UserName</label><i className="mtrl-select"></i>
+                <input ref={this.usernameRef} className="form-control rounded input-lg text-center no-border" type="text" required="required"/>
                 <span className="error" style={{color:"red"}}>{this.state.uErrorText}</span>
                 </div>
-                <div className="form-group">	
+                <div className="form-group">
+                <label className="control-label" htmlFor="input">Password</label><i className="mtrl-select"></i>	
                 <input ref={this.passwordRef} className="form-control rounded input-lg text-center no-border" type="password" required="required"/>
-                <label className="control-label" htmlFor="input">Password</label><i className="mtrl-select"></i>
                 <span className="error" style={{color:"red"}}>{this.state.pErrorText}</span>
                 </div>
                 <div className="form-radio">

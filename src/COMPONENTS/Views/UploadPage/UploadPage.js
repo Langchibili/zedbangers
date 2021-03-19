@@ -3,6 +3,8 @@ import NewSongForm from "./NewSongForm/NewSongForm";
 import NewVideoForm from "./NewVideoForm/NewVideoForm";
 import api from "../../../Store/api";
 import { Link } from "react-router-dom";
+import Display from "../../Includes/Display/Display";
+import SongOwnership from "./SongOwnership/SongOwnership";
 
 export default class UploadPage extends React.Component{
     constructor(props){
@@ -13,6 +15,8 @@ export default class UploadPage extends React.Component{
               post_link: null,
               postingText: "post",
               showTitleBox: false,
+              showUploadForm: window.location.pathname !== '/upload/song',
+              showSongWonershipForm: window.location.pathname  === '/upload/song',
               buttonState: {backgroundColor: "lightgrey",disabled:true}
         }
       //   this.addUserInfo();
@@ -73,7 +77,11 @@ export default class UploadPage extends React.Component{
      }
 
     
-      
+     changeArtist = (artist)=>{
+         this.setState({
+             artist: artist
+         })
+     }
       handleChange = ()=>{
           const description = this.postBox.current.value;
           const userName = this.state.userName;
@@ -189,7 +197,14 @@ export default class UploadPage extends React.Component{
              isExplicit: value
          })
      }
-
+     showUploadForm = (showUploadForm, showSongWonershipForm)=>{
+         if(showUploadForm){ 
+             this.setState({
+                showUploadForm: showUploadForm,
+                showSongWonershipForm: showSongWonershipForm
+            })
+        }
+     }
       handleSubmit(e){
           e.preventDefault();
           if(this.props.post_type === "embed" && !this.state.hasOwnProperty("embed")){
@@ -221,6 +236,9 @@ export default class UploadPage extends React.Component{
               delete stateObjectclone.buttonState; // remove buttonstate property from state 
               delete stateObjectclone.postingText; // remove postingText property from state 
               delete stateObjectclone.post_link; // remove post_link property from state
+              delete stateObjectclone.showUploadForm; // remove showUploadForm property from state
+              delete stateObjectclone.showSongWonershipForm; // remove showUploadForm property from state
+    
               if(this.state.post_type === "video"){
               delete stateObjectclone.artist; // remove artist property from state if song
               delete stateObjectclone.genres; // remove genres property from state if song
@@ -228,38 +246,45 @@ export default class UploadPage extends React.Component{
               delete stateObjectclone.featuredArtists; // remove genres property from state if song
             }
               const newPost = await api.createItem("/posts",stateObjectclone);
-              this.addUserInfo.post_link = '/'+this.props.post_type+'/'+newPost.title+'/'+newPost._id;
+              this.addUserInfo.post_link = '/'+this.props.post_type+'/'+newPost.dashed_title+'/'+newPost._id;
               if(newPost){this.setState({postingText: "done",buttonState: {backgroundColor: "lightgrey",disabled:true}, ...this.addUserInfo})}  
             })        
      }
      renderUploaderName = ()=>{
         return this.props.post_type === "song"? "Song" : "Video";
      }
+     componentDidUpdate(){
+        this.props.logUrl();
+     }
 
    render(){
     return (   
         <section className="panel panel-default"> 
-
-        <header className="panel-heading font-bold">{this.props.post_type === "embed"? "Embed Video": "Upload "+this.renderUploaderName()} </header> 
-        
-        <div className="panel-body"> 
-        
-        <form role="form"> 
-        
-        <div className="form-group">
-        <input type="text" className="form-control" required={window.location.pathname === "/upload/song"} placeholder="title" onChange={this.setTitle} /> 
-        </div> 
-        {this.props.post_type === "embed"? "" : this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
-        <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "song"? "about song..." : "about video..." } />
-        <br/>
-        <div className="form-group">
-          <input type="text" className="form-control" placeholder="youtube video link" onChange={this.handleEmbed} /> 
-        </div> 
-        <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
-        <br/>{this.state.post_link? <Link to={this.state.post_link} className="text-success">View Post</Link> : ""}
-        </form> 
-        </div> 
-       </section>
+        <Display isVisible={this.state.showSongWonershipForm}>
+            <SongOwnership showUploadForm={this.showUploadForm} changeArtist={this.changeArtist}/>
+        </Display>
+        <Display isVisible={this.state.showUploadForm}>
+            <header className="panel-heading font-bold">{this.props.post_type === "embed"? "Embed Video": "Upload "+this.renderUploaderName()} </header> 
+            <header className="panel-heading font-bold"> artist: {this.state.artist.artistName}</header>
+            <div className="panel-body"> 
+            
+            <form role="form"> 
+            
+            <div className="form-group">
+            <input type="text" className="form-control" required={window.location.pathname === "/upload/song"} placeholder="title" onChange={this.setTitle} /> 
+            </div> 
+            {this.props.post_type === "embed"? "" : this.renderFormType(this.addPhoto, this.addAudio, this.addVideo, this.addGenre, this.removeGenre, this.toggleLyricsType)}
+            <textarea id="editor" onChange={this.handleChange} ref={this.postBox} className="form-control" style={{overflow: 'scroll', height: '150px', maxHeight: '150px'}} placeholder={this.props.post_type === "song"? "about song..." : "about video..." } />
+            <br/>
+            <div className="form-group">
+            <input type="text" className="form-control" placeholder="youtube video link" onChange={this.handleEmbed} /> 
+            </div> 
+            <button className="btn btn-sm btn-default" onClick={this.handleSubmit} disabled={this.state.buttonState.disabled} style={{backgroundColor: this.state.buttonState.backgroundColor, color:"white !important", fontWeight:"bold"}}>{this.state.postingText}</button>
+            <br/>{this.state.post_link? <Link to={this.state.post_link} className="text-success">View Post</Link> : ""}
+            </form> 
+            </div> 
+        </Display>
+        </section>
         );
       } 
 }

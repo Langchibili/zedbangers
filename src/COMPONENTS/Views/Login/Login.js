@@ -108,6 +108,9 @@ export default class Login extends React.Component{
       componentWillMount(){
         this.changeHeaderTheme();
       }
+      componentDidMount(){
+        this.props.logUrl();
+      }
        render(){
          return (
           <section className="m-t-lg wrapper-md animated fadeInUp" aria-describedby="main-loader" aria-busy="false">

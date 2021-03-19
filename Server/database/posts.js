@@ -35,7 +35,16 @@ const postSchema = new mongoose.Schema({
       dashed_title: String,
 			description: String,
 			short_description: String,
+      authorIsSongArtist: {
+        type: Boolean,
+        default: false
+      },
 			artist: {
+         isNotLocalArtist: {
+            type: Boolean,
+            default: false
+          },
+          googleSearch: String,
           artistId: String,
           artistName: String,
           picture_xl: String,
@@ -285,7 +294,7 @@ module.exports.posts = {
                           return docs;
                        }).sort(sortObject={_id: -1}).limit(limit));
                   },
-                  getPostsByTypeAndUserIds: async function(post_type,fields=null,limit=null,arrayOfIds=null,sortObject={_id: -1}){
+                  getPostsByTypeAndUserIds: async function(fields=null,limit=null,arrayOfIds=null,post_type="music",sortObject={_id: -1}){
                     return await docApiConcatinator(api, null, await postModel.find({ userId : { $in : arrayOfIds }, post_type: post_type },fields,function (err, docs) {
                       if (err){
                           throw err;

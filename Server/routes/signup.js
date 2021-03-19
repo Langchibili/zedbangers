@@ -87,6 +87,8 @@ router.post("/", (req,res,next)=>{
                     else{
                          userObject.niceName = userObject.first_name + " "+ userObject.last_name;
                          response = await users.addUser(userObject);
+                         const NewUser = response;
+                         req.session.loggedInUser = NewUser; // log user in
                     }
                     
                }

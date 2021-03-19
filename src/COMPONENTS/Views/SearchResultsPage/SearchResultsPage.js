@@ -7,7 +7,8 @@ export default class SearchResultsPage extends React.Component{
        super(props);
        this.state = {
            posts: [],
-           users: []
+           users: [],
+           postRequestDone: false
        }
    }
 
@@ -18,7 +19,10 @@ export default class SearchResultsPage extends React.Component{
     this.setState({
         posts: postsResult,
         // users: usersResult
-    }, ()=>{ console.log(this.state.posts)})
+    }, ()=>{ 
+      this.setState({
+      postRequestDone: true
+    })})
   }
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
@@ -34,24 +38,26 @@ export default class SearchResultsPage extends React.Component{
     this.changeHeaderTheme();
     this.getPosts();
   }
-
+  componentDidMount(){
+    this.props.logUrl();
+  }
+  showResults = ()=>{
+    return this.state.posts.length > 0? <Lists list_type="ListWithImageType" 
+    items_type="song" items={this.state.posts} 
+    nowPlayingTrackId={this.props.nowPlayingTrackId}
+    updateNowPlayingSongId={this.props.updateNowPlayingSongId}
+    updateDownload={this.props.updateDownload}
+    pauseAudio={this.props.pauseAudio}
+    toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>:
+    <div>Sorry, no results found for your search.</div>
+  }
    render(){
     return ( 
         <section className="hbox stretch bg-black dker">
         <section className="col-sm-4 no-padder bg">
             <section className="vbox">
                 <section className=" scrollable hover">
-                {this.state.posts? 
-                    this.state.posts.length > 0? <Lists list_type="ListWithImageType" 
-                    items_type="song" items={this.state.posts} 
-                    nowPlayingTrackId={this.props.nowPlayingTrackId}
-                    updateNowPlayingSongId={this.props.updateNowPlayingSongId}
-                    updateDownload={this.props.updateDownload}
-                    pauseAudio={this.props.pauseAudio}
-                    toggleOnFileIsDownloading={this.props.toggleOnFileIsDownloading}/>:
-                    <div>Sorry, no results found for your search.</div>:
-                    <div></div>
-                }
+                {this.state.postRequestDone? this.showResults() : <div style={{width:"100%", margin: "0 auto", textAlign: "center"}}><i className="fa fa-spinner fa fa-spin fa fa-large text-info" /></div>}
             </section>
             </section>
         </section>

@@ -29,6 +29,10 @@ export default class Navigation extends React.Component{
                     
                     <span className="font-bold">What's New
                     </span> </Link> </li> 
+                    {this.props.isLoggedIn? <li> <Link  onClick={this.toggleNav} to="/newsfeed"> <i className="icon-globe icon text-info" /> 
+                    
+                    <span className="font-bold">NewsFeed
+                    </span> </Link> </li> : ""}
                     {/* <li> <Link to="/genres"> <i className="icon-music-tone-alt icon text-info" /> 
                     
                     <span className="font-bold">Genres

@@ -1,19 +1,18 @@
 import React from "react";
 import Header from "../Includes/Header/Header";
-import Footer from "../Includes/Footer/Footer";
+//import Footer from "../Includes/Footer/Footer";
 import Navigation from "../Includes/Navigation/Navigation";
 import Views from "../Views/Views";
-import SideBar from "../Includes/SideBar/SideBar";
-import { BrowserRouter } from "react-router-dom";
+// import SideBar from "../Includes/SideBar/SideBar";
+import { BrowserRouter, Switch } from "react-router-dom";
 import AudioPlayer from "../Includes/AudioPlayer/AudioPlayer";
 import VideoAd from "../Includes/VideoAd/VideoAd";
 import Display from "../Includes/Display/Display";
 import api from "../../Store/api";
 import Loader from "../Includes/Loader/Loader";
-import api_url from "../../constants/api_url";
 import HomeButton from "../Includes/Shortcuts/HomeButton";
-import BackBtn from "../Includes/Shortcuts/BackBtn";
-import ScrowDownBtn from "../Includes/Shortcuts/ScrowDownBtn";
+import ScrollUpBtn from "../Includes/ScrollUpBtn/ScrollUpBtn";
+import BottomNav from "../Includes/BottomNav/BottomNav";
 
 export default class App extends React.Component{
   constructor(props){
@@ -27,10 +26,12 @@ export default class App extends React.Component{
       isLoggedIn: false,
       sessionReqDone: false,
       UserInfo: null,
+      currentUrl: null,
       previousUrl: null,
       updateView: true,
       pauseAudio: false,
-      visitedUrls: [window.location.href]
+      visitedUrlsLength: 1,
+      visitedUrls: [window.location.pathname]
     }
 }
 
@@ -115,21 +116,51 @@ pauseAudio =()=>{
 }
 
 logUrl = ()=>{
-  const currentUrl =  window.location.href;
-  const urlArray = this.state.visitedUrls;
-  const previousUrl = urlArray[urlArray.length-2];
-  if(currentUrl !== urlArray[urlArray.length-1]){
+  // window.history.pushState({ previousUrl: window.location.pathname },null,window.location.href);
+  // return 
+  let urlArray = this.state.visitedUrls;
+  const currentUrl =  window.location.pathname;
+  const rootUrl = urlArray[0]; //get the root url
+  if(currentUrl !== rootUrl){ // check if this is the origin url
     urlArray.push(currentUrl);
-    this.setState({
+    const visitedUrlsLength = urlArray.length;
+    let previousUrl =  urlArray[visitedUrlsLength-1]; // get the last logged url as prevurl
+    const currentUrlIndex = urlArray.findIndex((url, urlIndex)=>{ return currentUrl === url});
+    if(urlArray.includes(currentUrl)){
+       urlArray = urlArray.filter((url, indexOf)=>{
+             return indexOf <= currentUrlIndex
+       })
+       previousUrl = urlArray[visitedUrlsLength-2] // then get the one 2 indexes in as prev url
+    } 
+    let prevUrlData = {
+      currentUrl: currentUrl,
       visitedUrls: urlArray,
+      visitedUrlsLength: visitedUrlsLength,
       previousUrl: previousUrl
-    }) 
+    }
+    window.history.pushState({ prevUrl: prevUrlData },null,window.location.href);
   }
+  else{
+    const prevUrlData = {
+      currentUrl: null,
+      previousUrl: null,
+      visitedUrls: [window.location.pathname],
+      visitedUrlsLength: 1
+    }
+    window.history.pushState({ prevUrl: prevUrlData },null,window.location.href);
+  }
+  console.log(window.history.state.prevUrl);
+}
+deletePrevUrl = ()=>{
+  const urlArray = this.state.visitedUrls;
+  urlArray.pop();
+  this.setState({ 
+     previousUrl: urlArray
+  })
 }
 
-
 async componentWillMount(){
-  //this.redirectToHttps(); // redirect http requests to https
+  this.redirectToHttps(); // redirect http requests to https
   //window.toolbar.visible = false;
   await this.checkUserSession();
 }
@@ -137,7 +168,6 @@ async componentWillMount(){
     return ( 
       <div>
        <section className="vbox">
-       <div id="topDiv"></div>
        <BrowserRouter>
            <Header 
             isLoggedIn={this.state.isLoggedIn} 
@@ -153,28 +183,33 @@ async componentWillMount(){
                      {this.state.previousUrl? 
                      <div>
                      <HomeButton />
-                     <BackBtn previousUrl={this.state.previousUrl}/></div>:
-                     ""}
+                      </div>: ""}
                      {this.state.sessionReqDone? <Views 
+                          location = {this.props.location}
                           logUrl={this.logUrl}
+                          currentUrl={this.state.currentUrl}
                           updateNowPlayingSongId={this.updateNowPlayingSongId} 
                           nowPlayingTrackId={this.state.nowPlayingTrackId}
                           updateNowPlayingListId={this.updateNowPlayingListId}
                           UserInfo={this.state.UserInfo} 
-                          changeHeaderTheme={this.changeHeaderTheme}
                           updateDownload={this.updateDownload}
                           toggleOnFileIsDownloading={this.toggleOnFileIsDownloading}
                           pauseAudio={this.pauseAudio}
                           updateView={this.state.updateView}
                           isLoggedIn={this.state.isLoggedIn} /> : <Loader loaderContent="loading..." />}
-
+                        <div id="bottom-space" style={{minHeight:"50px"}}></div>
                         <Display isVisible={this.state.fileIsDownloading}>
                           <VideoAd 
                            download={this.state.download} 
                            toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
                         </Display>
-                        <ScrowDownBtn />
-                        <Footer />
+                        <Switch>
+                          <BottomNav 
+                                visitedUrlsLength = {this.props.visitedUrlsLength}
+                                isLoggedIn={this.state.isLoggedIn} 
+                                previousUrl={this.state.previousUrl}
+                               deletePrevUrl={this.deletePrevUrl}/>
+                        </Switch>
                       </section>
                    </section>
                  </section>
@@ -186,11 +221,11 @@ async componentWillMount(){
           </BrowserRouter>
         </section>
        {this.state.sessionReqDone? <AudioPlayer 
-                                    nowPlayingSongId={this.state.nowPlayingSongId} 
-                                    nowPlayingTrackId={this.nowPlayingTrackId} 
-                                    nowPlayingListId={this.state.nowPlayingListId}
-                                    pauseAudio={this.state.pauseAudio}/> : ""}  
-       <div id="buttomDiv"></div>
+            nowPlayingSongId={this.state.nowPlayingSongId} 
+            nowPlayingTrackId={this.nowPlayingTrackId} 
+            nowPlayingListId={this.state.nowPlayingListId}
+            pauseAudio={this.state.pauseAudio}/> : ""}  
+       <ScrollUpBtn />     
       </div>
       );
       } 
