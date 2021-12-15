@@ -40,7 +40,7 @@ export default class GoogleAuth extends React.Component{
   }
   render(){
     return <GoogleLogin
-            clientId={socialLoginIds.googleClientIdLocalhost}
+            clientId={socialLoginIds.googleClientId}
             buttonText="CONTINUE WITH GOOGLE"
             onSuccess={this.googleResponse}
             onFailure={this.googleResponse}

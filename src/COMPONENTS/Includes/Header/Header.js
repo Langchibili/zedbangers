@@ -69,7 +69,7 @@ export default class Header extends React.Component{
                <div className="navbar-brand text-lt"> 
                   <i className="icon-earphones" /> 
                   <img src="images/logo.png" alt="." className="hide" /> 
-                     <span className="hidden-nav-xs m-l-sm">{/*<img src={musicwebapplogo} style={{width:"200px",height:"200px"}}/>*/} <a href="/">thenetworkmusic</a></span> 
+                     <span className="hidden-nav-xs m-l-sm">{/*<img src={musicwebapplogo} style={{width:"200px",height:"200px"}}/>*/} <a href="/">AMALEVELS</a></span> 
                   <a href="#" className="hidden-md hidden-lg" onClick={this.showSearchBar} style={{marginLeft: "10px"}}><i className="fa fa-search" /></a>
                </div> 
             <a className="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user"> <i className="icon-settings" /> </a> 

@@ -121,7 +121,7 @@ export default class Login extends React.Component{
                             <h2 className="log-title">{this.state.loginText}</h2>
                              <ExternalSiteAuthButtons buttonPreText="LOGIN" />
                               <p>
-                                Not on musicbase Yet? <Link to="/" title="">Take the tour</Link> or <Link to="/signup" title="">Join now</Link>
+                                Not on AMALEVELS Yet? <Link to="/" title="">Take the tour</Link> or <Link to="/signup" title="">Join now</Link>
                               </p>
                             <form method="post">
                               <div className="form-group">	

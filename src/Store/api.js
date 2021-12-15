@@ -1,11 +1,11 @@
 import api_url from "../constants/api_url";
-
+import server_access_token from "../constants/server_access_token";
  const api = {
    /* GET REQUESTS */
    getItemById: async function (apiEndPoint,id,fields=null){
-    const fieldsPart = fields? '/?fields='+fields : "";
+    const fieldsPart = fields? '&fields='+fields : "";
     try{
-      const response = await fetch(api_url+apiEndPoint+"/"+id+fieldsPart,{credentials: "include"});
+      const response = await fetch(api_url+apiEndPoint+"/"+id+"?access_token="+server_access_token+fieldsPart,{credentials: "include"});
       const myResponse = await response.json();
       return myResponse;
     }
@@ -18,10 +18,10 @@ import api_url from "../constants/api_url";
     try{
       let response;
       if(fields){
-          response = await fetch(api_url+apiEndPoint+'/?username='+username+'&fields='+fields,{credentials: "include"});
+          response = await fetch(api_url+apiEndPoint+'/?username='+username+'&fields='+fields+"&access_token="+server_access_token,{credentials: "include"});
       }
       else{
-        response = await fetch(api_url+apiEndPoint+'/?username='+username,{credentials: "include"});
+        response = await fetch(api_url+apiEndPoint+'/?username='+username+"&access_token="+server_access_token,{credentials: "include"});
       }
       const myResponse = await response.json();
       return myResponse;
@@ -37,7 +37,7 @@ import api_url from "../constants/api_url";
       for(let query in otherQueriesObject){
           otherQueries = otherQueries + "&" + query + "=" + otherQueriesObject[query];
       }
-      const response = await fetch(api_url+apiEndPoint+'/?fields='+fields+'&postId='+postId+'&post_type='+postType+'&commentType='+commentType+'&userId='+userId+'&limit='+limit+otherQueries,{credentials: "include"});
+      const response = await fetch(api_url+apiEndPoint+'/?fields='+fields+'&postId='+postId+'&post_type='+postType+'&commentType='+commentType+'&userId='+userId+'&limit='+limit+"&access_token="+server_access_token+otherQueries,{credentials: "include"});
       const myResponse = await response.json();
       return myResponse;
     }
@@ -58,7 +58,7 @@ import api_url from "../constants/api_url";
         queries =  '?fields='+fields+'&limit='+limit;
       }
       const params = "/"+post_type+"/"+taxonomy+"/"+taxonomyValue+"/";
-      const response = await fetch(api_url+apiEndPoint+params+queries);
+      const response = await fetch(api_url+apiEndPoint+params+"?access_token="+server_access_token+queries);
       const myResponse = await response.json();
       return myResponse;
     }
@@ -71,7 +71,7 @@ import api_url from "../constants/api_url";
    /* POST REQUESTS */
    createItem: async function (apiEndPoint,data){
     try{
-      const response = await fetch(api_url+apiEndPoint,{
+      const response = await fetch(api_url+apiEndPoint+"?access_token="+server_access_token,{
           method: 'POST', 
           mode: 'cors', // no-cors, *cors, same-origin
           cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -96,7 +96,7 @@ import api_url from "../constants/api_url";
    /* PUT REQUESTS */
    updateItem: async function (apiEndPoint,data,id){
     try{
-      const response = await fetch(api_url+apiEndPoint+"/"+id,{
+      const response = await fetch(api_url+apiEndPoint+"/"+id+"?access_token="+server_access_token,{
           method: 'PUT',
           body: JSON.stringify(data), 
           credentials: "include",
@@ -120,7 +120,7 @@ import api_url from "../constants/api_url";
    deleteItemByid: async function (apiEndPoint,id){
     const data = {id: id};
     try{
-          const response = await fetch(api_url+apiEndPoint,{
+          const response = await fetch(api_url+apiEndPoint+"?access_token="+server_access_token,{
           method: 'DELETE', 
           body: JSON.stringify(data), 
           credentials: "include",
@@ -143,7 +143,7 @@ import api_url from "../constants/api_url";
   deleteItem: async function (apiEndPoint,deleteObject=null){
     const data = deleteObject? deleteObject : {"delete": "by id"};
     try{
-          const response = await fetch(api_url+apiEndPoint,{
+          const response = await fetch(api_url+apiEndPoint+"?access_token="+server_access_token,{
           method: 'DELETE', 
           body: JSON.stringify(data), 
           credentials: "include",

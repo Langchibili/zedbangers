@@ -40,7 +40,7 @@ router.post("/", (req,res,next)=>{
                const getCurrentUser = await users.getUser(null,currentUserName);
                if(!isEmpty(getCurrentUser)){ // if user exists do the following
                     req.session.loggedInUser = getCurrentUser;
-                    if(req.session.loggedInUser){
+                    if(req.session.hasOwnProperty("loggedInUser")){
                          response  = {"success":req.session.loggedInUser};
                     }
                     else{

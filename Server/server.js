@@ -4,6 +4,7 @@ const cors = require("cors");  // cors
 const app = express();  // express aspp
 const session = require('express-session')// express-session
 const session_secret = require("./utilities/secrets/secrets").session_secret; // sms secret
+const access_token = require("./utilities/secrets/secrets").access_token; // sms secret
 const bodyParser = require("body-parser"); // body parser 
 const expressLimit = require("express-limit").limit;
 const MongoDBStore = require('connect-mongodb-session')(session); // connect-mongodb-session 
@@ -61,7 +62,9 @@ const server = app.listen(PORT,()=>{
     store.on("open",()=>{
       console.log("session database connection established");
     })
-
+    store.on("data", function(){
+      store.removeAllListeners();
+    })
 });
 
 server.timeout = 60 * 60 * 1000;
@@ -97,7 +100,7 @@ app.use(cors(corsOptions));
 // create a session 
 app.use(session({
   secret: session_secret,
-  resave: true,
+  resave: false,
   saveUninitialized: true,
   unset: 'destroy',
   store: store,
@@ -108,9 +111,25 @@ app.use(session({
   },
   name: 'session cookie name',
 }));
-  
+  /* CHECK FOR ACCESS TOKEN, IMPORTANT SECURITY MEASURE */
+app.use(function(req,res,next){
+  console.log(req);
+    if(req.path.startsWith("/files")){ // go next if req is for static files
+      next();
+    }
+    if(!req.query.hasOwnProperty("access_token")){
+       return res.status(403).send("forbidden");
+    }
+    const req_access_token = req.query.access_token;
+    if(req_access_token !== access_token){
+      return res.status(403).send("forbidden");
+    }
+    next();
+});
+
 /* get logged in user */
-app.get("/user_status", (req,res,next)=>{ 
+app.get("/user_status", (req,res,next)=>{
+  console.log("user session here, server.js line 142", req.session); 
     if(req.session.hasOwnProperty("loggedInUser")){
       const loggedInUser = req.session.loggedInUser;
       const loggedUserName = loggedInUser.username;

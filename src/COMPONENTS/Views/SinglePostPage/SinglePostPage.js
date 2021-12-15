@@ -61,7 +61,7 @@ export default class SinglePostPage extends React.Component{
   }
 
   changeBottonNavTheme = ()=>{
-    const BottomNav = document.querySelector(".white-theme");
+    const BottomNav = document.querySelector(".bottom-nav .white-theme");
     const pathArray  = window.location.pathname.split("/");
     if(pathArray[1] === "song"){
          BottomNav.className = BottomNav.className.replace("white-theme","black-theme");
@@ -73,7 +73,7 @@ export default class SinglePostPage extends React.Component{
   changeHeaderTheme = () =>{
     const header = document.getElementById("header");
     const pathArray  = window.location.pathname.split("/");
-    this.changeBottonNavTheme();
+    // this.changeBottonNavTheme();
     if(pathArray[1] === "song"){
          header.className = header.className.replace("bg-white-only","bg-black lter");
     }

@@ -42,6 +42,15 @@ redirectToHttps = () => {
      window.location = httpsUrl;
   }
 }
+
+redirectWww = () => {
+  const wwwUrl = window.location.href;
+  if(wwwUrl.includes("www")){
+     const wwwLesUrl = wwwUrl.replace("www.", "")
+     window.location = wwwLesUrl;
+  }
+}
+
 async checkUserSession(){
   const userStatus = await api.getItems("/user_status");
   if(userStatus){
@@ -161,7 +170,7 @@ deletePrevUrl = ()=>{
 
 async componentWillMount(){
   this.redirectToHttps(); // redirect http requests to https
-  //window.toolbar.visible = false;
+  this.redirectWww();
   await this.checkUserSession();
 }
    render(){
@@ -204,11 +213,11 @@ async componentWillMount(){
                            toggleOffFileIsDownloading={this.toggleOffFileIsDownloading}/>
                         </Display>
                         <Switch>
-                          <BottomNav 
+                          {/* <BottomNav 
                                 visitedUrlsLength = {this.props.visitedUrlsLength}
                                 isLoggedIn={this.state.isLoggedIn} 
                                 previousUrl={this.state.previousUrl}
-                               deletePrevUrl={this.deletePrevUrl}/>
+                               deletePrevUrl={this.deletePrevUrl}/> */}
                         </Switch>
                       </section>
                    </section>
